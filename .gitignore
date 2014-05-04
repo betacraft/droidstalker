@@ -1,0 +1,32 @@
+# local eclipse config
+.classpath
+
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+
+#idea workspace metadata folder
+.idea/*
+# output files
+*/target/*
+*.devicelog
+target/*
+*/out/*
+*.log
+*.class
+commit_message
+

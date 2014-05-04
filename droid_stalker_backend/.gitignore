@@ -1,0 +1,10 @@
+#idea workspace metadata folder
+.idea/*
+# output files
+*/target/*
+*.devicelog
+target/*
+*/out/*
+*.log
+*.class
+commit_message

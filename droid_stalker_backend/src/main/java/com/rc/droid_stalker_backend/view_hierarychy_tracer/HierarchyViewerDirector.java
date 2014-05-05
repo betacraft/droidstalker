@@ -69,7 +69,6 @@ public abstract class HierarchyViewerDirector implements IDeviceChangeListener,
     }
 
 
-
     public void populateDeviceSelectionModel() {
         IDevice[] devices = DeviceBridge.getDevices();
         for (IDevice device : devices) {
@@ -89,33 +88,28 @@ public abstract class HierarchyViewerDirector implements IDeviceChangeListener,
 
     @Override
     public void deviceConnected(final IDevice device) {
-        executeInBackground("Connecting device", new Runnable() {
-            @Override
-            public void run() {
-                logger.debug("Connecting to the device {}",device.getSerialNumber());
-                if (!device.isOnline()) {
-                    logger.debug("Device {} is not online",device.getSerialNumber());
-                    return;
-                }
+        logger.debug("Connecting to the device {}", device.getSerialNumber());
+        if (!device.isOnline()) {
+            logger.debug("Device {} is not online", device.getSerialNumber());
+            return;
+        }
 
-                IHvDevice hvDevice;
-                synchronized (mDevicesLock) {
-                    hvDevice = mDevices.get(device);
-                    if (hvDevice == null) {
-                        hvDevice = HvDeviceFactory.create(device);
-                        hvDevice.initializeViewDebug();
-                        hvDevice.addWindowChangeListener(getDirector());
-                        mDevices.put(device, hvDevice);
-                    } else {
-                        // attempt re-initializing view server if device state has changed
-                        hvDevice.initializeViewDebug();
-                    }
-                }
-
-                DeviceSelectionModel.getModel().addDevice(hvDevice);
-                focusChanged(device);
+        IHvDevice hvDevice;
+        synchronized (mDevicesLock) {
+            hvDevice = mDevices.get(device);
+            if (hvDevice == null) {
+                hvDevice = HvDeviceFactory.create(device);
+                hvDevice.initializeViewDebug();
+                hvDevice.addWindowChangeListener(getDirector());
+                mDevices.put(device, hvDevice);
+            } else {
+                // attempt re-initializing view server if device state has changed
+                hvDevice.initializeViewDebug();
             }
-        });
+        }
+
+        DeviceSelectionModel.getModel().addDevice(hvDevice);
+        focusChanged(device);
     }
 
     @Override
@@ -175,7 +169,7 @@ public abstract class HierarchyViewerDirector implements IDeviceChangeListener,
     }
 
 
-    private IHvDevice getHvDevice(IDevice device) {
+    public IHvDevice getHvDevice(IDevice device) {
         synchronized (mDevicesLock) {
             return mDevices.get(device);
         }

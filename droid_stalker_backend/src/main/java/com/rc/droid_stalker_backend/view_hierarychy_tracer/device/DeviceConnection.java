@@ -31,10 +31,10 @@ public class DeviceConnection {
         if (port == -1) {
             throw new IOException();
         }
-        logger.debug("Creating socket forward with port {}", port);
+        //logger.debug("Creating socket forward with port {}", port);
         mSocketChannel.connect(new InetSocketAddress("127.0.0.1", port)); //$NON-NLS-1$
         mSocketChannel.socket().setSoTimeout(40000);
-        logger.debug("Socket channel is connected : {}", mSocketChannel.isConnected());
+        //logger.debug("Socket channel is connected : {}", mSocketChannel.isConnected());
     }
 
     public BufferedReader getInputStream() throws IOException {

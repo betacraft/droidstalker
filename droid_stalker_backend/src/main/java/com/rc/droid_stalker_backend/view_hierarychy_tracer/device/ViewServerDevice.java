@@ -28,6 +28,8 @@ public class ViewServerDevice extends AbstractHvDevice {
         if (!mDevice.isOnline()) {
             return false;
         }
+        DeviceBridge.stopViewServer(mDevice);
+        DeviceBridge.startViewServer(mDevice);
         DeviceBridge.setupDeviceForward(mDevice);
         return reloadWindows();
     }

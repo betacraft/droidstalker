@@ -32,14 +32,10 @@ public class DeviceBridge {
     private static final int SERVICE_CODE_STOP_SERVER = 2;
 
     private static final int SERVICE_CODE_IS_SERVER_RUNNING = 3;
-    private static final int MAX_RETRIES = 3;
 
     private static AndroidDebugBridge sBridge;
 
     private static final HashMap<IDevice, Integer> sDevicePortMap = new HashMap<IDevice, Integer>();
-
-    private static final HashMap<IDevice, DeviceConnection> sDeviceConnectionMap = new HashMap<IDevice,
-            DeviceConnection>();
 
     private static final HashMap<IDevice, ViewServerInfo> sViewServerInfo =
             new HashMap<IDevice, ViewServerInfo>();
@@ -66,6 +62,22 @@ public class DeviceBridge {
         sBridge = bridge;
     }
 
+    /**
+     * Creates an {@link AndroidDebugBridge} connected to adb at the given location.
+     * <p/>
+     * If a bridge is already running, this disconnects it and creates a new one.
+     *
+     * @param adbLocation the location to adb.
+     */
+    public static void initDebugBridge(String adbLocation) {
+        if (sBridge == null) {
+            /* debugger support required only if hv is using ddm protocol */
+            AndroidDebugBridge.init(true);
+        }
+        if (sBridge == null || !sBridge.isConnected()) {
+            sBridge = AndroidDebugBridge.createBridge(adbLocation, true);
+        }
+    }
 
     /**
      * Disconnects the current {@link AndroidDebugBridge}.
@@ -293,24 +305,41 @@ public class DeviceBridge {
         }
     }
 
-    public static ViewServerInfo loadViewServerInfo(final IDevice device) {
+    public static ViewServerInfo loadViewServerInfo(IDevice device) {
         logger.debug("Loading view server info from device {}", device.getSerialNumber());
         int server = -1;
         int protocol = -1;
-        DeviceConnection connection = getConnectionForDevice(device);
+        DeviceConnection connection = null;
+
         try {
+            connection = new DeviceConnection(device);
             connection.sendCommand("SERVER"); //$NON-NLS-1$
             String line = connection.getInputStream().readLine();
+            logger.debug("Response for getting protocol version is {}", line);
             if (line != null) {
                 server = Integer.parseInt(line);
             }
+        } catch (Exception e) {
+            logger.error("Unable to get view server version from device " + device, e);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        connection = null;
+        try {
+            connection = new DeviceConnection(device);
             connection.sendCommand("PROTOCOL"); //$NON-NLS-1$
-            line = connection.getInputStream().readLine();
+            String line = connection.getInputStream().readLine();
             if (line != null) {
                 protocol = Integer.parseInt(line);
             }
         } catch (Exception e) {
             logger.error("Unable to get view server protocol version from device " + device, e);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
         }
         if (server == -1 || protocol == -1) {
             return null;
@@ -320,40 +349,6 @@ public class DeviceBridge {
             sViewServerInfo.put(device, returnValue);
         }
         return returnValue;
-    }
-
-    private static DeviceConnection getConnectionForDevice(final IDevice device) {
-        if (sDeviceConnectionMap.containsKey(device)) {
-            DeviceConnection connection = sDeviceConnectionMap.get(device);
-            if (!connection.getSocket().isClosed())
-                return connection;
-            else {
-                connection.close();
-            }
-        }
-        return createNewDeviceConnectionFor(device);
-    }
-
-    public static DeviceConnection createNewDeviceConnectionFor(final IDevice device) {
-        DeviceConnection deviceConnection = null;
-        int retries = 0;
-        while (retries++ < MAX_RETRIES) {
-            try {
-                deviceConnection = new DeviceConnection(device);
-                break;
-            } catch (IOException e) {
-                logger.error("Error while creating device connection for device {}", device.getSerialNumber(), e);
-            }
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ignored) {
-
-            }
-        }
-        if (deviceConnection == null)
-            throw new RuntimeException("Could not connect to the device " + device.getSerialNumber());
-        sDeviceConnectionMap.put(device, deviceConnection);
-        return deviceConnection;
     }
 
     public static ViewServerInfo getViewServerInfo(IDevice device) {
@@ -375,9 +370,10 @@ public class DeviceBridge {
     public static Window[] loadWindows(final IHvDevice hvDevice, final IDevice device) {
         logger.debug("Loading windows from device {}", device.getSerialNumber());
         ArrayList<Window> windows = new ArrayList<Window>();
-        DeviceConnection connection = getConnectionForDevice(device);
+        DeviceConnection connection = null;
         ViewServerInfo serverInfo = getViewServerInfo(device);
         try {
+            connection = new DeviceConnection(device);
             connection.sendCommand("LIST"); //$NON-NLS-1$
             BufferedReader in = connection.getInputStream();
             String line;
@@ -399,7 +395,7 @@ public class DeviceBridge {
                     }
 
                     Window w = new Window(hvDevice, line.substring(index + 1), id);
-                    logger.debug("Adding window from {} with title {}", device.getSerialNumber(), w.getTitle());
+                    //logger.debug("Adding window from {} with title {}", device.getSerialNumber(), w.getTitle());
                     windows.add(w);
                 }
             }
@@ -412,6 +408,10 @@ public class DeviceBridge {
             }
         } catch (Exception e) {
             logger.error("Unable to load the window list from device " + device, e);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
         }
         // The server returns the list of windows from the window at the bottom
         // to the top. We want the reverse order to put the top window on top of
@@ -428,9 +428,9 @@ public class DeviceBridge {
      * protocol version 3 and above.
      */
     public static int getFocusedWindow(IDevice device) {
-        DeviceConnection connection = getConnectionForDevice(device);
+        DeviceConnection connection = null;
         try {
-
+            connection = new DeviceConnection(device);
             connection.sendCommand("GET_FOCUS"); //$NON-NLS-1$
             String line = connection.getInputStream().readLine();
             if (line == null || line.length() == 0) {
@@ -439,13 +439,18 @@ public class DeviceBridge {
             return (int) Long.parseLong(line.substring(0, line.indexOf(' ')), 16);
         } catch (Exception e) {
             logger.error("Unable to get the focused window from device " + device, e);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
         }
         return -1;
     }
 
     public static ViewNode loadWindowData(Window window) {
-        DeviceConnection connection = getConnectionForDevice(window.getDevice());
+        DeviceConnection connection = null;
         try {
+            connection = new DeviceConnection(window.getDevice());
             connection.sendCommand("DUMP " + window.encode()); //$NON-NLS-1$
             BufferedReader in = connection.getInputStream();
             ViewNode currentNode = parseViewHierarchy(in, window);
@@ -457,6 +462,10 @@ public class DeviceBridge {
         } catch (Exception e) {
             logger.error("Unable to load window data for window " + window.getTitle() + " on device "
                     + window.getDevice(), e);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
         }
         return null;
     }
@@ -498,8 +507,9 @@ public class DeviceBridge {
     }
 
     public static boolean loadProfileData(Window window, ViewNode viewNode) {
-        DeviceConnection connection = getConnectionForDevice(window.getDevice());
+        DeviceConnection connection = null;
         try {
+            connection = new DeviceConnection(window.getDevice());
             connection.sendCommand("PROFILE " + window.encode() + " " + viewNode.toString()); //$NON-NLS-1$
             BufferedReader in = connection.getInputStream();
             int protocol;
@@ -518,6 +528,10 @@ public class DeviceBridge {
         } catch (Exception e) {
             logger.error("Unable to load profiling data for window " + window.getTitle()
                     + " on device " + window.getDevice(), e);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
         }
         return false;
     }
@@ -568,33 +582,48 @@ public class DeviceBridge {
 
 
     public static void invalidateView(ViewNode viewNode) {
-        DeviceConnection connection = getConnectionForDevice(viewNode.window.getDevice());
+        DeviceConnection connection = null;
         try {
+            connection = new DeviceConnection(viewNode.window.getDevice());
             connection.sendCommand("INVALIDATE " + viewNode.window.encode() + " " + viewNode); //$NON-NLS-1$
         } catch (Exception e) {
             logger.error("Unable to invalidate view " + viewNode + " in window " + viewNode.window
                     + " on device " + viewNode.window.getDevice(), e);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
         }
     }
 
     public static void requestLayout(ViewNode viewNode) {
-        DeviceConnection connection = getConnectionForDevice(viewNode.window.getDevice());
+        DeviceConnection connection = null;
         try {
+            connection = new DeviceConnection(viewNode.window.getDevice());
             connection.sendCommand("REQUEST_LAYOUT " + viewNode.window.encode() + " " + viewNode); //$NON-NLS-1$
         } catch (Exception e) {
             logger.error("Unable to request layout for node " + viewNode + " in window "
                     + viewNode.window + " on device " + viewNode.window.getDevice(), e);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
         }
     }
 
     public static void outputDisplayList(ViewNode viewNode) {
-        DeviceConnection connection = getConnectionForDevice(viewNode.window.getDevice());
+        DeviceConnection connection = null;
         try {
+            connection = new DeviceConnection(viewNode.window.getDevice());
             connection.sendCommand("OUTPUT_DISPLAYLIST " +
                     viewNode.window.encode() + " " + viewNode); //$NON-NLS-1$
         } catch (Exception e) {
             logger.error("Unable to dump displaylist for node " + viewNode + " in window "
                     + viewNode.window + " on device " + viewNode.window.getDevice(), e);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
         }
     }
 

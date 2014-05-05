@@ -25,11 +25,11 @@ public final class ADB {
      * @param adbPath adb path
      */
     private ADB(final String adbPath) {
-        AndroidDebugBridge.init(false);
+        AndroidDebugBridge.initIfNeeded(true);
         if (mAndroidDebugBridge == null || !mAndroidDebugBridge.isConnected()) {
             logger.debug("Creating debug bridge");
             mAndroidDebugBridge = AndroidDebugBridge.createBridge
-                    (adbPath, true);
+                    (adbPath, false);
         }
         if (!mAndroidDebugBridge.isConnected()) {
             logger.debug("Debug bridge is not connected so restarting it");

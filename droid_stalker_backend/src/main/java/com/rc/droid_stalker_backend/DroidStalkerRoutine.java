@@ -1,5 +1,6 @@
 package com.rc.droid_stalker_backend;
 
+import com.android.ddmlib.AndroidDebugBridge;
 import com.android.ddmlib.Client;
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.ThreadInfo;
@@ -26,6 +27,42 @@ public final class DroidStalkerRoutine implements Runnable {
 
     public DroidStalkerRoutine() {
         mAdb = ADB.get("/home/akshay/android-sdk-linux/platform-tools/adb");
+        mAdb.getAndroidDebugBridge().addClientChangeListener(new AndroidDebugBridge.IClientChangeListener() {
+            @Override
+            public void clientChanged(Client client, int changeMask) {
+                logger.debug("Client changed {}", client.getClientData().getPid());
+            }
+        });
+
+        mAdb.getAndroidDebugBridge().addDeviceChangeListener(new AndroidDebugBridge.IDeviceChangeListener() {
+            @Override
+            public void deviceConnected(IDevice device) {
+                logger.debug("Device connected {}", device.getSerialNumber());
+                test();
+            }
+
+            @Override
+            public void deviceDisconnected(IDevice device) {
+
+                logger.debug("Device disconnected {}", device.getSerialNumber());
+            }
+
+            @Override
+            public void deviceChanged(IDevice device, int changeMask) {
+
+
+            }
+        });
+
+        if (mAdb.getAndroidDebugBridge().getDevices().length != 0) {
+
+            test();
+        }
+
+
+    }
+
+    private void test() {
         mCurrentDevice = mAdb.getDevices()[0];
         mDirector = StalkerHierarchyViewerDirector.createDirector();
         mDirector.acquireBridge(mAdb.getAndroidDebugBridge());
@@ -41,8 +78,6 @@ public final class DroidStalkerRoutine implements Runnable {
                 logger.debug("name {} status {}", threadInfo.getThreadName(), threadInfo.getStatus());
             }
         }
-
-
     }
 
     @Override

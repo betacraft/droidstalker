@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  * Date  : 4/24/14
  * Time  : 11:49 AM
  */
-public final class ADB {
+public final class ADB implements AndroidDebugBridge.IDebugBridgeChangeListener {
 
     private static final Logger logger = LoggerFactory.getLogger(ADB.class);
     private static ADB INSTANCE;
@@ -25,7 +25,8 @@ public final class ADB {
      * @param adbPath adb path
      */
     private ADB(final String adbPath) {
-        AndroidDebugBridge.initIfNeeded(true);
+        mAndroidDebugBridge.addDebugBridgeChangeListener(this);
+        AndroidDebugBridge.init(true);
         if (mAndroidDebugBridge == null || !mAndroidDebugBridge.isConnected()) {
             logger.debug("Creating debug bridge");
             mAndroidDebugBridge = AndroidDebugBridge.createBridge
@@ -79,5 +80,10 @@ public final class ADB {
 
     public AndroidDebugBridge getAndroidDebugBridge() {
         return mAndroidDebugBridge;
+    }
+
+    @Override
+    public void bridgeChanged(AndroidDebugBridge bridge) {
+        mAndroidDebugBridge = bridge;
     }
 }

@@ -25,8 +25,8 @@ public abstract class HierarchyViewerDirector implements IDeviceChangeListener,
     private static final boolean sIsUsingDdmProtocol;
 
     static {
-        String sHvProtoEnvVar = System.getenv("ANDROID_HVPROTO"); //$NON-NLS-1$
-        sIsUsingDdmProtocol = "ddm".equalsIgnoreCase(sHvProtoEnvVar);
+        //String sHvProtoEnvVar = System.getenv("ANDROID_HVPROTO"); //$NON-NLS-1$
+        sIsUsingDdmProtocol = true;//"ddm".equalsIgnoreCase(sHvProtoEnvVar);
     }
 
     protected static HierarchyViewerDirector sDirector;

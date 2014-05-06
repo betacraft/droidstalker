@@ -1,0 +1,1052 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="dc33bf6c-7f60-4651-bbb3-b8ade8a45218" name="Default" comment="" />
+    <ignored path="droid_stalker_backend.iws" />
+    <ignored path=".idea/workspace.xml" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
+  <component name="CreatePatchCommitExecutor">
+    <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DaemonCodeAnalyzer">
+    <disable_hints />
+  </component>
+  <component name="DebuggerManager">
+    <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint>
+        <option name="NOTIFY_CAUGHT" value="true" />
+        <option name="NOTIFY_UNCAUGHT" value="true" />
+        <option name="ENABLED" value="false" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </breakpoint_any>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
+    <breakpoint_rules />
+    <ui_properties />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
+  <component name="FavoritesManager">
+    <favorites_list name="droid_stalker_backend" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file leaf-file-name="StalkerHierarchyViewerDirector.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/StalkerHierarchyViewerDirector.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="0" selection-start="828" selection-end="828" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="880">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ViewNode.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/ViewNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="332" column="18" selection-start="11898" selection-end="11898" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6960">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Map.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar:///opt/java/src.zip!/java/util/Map.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="199" column="6" selection-start="9031" selection-end="9031" vertical-scroll-proportion="0.0" vertical-offset="3255" max-vertical-offset="9220">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Window.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/Window.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="59" column="25" selection-start="1317" selection-end="1317" vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="1960">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="0" selection-start="610" selection-end="610" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DroidStalkerRoutine.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/DroidStalkerRoutine.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="29" selection-start="1142" selection-end="1142" vertical-scroll-proportion="0.0" vertical-offset="23" max-vertical-offset="820">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="IDevice.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$MAVEN_REPOSITORY$/com/android/tools/ddms/ddmlib/22.2.1/ddmlib-22.2.1-sources.jar!/com/android/ddmlib/IDevice.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="330" column="16" selection-start="12928" selection-end="12928" vertical-scroll-proportion="0.0" vertical-offset="6050" max-vertical-offset="9700">
+              <folding>
+                <element signature="e#0#20526#0" expanded="false" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#3564#3565#0" expanded="false" />
+                <element signature="e#3600#3601#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DeviceConnection.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/DeviceConnection.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="76" selection-start="320" selection-end="320" vertical-scroll-proportion="0.10037641" vertical-offset="0" max-vertical-offset="1660">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WindowUpdater.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/WindowUpdater.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="132" column="33" selection-start="5184" selection-end="5184" vertical-scroll-proportion="0.0" vertical-offset="1965" max-vertical-offset="2940">
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#711#754#0" expanded="false" />
+                <element signature="e#834#851#0" expanded="false" />
+                <element signature="e#1757#1780#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Windows.class" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar:///opt/java/jre/lib/plugin.jar!/sun/plugin2/os/windows/Windows.class">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="13" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2500">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindManager">
+    <FindUsagesManager>
+      <setting name="OPEN_NEW_TAB" value="false" />
+    </FindUsagesManager>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="changedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/exceptions/DroidStalkerBaseException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/exceptions/NoSuchDeviceException.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/ViewHierarchyTracer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/ViewHierarchyMonitor.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/DeviceConnetion.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/IHvDevice.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/Window.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/WindowUpdater.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/ViewNode.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/DeviceBridge.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/DeviceConnection.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/AbstractHvDevice.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/IHvDevice.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/DdmViewDebugDevice.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/HvDeviceFactory.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/DeviceSelectionModel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/PixelPerfectModel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/TreeViewModel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/Kernel.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/ADB.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/ViewServerDevice.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/DeviceConnection.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/DroidStalkerRoutine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/StalkerHierarchyViewerDirector.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/HierarchyViewerDirector.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/DeviceBridge.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1362" />
+    <option name="width" value="1608" />
+    <option name="height" value="903" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+    <OptionsSetting value="true" id="Add" />
+    <OptionsSetting value="true" id="Remove" />
+    <OptionsSetting value="true" id="Checkout" />
+    <OptionsSetting value="true" id="Update" />
+    <OptionsSetting value="true" id="Status" />
+    <OptionsSetting value="true" id="Edit" />
+    <OptionsSetting value="true" id="Undo Check Out" />
+    <OptionsSetting value="true" id="Get Latest Version" />
+    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="0" id="Remove" />
+  </component>
+  <component name="ProjectReloadState">
+    <option name="STATE" value="0" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages ProjectPane="false" />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="droid_stalker_backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="droid_stalker_backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="droid-stalker-backend" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
+    <property name="GoToFile.includeJavaFiles" value="false" />
+    <property name="MemberChooser.sorted" value="false" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="options.lastSelected" value="appearance" />
+    <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="recentsLimit" value="5" />
+    <property name="dynamic.classpath" value="false" />
+    <property name="FullScreen" value="false" />
+    <property name="last_opened_file_path" value="$USER_HOME$/third_party_code_base/swt" />
+    <property name="SearchEverywhereHistory" value="" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="OverrideImplement.overriding.sorted" value="false" />
+  </component>
+  <component name="RunManager" selected="Application.Kernel">
+    <configuration default="false" name="Kernel" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.rc.droid_stalker_backend.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.rc.droid_stalker_backend.Kernel" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="droid_stalker_backend" />
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin" singleton="true">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <method />
+    </configuration>
+    <configuration default="true" type="GrailsRunConfigurationType" factoryName="Grails" singleton="true">
+      <module name="" />
+      <setting name="vmparams" value="" />
+      <setting name="cmdLine" value="run-app" />
+      <setting name="depsClasspath" value="false" />
+      <setting name="passParentEnv" value="true" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <setting name="launchBrowser" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Specs2RunConfiguration" factoryName="Specs2">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
+      <method />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlashRunConfigurationType" factoryName="Flash App">
+      <option name="BCName" value="" />
+      <option name="IOSSimulatorSdkPath" value="" />
+      <option name="adlOptions" value="" />
+      <option name="airProgramParameters" value="" />
+      <option name="appDescriptorForEmulator" value="Android" />
+      <option name="debugTransport" value="USB" />
+      <option name="debuggerSdkRaw" value="BC SDK" />
+      <option name="emulator" value="NexusOne" />
+      <option name="emulatorAdlOptions" value="" />
+      <option name="fastPackaging" value="true" />
+      <option name="fullScreenHeight" value="0" />
+      <option name="fullScreenWidth" value="0" />
+      <option name="launchUrl" value="false" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browserFamily" value="FIREFOX" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="/usr/bin/flashplayerdebugger" />
+        </LauncherParameters>
+      </option>
+      <option name="mobileRunTarget" value="Emulator" />
+      <option name="moduleName" value="" />
+      <option name="overriddenMainClass" value="" />
+      <option name="overriddenOutputFileName" value="" />
+      <option name="overrideMainClass" value="false" />
+      <option name="runTrusted" value="true" />
+      <option name="screenDpi" value="0" />
+      <option name="screenHeight" value="0" />
+      <option name="screenWidth" value="0" />
+      <option name="url" value="http://" />
+      <option name="usbDebugPort" value="7936" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" appDescriptorForEmulator="Android" class_name="" emulatorAdlOptions="" method_name="" output_log_level="null" package_name="" scope="Class">
+      <option name="BCName" value="" />
+      <option name="launcherParameters">
+        <LauncherParameters>
+          <option name="browserFamily" value="FIREFOX" />
+          <option name="launcherType" value="OSDefault" />
+          <option name="newPlayerInstance" value="false" />
+          <option name="playerPath" value="/usr/bin/flashplayerdebugger" />
+        </LauncherParameters>
+      </option>
+      <option name="moduleName" value="" />
+      <option name="trusted" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="CucumberJavaRunConfigurationType" factoryName="Cucumber java">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="myFilePath" />
+      <option name="GLUE" />
+      <option name="myNameFilter" />
+      <option name="myGeneratedName" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
+      <module name="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="DEPLOY" value="true" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="ScalaTestRunConfiguration" factoryName="ScalaTest">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <extension name="scalaCoverage" />
+      <module name="" />
+      <setting name="path" value="" />
+      <setting name="package" value="" />
+      <setting name="vmparams" value="" />
+      <setting name="params" value="" />
+      <setting name="workingDirectory" value="$PROJECT_DIR$" />
+      <setting name="searchForTest" value="Across module dependencies" />
+      <setting name="testName" value="" />
+      <setting name="testKind" value="Class" />
+      <setting name="showProgressMessages" value="true" />
+      <method />
+    </configuration>
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="Application.Kernel" />
+    </list>
+    <recent_temporary>
+      <list size="1">
+        <item index="0" class="java.lang.String" itemvalue="Application.Kernel" />
+      </list>
+    </recent_temporary>
+    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
+      <Host>localhost</Host>
+      <Port>5050</Port>
+    </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="dc33bf6c-7f60-4651-bbb3-b8ade8a45218" name="Default" comment="" />
+      <created>1398270798804</created>
+      <updated>1398270798804</updated>
+      <workItem from="1398270805319" duration="7509000" />
+      <workItem from="1398319943505" duration="3638000" />
+      <workItem from="1398343705446" duration="8701000" />
+      <workItem from="1398402092703" duration="1693000" />
+      <workItem from="1398575704493" duration="5486000" />
+      <workItem from="1398658665561" duration="10761000" />
+      <workItem from="1398836231705" duration="6679000" />
+      <workItem from="1398852009930" duration="1477000" />
+      <workItem from="1399092842099" duration="19632000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="65576000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="1362" y="0" width="1608" height="903" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32850242" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="SBT Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39975846" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.269375" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="SBT Execute" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.269375" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32971016" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="myTodoPanelSettings">
+      <TodoPanelSettings />
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/ADB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="74" column="35" selection-start="2173" selection-end="2173" vertical-scroll-proportion="0.0" vertical-offset="1480" max-vertical-offset="1660">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/HvDeviceFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="26" selection-start="581" selection-end="581" vertical-scroll-proportion="0.0" vertical-offset="280" max-vertical-offset="940">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/ViewServerDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="75" selection-start="1241" selection-end="1241" vertical-scroll-proportion="0.0" vertical-offset="780" max-vertical-offset="3080">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/AbstractHvDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="4" selection-start="393" selection-end="426" vertical-scroll-proportion="0.0" vertical-offset="260" max-vertical-offset="540">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/DeviceBridge.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="23" selection-start="1907" selection-end="1907" vertical-scroll-proportion="0.0" vertical-offset="1180" max-vertical-offset="11900">
+          <folding>
+            <element signature="e#14235#14243#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/IHvDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="38" selection-start="856" selection-end="856" vertical-scroll-proportion="0.0" vertical-offset="800" max-vertical-offset="1280">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/DeviceConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="31" selection-start="730" selection-end="730" vertical-scroll-proportion="0.0" vertical-offset="533" max-vertical-offset="1672">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/DdmViewDebugDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6422">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/HierarchyViewerDirector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="36" selection-start="2316" selection-end="2316" vertical-scroll-proportion="0.0" vertical-offset="590" max-vertical-offset="5358">
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#1537#1557#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/DeviceSelectionModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="68" selection-end="68" vertical-scroll-proportion="0.0" vertical-offset="2109" max-vertical-offset="4769">
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#469#492#0" expanded="false" />
+            <element signature="e#586#606#0" expanded="false" />
+            <element signature="e#714#737#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/HvDeviceFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="26" selection-start="581" selection-end="581" vertical-scroll-proportion="0.0" vertical-offset="57" max-vertical-offset="893">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/ViewServerDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="75" selection-start="1241" selection-end="1241" vertical-scroll-proportion="0.0" vertical-offset="1046" max-vertical-offset="2926">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/AbstractHvDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="4" selection-start="393" selection-end="426" vertical-scroll-proportion="0.0" vertical-offset="247" max-vertical-offset="513">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/DeviceBridge.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="513" max-vertical-offset="11305">
+          <folding>
+            <element signature="e#14235#14243#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/IHvDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="40" column="38" selection-start="856" selection-end="856" vertical-scroll-proportion="0.0" vertical-offset="419" max-vertical-offset="1216">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/Kernel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="112" selection-start="490" selection-end="490" vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="494">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/ADB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="18" selection-start="1861" selection-end="1861" vertical-scroll-proportion="0.0" vertical-offset="1235" max-vertical-offset="1501">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/exceptions/NoSuchDeviceException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="96" selection-start="595" selection-end="595" vertical-scroll-proportion="0.0" vertical-offset="342" max-vertical-offset="513">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/exceptions/DroidStalkerBaseException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="4" selection-start="372" selection-end="641" vertical-scroll-proportion="0.0" vertical-offset="228" max-vertical-offset="551">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="0" selection-start="610" selection-end="610" vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="684">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/Kernel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="8" selection-start="1907" selection-end="1907" vertical-scroll-proportion="0.0" vertical-offset="673" max-vertical-offset="1273">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="49" selection-start="941" selection-end="941" vertical-scroll-proportion="0.0" vertical-offset="122" max-vertical-offset="760">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/google/android/tools/ddmlib/r13/ddmlib-r13.jar!/com/android/ddmlib/IDevice.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="17" selection-start="165" selection-end="165" vertical-scroll-proportion="19.0" vertical-offset="570" max-vertical-offset="1919" />
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/google/android/tools/ddmlib/r13/ddmlib-r13.jar!/com/android/ddmlib/AndroidDebugBridge.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="36" selection-start="1555" selection-end="1555" vertical-scroll-proportion="-6.8" vertical-offset="362" max-vertical-offset="2375" />
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/android/tools/ddms/ddmlib/22.0/ddmlib-22.0.jar!/com/android/ddmlib/AndroidDebugBridge.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="36" selection-start="1555" selection-end="1555" vertical-scroll-proportion="32.28" vertical-offset="1339" max-vertical-offset="2413" />
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/android/tools/ddms/ddmlib/22.2.1/ddmlib-22.2.1.jar!/com/android/ddmlib/Client.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="17" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0" vertical-offset="513" max-vertical-offset="2850" />
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/android/tools/ddms/ddmlib/22.2.1/ddmlib-22.2.1-sources.jar!/com/android/ddmlib/AndroidDebugBridge.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="21793" />
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/android/tools/ddms/ddmlib/22.2.1/ddmlib-22.2.1-sources.jar!/com/android/ddmlib/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="39" column="13" selection-start="1533" selection-end="1533" vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="16587" />
+      </provider>
+    </entry>
+    <entry file="file://$MAVEN_REPOSITORY$/com/android/tools/layoutlib/layoutlib-api/22.2.1/layoutlib-api-22.2.1.pom">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1026" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/exceptions/NoSuchDeviceException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="96" selection-start="595" selection-end="595" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="513">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/exceptions/DroidStalkerBaseException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="644" selection-end="644" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="551">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/DdmViewDebugDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6422">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///opt/java/jre/lib/plugin.jar!/sun/plugin2/os/windows/Windows.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="13" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2500">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/ADB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="26" selection-start="1430" selection-end="1430" vertical-scroll-proportion="0.0" vertical-offset="686" max-vertical-offset="1660">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/Kernel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="54" selection-start="434" selection-end="434" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="520">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///opt/java/src.zip!/java/util/Map.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="199" column="6" selection-start="9031" selection-end="9031" vertical-scroll-proportion="0.0" vertical-offset="3346" max-vertical-offset="9220">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/DeviceSelectionModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="26" selection-start="808" selection-end="808" vertical-scroll-proportion="0.0" vertical-offset="660" max-vertical-offset="4960">
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#469#492#0" expanded="false" />
+            <element signature="e#586#606#0" expanded="false" />
+            <element signature="e#714#737#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/WindowUpdater.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="132" column="33" selection-start="5184" selection-end="5184" vertical-scroll-proportion="0.0" vertical-offset="1965" max-vertical-offset="2940">
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#711#754#0" expanded="false" />
+            <element signature="e#834#851#0" expanded="false" />
+            <element signature="e#1757#1780#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/AbstractHvDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="22" selection-start="277" selection-end="277" vertical-scroll-proportion="0.1904762" vertical-offset="0" max-vertical-offset="525">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/android/tools/ddms/ddmlib/22.2.1/ddmlib-22.2.1-sources.jar!/com/android/ddmlib/IDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="330" column="16" selection-start="12928" selection-end="12928" vertical-scroll-proportion="0.0" vertical-offset="2570" max-vertical-offset="9700">
+          <folding>
+            <element signature="e#0#20526#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#3564#3565#0" expanded="false" />
+            <element signature="e#3600#3601#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/HvDeviceFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="35" selection-start="590" selection-end="590" vertical-scroll-proportion="0.15267175" vertical-offset="120" max-vertical-offset="860">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/ViewNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="332" column="18" selection-start="11898" selection-end="11898" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="6960">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="0" selection-start="610" selection-end="610" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/DroidStalkerRoutine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="29" selection-start="1142" selection-end="1142" vertical-scroll-proportion="0.0" vertical-offset="286" max-vertical-offset="820">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/IHvDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="13" selection-start="667" selection-end="667" vertical-scroll-proportion="0.33206108" vertical-offset="446" max-vertical-offset="1220">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/StalkerHierarchyViewerDirector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="0" selection-start="828" selection-end="828" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="880">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/ViewServerDevice.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="47" selection-start="1535" selection-end="1535" vertical-scroll-proportion="0.7528231" vertical-offset="120" max-vertical-offset="2820">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/HierarchyViewerDirector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="76" column="21" selection-start="2362" selection-end="2362" vertical-scroll-proportion="0.33375156" vertical-offset="894" max-vertical-offset="4540">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/models/Window.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="59" column="25" selection-start="1317" selection-end="1317" vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="1960">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/DeviceBridge.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="341" column="45" selection-start="12930" selection-end="12930" vertical-scroll-proportion="0.41454083" vertical-offset="6195" max-vertical-offset="11840">
+          <folding>
+            <element signature="e#14235#14243#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/rc/droid_stalker_backend/view_hierarychy_tracer/device/DeviceConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="76" selection-start="320" selection-end="320" vertical-scroll-proportion="0.10037641" vertical-offset="0" max-vertical-offset="1660">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="Copyright.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.20000002" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
+

@@ -51,10 +51,10 @@ public class DeviceStruct implements org.apache.thrift.TBase<DeviceStruct, Devic
   }
 
   private String serialNumber; // required
-  private String avdName; // required
+  private String avdName; // optional
   private String deviceState; // required
   private boolean isEmulator; // required
-  private short batteryPercentage; // required
+  private short batteryPercentage; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -130,18 +130,19 @@ public class DeviceStruct implements org.apache.thrift.TBase<DeviceStruct, Devic
   private static final int __ISEMULATOR_ISSET_ID = 0;
   private static final int __BATTERYPERCENTAGE_ISSET_ID = 1;
   private byte __isset_bitfield = 0;
+  private _Fields optionals[] = {_Fields.AVD_NAME,_Fields.BATTERY_PERCENTAGE};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.SERIAL_NUMBER, new org.apache.thrift.meta_data.FieldMetaData("serialNumber", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.AVD_NAME, new org.apache.thrift.meta_data.FieldMetaData("avdName", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+    tmpMap.put(_Fields.AVD_NAME, new org.apache.thrift.meta_data.FieldMetaData("avdName", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.DEVICE_STATE, new org.apache.thrift.meta_data.FieldMetaData("deviceState", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.IS_EMULATOR, new org.apache.thrift.meta_data.FieldMetaData("isEmulator", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BOOL)));
-    tmpMap.put(_Fields.BATTERY_PERCENTAGE, new org.apache.thrift.meta_data.FieldMetaData("batteryPercentage", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+    tmpMap.put(_Fields.BATTERY_PERCENTAGE, new org.apache.thrift.meta_data.FieldMetaData("batteryPercentage", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I16)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(DeviceStruct.class, metaDataMap);
@@ -152,19 +153,14 @@ public class DeviceStruct implements org.apache.thrift.TBase<DeviceStruct, Devic
 
   public DeviceStruct(
     String serialNumber,
-    String avdName,
     String deviceState,
-    boolean isEmulator,
-    short batteryPercentage)
+    boolean isEmulator)
   {
     this();
     this.serialNumber = serialNumber;
-    this.avdName = avdName;
     this.deviceState = deviceState;
     this.isEmulator = isEmulator;
     setIsEmulatorIsSet(true);
-    this.batteryPercentage = batteryPercentage;
-    setBatteryPercentageIsSet(true);
   }
 
   /**
@@ -449,8 +445,8 @@ public class DeviceStruct implements org.apache.thrift.TBase<DeviceStruct, Devic
         return false;
     }
 
-    boolean this_present_batteryPercentage = true;
-    boolean that_present_batteryPercentage = true;
+    boolean this_present_batteryPercentage = true && this.isSetBatteryPercentage();
+    boolean that_present_batteryPercentage = true && that.isSetBatteryPercentage();
     if (this_present_batteryPercentage || that_present_batteryPercentage) {
       if (!(this_present_batteryPercentage && that_present_batteryPercentage))
         return false;
@@ -551,14 +547,16 @@ public class DeviceStruct implements org.apache.thrift.TBase<DeviceStruct, Devic
       sb.append(this.serialNumber);
     }
     first = false;
-    if (!first) sb.append(", ");
-    sb.append("avdName:");
-    if (this.avdName == null) {
-      sb.append("null");
-    } else {
-      sb.append(this.avdName);
+    if (isSetAvdName()) {
+      if (!first) sb.append(", ");
+      sb.append("avdName:");
+      if (this.avdName == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.avdName);
+      }
+      first = false;
     }
-    first = false;
     if (!first) sb.append(", ");
     sb.append("deviceState:");
     if (this.deviceState == null) {
@@ -571,10 +569,12 @@ public class DeviceStruct implements org.apache.thrift.TBase<DeviceStruct, Devic
     sb.append("isEmulator:");
     sb.append(this.isEmulator);
     first = false;
-    if (!first) sb.append(", ");
-    sb.append("batteryPercentage:");
-    sb.append(this.batteryPercentage);
-    first = false;
+    if (isSetBatteryPercentage()) {
+      if (!first) sb.append(", ");
+      sb.append("batteryPercentage:");
+      sb.append(this.batteryPercentage);
+      first = false;
+    }
     sb.append(")");
     return sb.toString();
   }
@@ -585,20 +585,12 @@ public class DeviceStruct implements org.apache.thrift.TBase<DeviceStruct, Devic
       throw new org.apache.thrift.protocol.TProtocolException("Required field 'serialNumber' is unset! Struct:" + toString());
     }
 
-    if (!isSetAvdName()) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'avdName' is unset! Struct:" + toString());
-    }
-
     if (!isSetDeviceState()) {
       throw new org.apache.thrift.protocol.TProtocolException("Required field 'deviceState' is unset! Struct:" + toString());
     }
 
     if (!isSetIsEmulator()) {
       throw new org.apache.thrift.protocol.TProtocolException("Required field 'isEmulator' is unset! Struct:" + toString());
-    }
-
-    if (!isSetBatteryPercentage()) {
-      throw new org.apache.thrift.protocol.TProtocolException("Required field 'batteryPercentage' is unset! Struct:" + toString());
     }
 
     // check for sub-struct validity
@@ -699,9 +691,11 @@ public class DeviceStruct implements org.apache.thrift.TBase<DeviceStruct, Devic
         oprot.writeFieldEnd();
       }
       if (struct.avdName != null) {
-        oprot.writeFieldBegin(AVD_NAME_FIELD_DESC);
-        oprot.writeString(struct.avdName);
-        oprot.writeFieldEnd();
+        if (struct.isSetAvdName()) {
+          oprot.writeFieldBegin(AVD_NAME_FIELD_DESC);
+          oprot.writeString(struct.avdName);
+          oprot.writeFieldEnd();
+        }
       }
       if (struct.deviceState != null) {
         oprot.writeFieldBegin(DEVICE_STATE_FIELD_DESC);
@@ -711,9 +705,11 @@ public class DeviceStruct implements org.apache.thrift.TBase<DeviceStruct, Devic
       oprot.writeFieldBegin(IS_EMULATOR_FIELD_DESC);
       oprot.writeBool(struct.isEmulator);
       oprot.writeFieldEnd();
-      oprot.writeFieldBegin(BATTERY_PERCENTAGE_FIELD_DESC);
-      oprot.writeI16(struct.batteryPercentage);
-      oprot.writeFieldEnd();
+      if (struct.isSetBatteryPercentage()) {
+        oprot.writeFieldBegin(BATTERY_PERCENTAGE_FIELD_DESC);
+        oprot.writeI16(struct.batteryPercentage);
+        oprot.writeFieldEnd();
+      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -732,10 +728,22 @@ public class DeviceStruct implements org.apache.thrift.TBase<DeviceStruct, Devic
     public void write(org.apache.thrift.protocol.TProtocol prot, DeviceStruct struct) throws org.apache.thrift.TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       oprot.writeString(struct.serialNumber);
-      oprot.writeString(struct.avdName);
       oprot.writeString(struct.deviceState);
       oprot.writeBool(struct.isEmulator);
-      oprot.writeI16(struct.batteryPercentage);
+      BitSet optionals = new BitSet();
+      if (struct.isSetAvdName()) {
+        optionals.set(0);
+      }
+      if (struct.isSetBatteryPercentage()) {
+        optionals.set(1);
+      }
+      oprot.writeBitSet(optionals, 2);
+      if (struct.isSetAvdName()) {
+        oprot.writeString(struct.avdName);
+      }
+      if (struct.isSetBatteryPercentage()) {
+        oprot.writeI16(struct.batteryPercentage);
+      }
     }
 
     @Override
@@ -743,14 +751,19 @@ public class DeviceStruct implements org.apache.thrift.TBase<DeviceStruct, Devic
       TTupleProtocol iprot = (TTupleProtocol) prot;
       struct.serialNumber = iprot.readString();
       struct.setSerialNumberIsSet(true);
-      struct.avdName = iprot.readString();
-      struct.setAvdNameIsSet(true);
       struct.deviceState = iprot.readString();
       struct.setDeviceStateIsSet(true);
       struct.isEmulator = iprot.readBool();
       struct.setIsEmulatorIsSet(true);
-      struct.batteryPercentage = iprot.readI16();
-      struct.setBatteryPercentageIsSet(true);
+      BitSet incoming = iprot.readBitSet(2);
+      if (incoming.get(0)) {
+        struct.avdName = iprot.readString();
+        struct.setAvdNameIsSet(true);
+      }
+      if (incoming.get(1)) {
+        struct.batteryPercentage = iprot.readI16();
+        struct.setBatteryPercentageIsSet(true);
+      }
     }
   }
 

@@ -17,7 +17,12 @@ import org.apache.thrift.TEnum;
 public enum KernelExceptionErrorCode implements org.apache.thrift.TEnum {
   KERNEL_BOOT_FAILED(1),
   KERNEL_CRASHED(2),
-  DEVICE_DISCONNECTED(3);
+  DEVICE_DISCONNECTED(3),
+  APP_NOT_FOUND(4),
+  APP_COULD_NOT_START(5),
+  NO_SUCH_DEBUG_SESSION_RUNNING(6),
+  DEVICE_NOT_FOUND_CONNECTED(7),
+  FAILED_TO_START_APP(8);
 
   private final int value;
 
@@ -44,6 +49,16 @@ public enum KernelExceptionErrorCode implements org.apache.thrift.TEnum {
         return KERNEL_CRASHED;
       case 3:
         return DEVICE_DISCONNECTED;
+      case 4:
+        return APP_NOT_FOUND;
+      case 5:
+        return APP_COULD_NOT_START;
+      case 6:
+        return NO_SUCH_DEBUG_SESSION_RUNNING;
+      case 7:
+        return DEVICE_NOT_FOUND_CONNECTED;
+      case 8:
+        return FAILED_TO_START_APP;
       default:
         return null;
     }

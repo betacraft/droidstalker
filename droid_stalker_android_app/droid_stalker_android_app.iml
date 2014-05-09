@@ -28,6 +28,7 @@
     </content>
     <orderEntry type="jdk" jdkName="Maven Android API 16 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.5.8" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: android:android:4.1.2_r4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.googlecode.androidannotations:androidannotations:2.7" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.googlecode.androidannotations:androidannotations-api:2.7" level="project" />

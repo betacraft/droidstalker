@@ -14,5 +14,6 @@ struct ThreadInfoStruct {
     5: required i32 upTime,
     6: required i32 startTime,
     7: required bool isDaemon,
-    8: required i64 traceTime
+    8: required i64 traceTime,
+    9: optional string stackTrace
 }

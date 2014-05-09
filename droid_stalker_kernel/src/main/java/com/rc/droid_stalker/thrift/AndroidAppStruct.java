@@ -6,31 +6,15 @@
  */
 package com.rc.droid_stalker.thrift;
 
+import org.apache.thrift.TException;
+import org.apache.thrift.protocol.TProtocolException;
+import org.apache.thrift.protocol.TTupleProtocol;
 import org.apache.thrift.scheme.IScheme;
 import org.apache.thrift.scheme.SchemeFactory;
 import org.apache.thrift.scheme.StandardScheme;
-
 import org.apache.thrift.scheme.TupleScheme;
-import org.apache.thrift.protocol.TTupleProtocol;
-import org.apache.thrift.protocol.TProtocolException;
-import org.apache.thrift.EncodingUtils;
-import org.apache.thrift.TException;
-import org.apache.thrift.async.AsyncMethodCallback;
-import org.apache.thrift.server.AbstractNonblockingServer.*;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.EnumMap;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.EnumSet;
-import java.util.Collections;
-import java.util.BitSet;
-import java.nio.ByteBuffer;
-import java.util.Arrays;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.util.*;
 
 /**
  * Device Structure
@@ -48,7 +32,7 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
   }
 
   private String packageName; // required
-  private String activityName; // optional
+  private String activityName; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -112,13 +96,12 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
   }
 
   // isset id assignments
-  private _Fields optionals[] = {_Fields.ACTIVITY_NAME};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
     tmpMap.put(_Fields.PACKAGE_NAME, new org.apache.thrift.meta_data.FieldMetaData("packageName", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-    tmpMap.put(_Fields.ACTIVITY_NAME, new org.apache.thrift.meta_data.FieldMetaData("activityName", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+    tmpMap.put(_Fields.ACTIVITY_NAME, new org.apache.thrift.meta_data.FieldMetaData("activityName", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(AndroidAppStruct.class, metaDataMap);
@@ -128,10 +111,12 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
   }
 
   public AndroidAppStruct(
-    String packageName)
+    String packageName,
+    String activityName)
   {
     this();
     this.packageName = packageName;
+    this.activityName = activityName;
   }
 
   /**
@@ -344,16 +329,14 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
       sb.append(this.packageName);
     }
     first = false;
-    if (isSetActivityName()) {
-      if (!first) sb.append(", ");
-      sb.append("activityName:");
-      if (this.activityName == null) {
-        sb.append("null");
-      } else {
-        sb.append(this.activityName);
-      }
-      first = false;
+    if (!first) sb.append(", ");
+    sb.append("activityName:");
+    if (this.activityName == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.activityName);
     }
+    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -362,6 +345,10 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
     // check for required fields
     if (!isSetPackageName()) {
       throw new TProtocolException("Required field 'packageName' is unset! Struct:" + toString());
+    }
+
+    if (!isSetActivityName()) {
+      throw new TProtocolException("Required field 'activityName' is unset! Struct:" + toString());
     }
 
     // check for sub-struct validity
@@ -436,11 +423,9 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
         oprot.writeFieldEnd();
       }
       if (struct.activityName != null) {
-        if (struct.isSetActivityName()) {
-          oprot.writeFieldBegin(ACTIVITY_NAME_FIELD_DESC);
-          oprot.writeString(struct.activityName);
-          oprot.writeFieldEnd();
-        }
+        oprot.writeFieldBegin(ACTIVITY_NAME_FIELD_DESC);
+        oprot.writeString(struct.activityName);
+        oprot.writeFieldEnd();
       }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
@@ -460,14 +445,7 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
     public void write(org.apache.thrift.protocol.TProtocol prot, AndroidAppStruct struct) throws TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
       oprot.writeString(struct.packageName);
-      BitSet optionals = new BitSet();
-      if (struct.isSetActivityName()) {
-        optionals.set(0);
-      }
-      oprot.writeBitSet(optionals, 1);
-      if (struct.isSetActivityName()) {
-        oprot.writeString(struct.activityName);
-      }
+      oprot.writeString(struct.activityName);
     }
 
     @Override
@@ -475,11 +453,8 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
       TTupleProtocol iprot = (TTupleProtocol) prot;
       struct.packageName = iprot.readString();
       struct.setPackageNameIsSet(true);
-      BitSet incoming = iprot.readBitSet(1);
-      if (incoming.get(0)) {
-        struct.activityName = iprot.readString();
-        struct.setActivityNameIsSet(true);
-      }
+      struct.activityName = iprot.readString();
+      struct.setActivityNameIsSet(true);
     }
   }
 

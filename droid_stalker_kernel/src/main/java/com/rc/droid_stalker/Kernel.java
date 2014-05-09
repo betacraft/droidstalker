@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Kernel of the backend
+ * Kernel of the DroidStalker
  * Author: akshay deo (akshay@rainingclouds.com)
  * Date  : 4/23/14
  * Time  : 10:05 PM

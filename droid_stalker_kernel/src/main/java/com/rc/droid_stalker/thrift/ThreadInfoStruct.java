@@ -46,6 +46,7 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
   private static final org.apache.thrift.protocol.TField START_TIME_FIELD_DESC = new org.apache.thrift.protocol.TField("startTime", org.apache.thrift.protocol.TType.I32, (short)6);
   private static final org.apache.thrift.protocol.TField IS_DAEMON_FIELD_DESC = new org.apache.thrift.protocol.TField("isDaemon", org.apache.thrift.protocol.TType.BOOL, (short)7);
   private static final org.apache.thrift.protocol.TField TRACE_TIME_FIELD_DESC = new org.apache.thrift.protocol.TField("traceTime", org.apache.thrift.protocol.TType.I64, (short)8);
+  private static final org.apache.thrift.protocol.TField STACK_TRACE_FIELD_DESC = new org.apache.thrift.protocol.TField("stackTrace", org.apache.thrift.protocol.TType.STRING, (short)9);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -61,6 +62,7 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
   private int startTime; // required
   private boolean isDaemon; // required
   private long traceTime; // required
+  private String stackTrace; // optional
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
@@ -71,7 +73,8 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
     UP_TIME((short)5, "upTime"),
     START_TIME((short)6, "startTime"),
     IS_DAEMON((short)7, "isDaemon"),
-    TRACE_TIME((short)8, "traceTime");
+    TRACE_TIME((short)8, "traceTime"),
+    STACK_TRACE((short)9, "stackTrace");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -102,6 +105,8 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
           return IS_DAEMON;
         case 8: // TRACE_TIME
           return TRACE_TIME;
+        case 9: // STACK_TRACE
+          return STACK_TRACE;
         default:
           return null;
       }
@@ -150,6 +155,7 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
   private static final int __ISDAEMON_ISSET_ID = 5;
   private static final int __TRACETIME_ISSET_ID = 6;
   private byte __isset_bitfield = 0;
+  private _Fields optionals[] = {_Fields.STACK_TRACE};
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
@@ -169,6 +175,8 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.BOOL)));
     tmpMap.put(_Fields.TRACE_TIME, new org.apache.thrift.meta_data.FieldMetaData("traceTime", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I64)));
+    tmpMap.put(_Fields.STACK_TRACE, new org.apache.thrift.meta_data.FieldMetaData("stackTrace", org.apache.thrift.TFieldRequirementType.OPTIONAL, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(ThreadInfoStruct.class, metaDataMap);
   }
@@ -219,6 +227,9 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
     this.startTime = other.startTime;
     this.isDaemon = other.isDaemon;
     this.traceTime = other.traceTime;
+    if (other.isSetStackTrace()) {
+      this.stackTrace = other.stackTrace;
+    }
   }
 
   public ThreadInfoStruct deepCopy() {
@@ -242,6 +253,7 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
     this.isDaemon = false;
     setTraceTimeIsSet(false);
     this.traceTime = 0;
+    this.stackTrace = null;
   }
 
   public int getThreadId() {
@@ -421,6 +433,29 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
     __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __TRACETIME_ISSET_ID, value);
   }
 
+  public String getStackTrace() {
+    return this.stackTrace;
+  }
+
+  public void setStackTrace(String stackTrace) {
+    this.stackTrace = stackTrace;
+  }
+
+  public void unsetStackTrace() {
+    this.stackTrace = null;
+  }
+
+  /** Returns true if field stackTrace is set (has been assigned a value) and false otherwise */
+  public boolean isSetStackTrace() {
+    return this.stackTrace != null;
+  }
+
+  public void setStackTraceIsSet(boolean value) {
+    if (!value) {
+      this.stackTrace = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case THREAD_ID:
@@ -487,6 +522,14 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
       }
       break;
 
+    case STACK_TRACE:
+      if (value == null) {
+        unsetStackTrace();
+      } else {
+        setStackTrace((String)value);
+      }
+      break;
+
     }
   }
 
@@ -516,6 +559,9 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
     case TRACE_TIME:
       return Long.valueOf(getTraceTime());
 
+    case STACK_TRACE:
+      return getStackTrace();
+
     }
     throw new IllegalStateException();
   }
@@ -543,6 +589,8 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
       return isSetIsDaemon();
     case TRACE_TIME:
       return isSetTraceTime();
+    case STACK_TRACE:
+      return isSetStackTrace();
     }
     throw new IllegalStateException();
   }
@@ -629,6 +677,15 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
       if (!(this_present_traceTime && that_present_traceTime))
         return false;
       if (this.traceTime != that.traceTime)
+        return false;
+    }
+
+    boolean this_present_stackTrace = true && this.isSetStackTrace();
+    boolean that_present_stackTrace = true && that.isSetStackTrace();
+    if (this_present_stackTrace || that_present_stackTrace) {
+      if (!(this_present_stackTrace && that_present_stackTrace))
+        return false;
+      if (!this.stackTrace.equals(that.stackTrace))
         return false;
     }
 
@@ -728,6 +785,16 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
         return lastComparison;
       }
     }
+    lastComparison = Boolean.valueOf(isSetStackTrace()).compareTo(other.isSetStackTrace());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetStackTrace()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.stackTrace, other.stackTrace);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     return 0;
   }
 
@@ -783,6 +850,16 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
     sb.append("traceTime:");
     sb.append(this.traceTime);
     first = false;
+    if (isSetStackTrace()) {
+      if (!first) sb.append(", ");
+      sb.append("stackTrace:");
+      if (this.stackTrace == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.stackTrace);
+      }
+      first = false;
+    }
     sb.append(")");
     return sb.toString();
   }
@@ -924,6 +1001,14 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 9: // STACK_TRACE
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.stackTrace = iprot.readString();
+              struct.setStackTraceIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -963,6 +1048,13 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
       oprot.writeFieldBegin(TRACE_TIME_FIELD_DESC);
       oprot.writeI64(struct.traceTime);
       oprot.writeFieldEnd();
+      if (struct.stackTrace != null) {
+        if (struct.isSetStackTrace()) {
+          oprot.writeFieldBegin(STACK_TRACE_FIELD_DESC);
+          oprot.writeString(struct.stackTrace);
+          oprot.writeFieldEnd();
+        }
+      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -988,6 +1080,14 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
       oprot.writeI32(struct.startTime);
       oprot.writeBool(struct.isDaemon);
       oprot.writeI64(struct.traceTime);
+      BitSet optionals = new BitSet();
+      if (struct.isSetStackTrace()) {
+        optionals.set(0);
+      }
+      oprot.writeBitSet(optionals, 1);
+      if (struct.isSetStackTrace()) {
+        oprot.writeString(struct.stackTrace);
+      }
     }
 
     @Override
@@ -1009,6 +1109,11 @@ public class ThreadInfoStruct implements org.apache.thrift.TBase<ThreadInfoStruc
       struct.setIsDaemonIsSet(true);
       struct.traceTime = iprot.readI64();
       struct.setTraceTimeIsSet(true);
+      BitSet incoming = iprot.readBitSet(1);
+      if (incoming.get(0)) {
+        struct.stackTrace = iprot.readString();
+        struct.setStackTraceIsSet(true);
+      }
     }
   }
 

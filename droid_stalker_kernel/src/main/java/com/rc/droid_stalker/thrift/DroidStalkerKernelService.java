@@ -6,31 +6,19 @@
  */
 package com.rc.droid_stalker.thrift;
 
-import org.apache.thrift.scheme.IScheme;
-import org.apache.thrift.scheme.SchemeFactory;
-import org.apache.thrift.scheme.StandardScheme;
-
-import org.apache.thrift.scheme.TupleScheme;
-import org.apache.thrift.protocol.TTupleProtocol;
-import org.apache.thrift.protocol.TProtocolException;
 import org.apache.thrift.EncodingUtils;
 import org.apache.thrift.TException;
 import org.apache.thrift.async.AsyncMethodCallback;
-import org.apache.thrift.server.AbstractNonblockingServer.*;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.EnumMap;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.EnumSet;
-import java.util.Collections;
-import java.util.BitSet;
-import java.nio.ByteBuffer;
-import java.util.Arrays;
+import org.apache.thrift.protocol.TTupleProtocol;
+import org.apache.thrift.scheme.IScheme;
+import org.apache.thrift.scheme.SchemeFactory;
+import org.apache.thrift.scheme.StandardScheme;
+import org.apache.thrift.scheme.TupleScheme;
+import org.apache.thrift.server.AbstractNonblockingServer.AsyncFrameBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.*;
 
 public class DroidStalkerKernelService {
 
@@ -52,9 +40,25 @@ public class DroidStalkerKernelService {
     public boolean isRunning() throws DroidStalkerKernelException, TException;
 
     /**
+     * Start app for debug
+     * Returns debug session id
+     * 
+     * @param device
+     * @param app
+     */
+    public String startDebugSessionFor(DeviceStruct device, AndroidAppStruct app) throws DroidStalkerKernelException, TException;
+
+    /**
      * Method to start session
      */
     public Set<DeviceStruct> getDevices() throws DroidStalkerKernelException, TException;
+
+    /**
+     * Method to get all running threads in a debug session
+     * 
+     * @param debugSession
+     */
+    public Set<ThreadInfoStruct> getThreadsRunningIn(String debugSession) throws DroidStalkerKernelException, TException;
 
   }
 
@@ -64,7 +68,11 @@ public class DroidStalkerKernelService {
 
     public void isRunning(AsyncMethodCallback resultHandler) throws TException;
 
+    public void startDebugSessionFor(DeviceStruct device, AndroidAppStruct app, AsyncMethodCallback resultHandler) throws TException;
+
     public void getDevices(AsyncMethodCallback resultHandler) throws TException;
+
+    public void getThreadsRunningIn(String debugSession, AsyncMethodCallback resultHandler) throws TException;
 
   }
 
@@ -136,6 +144,33 @@ public class DroidStalkerKernelService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "isRunning failed: unknown result");
     }
 
+    public String startDebugSessionFor(DeviceStruct device, AndroidAppStruct app) throws DroidStalkerKernelException, TException
+    {
+      send_startDebugSessionFor(device, app);
+      return recv_startDebugSessionFor();
+    }
+
+    public void send_startDebugSessionFor(DeviceStruct device, AndroidAppStruct app) throws TException
+    {
+      startDebugSessionFor_args args = new startDebugSessionFor_args();
+      args.setDevice(device);
+      args.setApp(app);
+      sendBase("startDebugSessionFor", args);
+    }
+
+    public String recv_startDebugSessionFor() throws DroidStalkerKernelException, TException
+    {
+      startDebugSessionFor_result result = new startDebugSessionFor_result();
+      receiveBase(result, "startDebugSessionFor");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      if (result.kernelException != null) {
+        throw result.kernelException;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "startDebugSessionFor failed: unknown result");
+    }
+
     public Set<DeviceStruct> getDevices() throws DroidStalkerKernelException, TException
     {
       send_getDevices();
@@ -159,6 +194,32 @@ public class DroidStalkerKernelService {
         throw result.kernelException;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getDevices failed: unknown result");
+    }
+
+    public Set<ThreadInfoStruct> getThreadsRunningIn(String debugSession) throws DroidStalkerKernelException, TException
+    {
+      send_getThreadsRunningIn(debugSession);
+      return recv_getThreadsRunningIn();
+    }
+
+    public void send_getThreadsRunningIn(String debugSession) throws TException
+    {
+      getThreadsRunningIn_args args = new getThreadsRunningIn_args();
+      args.setDebugSession(debugSession);
+      sendBase("getThreadsRunningIn", args);
+    }
+
+    public Set<ThreadInfoStruct> recv_getThreadsRunningIn() throws DroidStalkerKernelException, TException
+    {
+      getThreadsRunningIn_result result = new getThreadsRunningIn_result();
+      receiveBase(result, "getThreadsRunningIn");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      if (result.kernelException != null) {
+        throw result.kernelException;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getThreadsRunningIn failed: unknown result");
     }
 
   }
@@ -240,6 +301,41 @@ public class DroidStalkerKernelService {
       }
     }
 
+    public void startDebugSessionFor(DeviceStruct device, AndroidAppStruct app, AsyncMethodCallback resultHandler) throws TException {
+      checkReady();
+      startDebugSessionFor_call method_call = new startDebugSessionFor_call(device, app, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class startDebugSessionFor_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private DeviceStruct device;
+      private AndroidAppStruct app;
+      public startDebugSessionFor_call(DeviceStruct device, AndroidAppStruct app, AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.device = device;
+        this.app = app;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("startDebugSessionFor", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        startDebugSessionFor_args args = new startDebugSessionFor_args();
+        args.setDevice(device);
+        args.setApp(app);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public String getResult() throws DroidStalkerKernelException, TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_startDebugSessionFor();
+      }
+    }
+
     public void getDevices(AsyncMethodCallback resultHandler) throws TException {
       checkReady();
       getDevices_call method_call = new getDevices_call(resultHandler, this, ___protocolFactory, ___transport);
@@ -269,6 +365,38 @@ public class DroidStalkerKernelService {
       }
     }
 
+    public void getThreadsRunningIn(String debugSession, AsyncMethodCallback resultHandler) throws TException {
+      checkReady();
+      getThreadsRunningIn_call method_call = new getThreadsRunningIn_call(debugSession, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class getThreadsRunningIn_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String debugSession;
+      public getThreadsRunningIn_call(String debugSession, AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.debugSession = debugSession;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getThreadsRunningIn", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        getThreadsRunningIn_args args = new getThreadsRunningIn_args();
+        args.setDebugSession(debugSession);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public Set<ThreadInfoStruct> getResult() throws DroidStalkerKernelException, TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_getThreadsRunningIn();
+      }
+    }
+
   }
 
   public static class Processor<I extends Iface> extends org.apache.thrift.TBaseProcessor<I> implements org.apache.thrift.TProcessor {
@@ -284,7 +412,9 @@ public class DroidStalkerKernelService {
     private static <I extends Iface> Map<String,  org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> getProcessMap(Map<String,  org.apache.thrift.ProcessFunction<I, ? extends  org.apache.thrift.TBase>> processMap) {
       processMap.put("boot", new boot());
       processMap.put("isRunning", new isRunning());
+      processMap.put("startDebugSessionFor", new startDebugSessionFor());
       processMap.put("getDevices", new getDevices());
+      processMap.put("getThreadsRunningIn", new getThreadsRunningIn());
       return processMap;
     }
 
@@ -337,6 +467,30 @@ public class DroidStalkerKernelService {
       }
     }
 
+    public static class startDebugSessionFor<I extends Iface> extends org.apache.thrift.ProcessFunction<I, startDebugSessionFor_args> {
+      public startDebugSessionFor() {
+        super("startDebugSessionFor");
+      }
+
+      public startDebugSessionFor_args getEmptyArgsInstance() {
+        return new startDebugSessionFor_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public startDebugSessionFor_result getResult(I iface, startDebugSessionFor_args args) throws TException {
+        startDebugSessionFor_result result = new startDebugSessionFor_result();
+        try {
+          result.success = iface.startDebugSessionFor(args.device, args.app);
+        } catch (DroidStalkerKernelException kernelException) {
+          result.kernelException = kernelException;
+        }
+        return result;
+      }
+    }
+
     public static class getDevices<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getDevices_args> {
       public getDevices() {
         super("getDevices");
@@ -361,6 +515,30 @@ public class DroidStalkerKernelService {
       }
     }
 
+    public static class getThreadsRunningIn<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getThreadsRunningIn_args> {
+      public getThreadsRunningIn() {
+        super("getThreadsRunningIn");
+      }
+
+      public getThreadsRunningIn_args getEmptyArgsInstance() {
+        return new getThreadsRunningIn_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public getThreadsRunningIn_result getResult(I iface, getThreadsRunningIn_args args) throws TException {
+        getThreadsRunningIn_result result = new getThreadsRunningIn_result();
+        try {
+          result.success = iface.getThreadsRunningIn(args.debugSession);
+        } catch (DroidStalkerKernelException kernelException) {
+          result.kernelException = kernelException;
+        }
+        return result;
+      }
+    }
+
   }
 
   public static class AsyncProcessor<I extends AsyncIface> extends org.apache.thrift.TBaseAsyncProcessor<I> {
@@ -376,7 +554,9 @@ public class DroidStalkerKernelService {
     private static <I extends AsyncIface> Map<String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase,?>> getProcessMap(Map<String,  org.apache.thrift.AsyncProcessFunction<I, ? extends  org.apache.thrift.TBase, ?>> processMap) {
       processMap.put("boot", new boot());
       processMap.put("isRunning", new isRunning());
+      processMap.put("startDebugSessionFor", new startDebugSessionFor());
       processMap.put("getDevices", new getDevices());
+      processMap.put("getThreadsRunningIn", new getThreadsRunningIn());
       return processMap;
     }
 
@@ -494,6 +674,63 @@ public class DroidStalkerKernelService {
       }
     }
 
+    public static class startDebugSessionFor<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, startDebugSessionFor_args, String> {
+      public startDebugSessionFor() {
+        super("startDebugSessionFor");
+      }
+
+      public startDebugSessionFor_args getEmptyArgsInstance() {
+        return new startDebugSessionFor_args();
+      }
+
+      public AsyncMethodCallback<String> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<String>() { 
+          public void onComplete(String o) {
+            startDebugSessionFor_result result = new startDebugSessionFor_result();
+            result.success = o;
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            startDebugSessionFor_result result = new startDebugSessionFor_result();
+            if (e instanceof DroidStalkerKernelException) {
+                        result.kernelException = (DroidStalkerKernelException) e;
+                        result.setKernelExceptionIsSet(true);
+                        msg = result;
+            }
+             else 
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, startDebugSessionFor_args args, AsyncMethodCallback<String> resultHandler) throws TException {
+        iface.startDebugSessionFor(args.device, args.app,resultHandler);
+      }
+    }
+
     public static class getDevices<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, getDevices_args, Set<DeviceStruct>> {
       public getDevices() {
         super("getDevices");
@@ -548,6 +785,63 @@ public class DroidStalkerKernelService {
 
       public void start(I iface, getDevices_args args, AsyncMethodCallback<Set<DeviceStruct>> resultHandler) throws TException {
         iface.getDevices(resultHandler);
+      }
+    }
+
+    public static class getThreadsRunningIn<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, getThreadsRunningIn_args, Set<ThreadInfoStruct>> {
+      public getThreadsRunningIn() {
+        super("getThreadsRunningIn");
+      }
+
+      public getThreadsRunningIn_args getEmptyArgsInstance() {
+        return new getThreadsRunningIn_args();
+      }
+
+      public AsyncMethodCallback<Set<ThreadInfoStruct>> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<Set<ThreadInfoStruct>>() {
+          public void onComplete(Set<ThreadInfoStruct> o) {
+            getThreadsRunningIn_result result = new getThreadsRunningIn_result();
+            result.success = o;
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            getThreadsRunningIn_result result = new getThreadsRunningIn_result();
+            if (e instanceof DroidStalkerKernelException) {
+                        result.kernelException = (DroidStalkerKernelException) e;
+                        result.setKernelExceptionIsSet(true);
+                        msg = result;
+            }
+             else 
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, getThreadsRunningIn_args args, AsyncMethodCallback<Set<ThreadInfoStruct>> resultHandler) throws TException {
+        iface.getThreadsRunningIn(args.debugSession,resultHandler);
       }
     }
 
@@ -1953,6 +2247,918 @@ public class DroidStalkerKernelService {
 
   }
 
+  public static class startDebugSessionFor_args implements org.apache.thrift.TBase<startDebugSessionFor_args, startDebugSessionFor_args._Fields>, java.io.Serializable, Cloneable, Comparable<startDebugSessionFor_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("startDebugSessionFor_args");
+
+    private static final org.apache.thrift.protocol.TField DEVICE_FIELD_DESC = new org.apache.thrift.protocol.TField("device", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+    private static final org.apache.thrift.protocol.TField APP_FIELD_DESC = new org.apache.thrift.protocol.TField("app", org.apache.thrift.protocol.TType.STRUCT, (short)2);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new startDebugSessionFor_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new startDebugSessionFor_argsTupleSchemeFactory());
+    }
+
+    private DeviceStruct device; // required
+    private AndroidAppStruct app; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      DEVICE((short)1, "device"),
+      APP((short)2, "app");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // DEVICE
+            return DEVICE;
+          case 2: // APP
+            return APP;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.DEVICE, new org.apache.thrift.meta_data.FieldMetaData("device", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, DeviceStruct.class)));
+      tmpMap.put(_Fields.APP, new org.apache.thrift.meta_data.FieldMetaData("app", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, AndroidAppStruct.class)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(startDebugSessionFor_args.class, metaDataMap);
+    }
+
+    public startDebugSessionFor_args() {
+    }
+
+    public startDebugSessionFor_args(
+      DeviceStruct device,
+      AndroidAppStruct app)
+    {
+      this();
+      this.device = device;
+      this.app = app;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public startDebugSessionFor_args(startDebugSessionFor_args other) {
+      if (other.isSetDevice()) {
+        this.device = new DeviceStruct(other.device);
+      }
+      if (other.isSetApp()) {
+        this.app = new AndroidAppStruct(other.app);
+      }
+    }
+
+    public startDebugSessionFor_args deepCopy() {
+      return new startDebugSessionFor_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.device = null;
+      this.app = null;
+    }
+
+    public DeviceStruct getDevice() {
+      return this.device;
+    }
+
+    public void setDevice(DeviceStruct device) {
+      this.device = device;
+    }
+
+    public void unsetDevice() {
+      this.device = null;
+    }
+
+    /** Returns true if field device is set (has been assigned a value) and false otherwise */
+    public boolean isSetDevice() {
+      return this.device != null;
+    }
+
+    public void setDeviceIsSet(boolean value) {
+      if (!value) {
+        this.device = null;
+      }
+    }
+
+    public AndroidAppStruct getApp() {
+      return this.app;
+    }
+
+    public void setApp(AndroidAppStruct app) {
+      this.app = app;
+    }
+
+    public void unsetApp() {
+      this.app = null;
+    }
+
+    /** Returns true if field app is set (has been assigned a value) and false otherwise */
+    public boolean isSetApp() {
+      return this.app != null;
+    }
+
+    public void setAppIsSet(boolean value) {
+      if (!value) {
+        this.app = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case DEVICE:
+        if (value == null) {
+          unsetDevice();
+        } else {
+          setDevice((DeviceStruct)value);
+        }
+        break;
+
+      case APP:
+        if (value == null) {
+          unsetApp();
+        } else {
+          setApp((AndroidAppStruct)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case DEVICE:
+        return getDevice();
+
+      case APP:
+        return getApp();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case DEVICE:
+        return isSetDevice();
+      case APP:
+        return isSetApp();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof startDebugSessionFor_args)
+        return this.equals((startDebugSessionFor_args)that);
+      return false;
+    }
+
+    public boolean equals(startDebugSessionFor_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_device = true && this.isSetDevice();
+      boolean that_present_device = true && that.isSetDevice();
+      if (this_present_device || that_present_device) {
+        if (!(this_present_device && that_present_device))
+          return false;
+        if (!this.device.equals(that.device))
+          return false;
+      }
+
+      boolean this_present_app = true && this.isSetApp();
+      boolean that_present_app = true && that.isSetApp();
+      if (this_present_app || that_present_app) {
+        if (!(this_present_app && that_present_app))
+          return false;
+        if (!this.app.equals(that.app))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    @Override
+    public int compareTo(startDebugSessionFor_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetDevice()).compareTo(other.isSetDevice());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetDevice()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.device, other.device);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetApp()).compareTo(other.isSetApp());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetApp()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.app, other.app);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("startDebugSessionFor_args(");
+      boolean first = true;
+
+      sb.append("device:");
+      if (this.device == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.device);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("app:");
+      if (this.app == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.app);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (device != null) {
+        device.validate();
+      }
+      if (app != null) {
+        app.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class startDebugSessionFor_argsStandardSchemeFactory implements SchemeFactory {
+      public startDebugSessionFor_argsStandardScheme getScheme() {
+        return new startDebugSessionFor_argsStandardScheme();
+      }
+    }
+
+    private static class startDebugSessionFor_argsStandardScheme extends StandardScheme<startDebugSessionFor_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, startDebugSessionFor_args struct) throws TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // DEVICE
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.device = new DeviceStruct();
+                struct.device.read(iprot);
+                struct.setDeviceIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // APP
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.app = new AndroidAppStruct();
+                struct.app.read(iprot);
+                struct.setAppIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, startDebugSessionFor_args struct) throws TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.device != null) {
+          oprot.writeFieldBegin(DEVICE_FIELD_DESC);
+          struct.device.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.app != null) {
+          oprot.writeFieldBegin(APP_FIELD_DESC);
+          struct.app.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class startDebugSessionFor_argsTupleSchemeFactory implements SchemeFactory {
+      public startDebugSessionFor_argsTupleScheme getScheme() {
+        return new startDebugSessionFor_argsTupleScheme();
+      }
+    }
+
+    private static class startDebugSessionFor_argsTupleScheme extends TupleScheme<startDebugSessionFor_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, startDebugSessionFor_args struct) throws TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetDevice()) {
+          optionals.set(0);
+        }
+        if (struct.isSetApp()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetDevice()) {
+          struct.device.write(oprot);
+        }
+        if (struct.isSetApp()) {
+          struct.app.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, startDebugSessionFor_args struct) throws TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.device = new DeviceStruct();
+          struct.device.read(iprot);
+          struct.setDeviceIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.app = new AndroidAppStruct();
+          struct.app.read(iprot);
+          struct.setAppIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class startDebugSessionFor_result implements org.apache.thrift.TBase<startDebugSessionFor_result, startDebugSessionFor_result._Fields>, java.io.Serializable, Cloneable, Comparable<startDebugSessionFor_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("startDebugSessionFor_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRING, (short)0);
+    private static final org.apache.thrift.protocol.TField KERNEL_EXCEPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("kernelException", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new startDebugSessionFor_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new startDebugSessionFor_resultTupleSchemeFactory());
+    }
+
+    private String success; // required
+    private DroidStalkerKernelException kernelException; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success"),
+      KERNEL_EXCEPTION((short)1, "kernelException");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          case 1: // KERNEL_EXCEPTION
+            return KERNEL_EXCEPTION;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.KERNEL_EXCEPTION, new org.apache.thrift.meta_data.FieldMetaData("kernelException", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(startDebugSessionFor_result.class, metaDataMap);
+    }
+
+    public startDebugSessionFor_result() {
+    }
+
+    public startDebugSessionFor_result(
+      String success,
+      DroidStalkerKernelException kernelException)
+    {
+      this();
+      this.success = success;
+      this.kernelException = kernelException;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public startDebugSessionFor_result(startDebugSessionFor_result other) {
+      if (other.isSetSuccess()) {
+        this.success = other.success;
+      }
+      if (other.isSetKernelException()) {
+        this.kernelException = new DroidStalkerKernelException(other.kernelException);
+      }
+    }
+
+    public startDebugSessionFor_result deepCopy() {
+      return new startDebugSessionFor_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+      this.kernelException = null;
+    }
+
+    public String getSuccess() {
+      return this.success;
+    }
+
+    public void setSuccess(String success) {
+      this.success = success;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public DroidStalkerKernelException getKernelException() {
+      return this.kernelException;
+    }
+
+    public void setKernelException(DroidStalkerKernelException kernelException) {
+      this.kernelException = kernelException;
+    }
+
+    public void unsetKernelException() {
+      this.kernelException = null;
+    }
+
+    /** Returns true if field kernelException is set (has been assigned a value) and false otherwise */
+    public boolean isSetKernelException() {
+      return this.kernelException != null;
+    }
+
+    public void setKernelExceptionIsSet(boolean value) {
+      if (!value) {
+        this.kernelException = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((String)value);
+        }
+        break;
+
+      case KERNEL_EXCEPTION:
+        if (value == null) {
+          unsetKernelException();
+        } else {
+          setKernelException((DroidStalkerKernelException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      case KERNEL_EXCEPTION:
+        return getKernelException();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      case KERNEL_EXCEPTION:
+        return isSetKernelException();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof startDebugSessionFor_result)
+        return this.equals((startDebugSessionFor_result)that);
+      return false;
+    }
+
+    public boolean equals(startDebugSessionFor_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      boolean this_present_kernelException = true && this.isSetKernelException();
+      boolean that_present_kernelException = true && that.isSetKernelException();
+      if (this_present_kernelException || that_present_kernelException) {
+        if (!(this_present_kernelException && that_present_kernelException))
+          return false;
+        if (!this.kernelException.equals(that.kernelException))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    @Override
+    public int compareTo(startDebugSessionFor_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(other.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetKernelException()).compareTo(other.isSetKernelException());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetKernelException()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.kernelException, other.kernelException);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("startDebugSessionFor_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("kernelException:");
+      if (this.kernelException == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.kernelException);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class startDebugSessionFor_resultStandardSchemeFactory implements SchemeFactory {
+      public startDebugSessionFor_resultStandardScheme getScheme() {
+        return new startDebugSessionFor_resultStandardScheme();
+      }
+    }
+
+    private static class startDebugSessionFor_resultStandardScheme extends StandardScheme<startDebugSessionFor_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, startDebugSessionFor_result struct) throws TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.success = iprot.readString();
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 1: // KERNEL_EXCEPTION
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.kernelException = new DroidStalkerKernelException();
+                struct.kernelException.read(iprot);
+                struct.setKernelExceptionIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, startDebugSessionFor_result struct) throws TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          oprot.writeString(struct.success);
+          oprot.writeFieldEnd();
+        }
+        if (struct.kernelException != null) {
+          oprot.writeFieldBegin(KERNEL_EXCEPTION_FIELD_DESC);
+          struct.kernelException.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class startDebugSessionFor_resultTupleSchemeFactory implements SchemeFactory {
+      public startDebugSessionFor_resultTupleScheme getScheme() {
+        return new startDebugSessionFor_resultTupleScheme();
+      }
+    }
+
+    private static class startDebugSessionFor_resultTupleScheme extends TupleScheme<startDebugSessionFor_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, startDebugSessionFor_result struct) throws TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        if (struct.isSetKernelException()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetSuccess()) {
+          oprot.writeString(struct.success);
+        }
+        if (struct.isSetKernelException()) {
+          struct.kernelException.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, startDebugSessionFor_result struct) throws TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.success = iprot.readString();
+          struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.kernelException = new DroidStalkerKernelException();
+          struct.kernelException.read(iprot);
+          struct.setKernelExceptionIsSet(true);
+        }
+      }
+    }
+
+  }
+
   public static class getDevices_args implements org.apache.thrift.TBase<getDevices_args, getDevices_args._Fields>, java.io.Serializable, Cloneable, Comparable<getDevices_args>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getDevices_args");
 
@@ -2689,6 +3895,863 @@ public class DroidStalkerKernelService {
               _elem7 = new DeviceStruct();
               _elem7.read(iprot);
               struct.success.add(_elem7);
+            }
+          }
+          struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.kernelException = new DroidStalkerKernelException();
+          struct.kernelException.read(iprot);
+          struct.setKernelExceptionIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class getThreadsRunningIn_args implements org.apache.thrift.TBase<getThreadsRunningIn_args, getThreadsRunningIn_args._Fields>, java.io.Serializable, Cloneable, Comparable<getThreadsRunningIn_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getThreadsRunningIn_args");
+
+    private static final org.apache.thrift.protocol.TField DEBUG_SESSION_FIELD_DESC = new org.apache.thrift.protocol.TField("debugSession", org.apache.thrift.protocol.TType.STRING, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new getThreadsRunningIn_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getThreadsRunningIn_argsTupleSchemeFactory());
+    }
+
+    private String debugSession; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      DEBUG_SESSION((short)1, "debugSession");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // DEBUG_SESSION
+            return DEBUG_SESSION;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.DEBUG_SESSION, new org.apache.thrift.meta_data.FieldMetaData("debugSession", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getThreadsRunningIn_args.class, metaDataMap);
+    }
+
+    public getThreadsRunningIn_args() {
+    }
+
+    public getThreadsRunningIn_args(
+      String debugSession)
+    {
+      this();
+      this.debugSession = debugSession;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getThreadsRunningIn_args(getThreadsRunningIn_args other) {
+      if (other.isSetDebugSession()) {
+        this.debugSession = other.debugSession;
+      }
+    }
+
+    public getThreadsRunningIn_args deepCopy() {
+      return new getThreadsRunningIn_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.debugSession = null;
+    }
+
+    public String getDebugSession() {
+      return this.debugSession;
+    }
+
+    public void setDebugSession(String debugSession) {
+      this.debugSession = debugSession;
+    }
+
+    public void unsetDebugSession() {
+      this.debugSession = null;
+    }
+
+    /** Returns true if field debugSession is set (has been assigned a value) and false otherwise */
+    public boolean isSetDebugSession() {
+      return this.debugSession != null;
+    }
+
+    public void setDebugSessionIsSet(boolean value) {
+      if (!value) {
+        this.debugSession = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case DEBUG_SESSION:
+        if (value == null) {
+          unsetDebugSession();
+        } else {
+          setDebugSession((String)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case DEBUG_SESSION:
+        return getDebugSession();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case DEBUG_SESSION:
+        return isSetDebugSession();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getThreadsRunningIn_args)
+        return this.equals((getThreadsRunningIn_args)that);
+      return false;
+    }
+
+    public boolean equals(getThreadsRunningIn_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_debugSession = true && this.isSetDebugSession();
+      boolean that_present_debugSession = true && that.isSetDebugSession();
+      if (this_present_debugSession || that_present_debugSession) {
+        if (!(this_present_debugSession && that_present_debugSession))
+          return false;
+        if (!this.debugSession.equals(that.debugSession))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    @Override
+    public int compareTo(getThreadsRunningIn_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetDebugSession()).compareTo(other.isSetDebugSession());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetDebugSession()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.debugSession, other.debugSession);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getThreadsRunningIn_args(");
+      boolean first = true;
+
+      sb.append("debugSession:");
+      if (this.debugSession == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.debugSession);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class getThreadsRunningIn_argsStandardSchemeFactory implements SchemeFactory {
+      public getThreadsRunningIn_argsStandardScheme getScheme() {
+        return new getThreadsRunningIn_argsStandardScheme();
+      }
+    }
+
+    private static class getThreadsRunningIn_argsStandardScheme extends StandardScheme<getThreadsRunningIn_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getThreadsRunningIn_args struct) throws TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // DEBUG_SESSION
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.debugSession = iprot.readString();
+                struct.setDebugSessionIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getThreadsRunningIn_args struct) throws TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.debugSession != null) {
+          oprot.writeFieldBegin(DEBUG_SESSION_FIELD_DESC);
+          oprot.writeString(struct.debugSession);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class getThreadsRunningIn_argsTupleSchemeFactory implements SchemeFactory {
+      public getThreadsRunningIn_argsTupleScheme getScheme() {
+        return new getThreadsRunningIn_argsTupleScheme();
+      }
+    }
+
+    private static class getThreadsRunningIn_argsTupleScheme extends TupleScheme<getThreadsRunningIn_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, getThreadsRunningIn_args struct) throws TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetDebugSession()) {
+          optionals.set(0);
+        }
+        oprot.writeBitSet(optionals, 1);
+        if (struct.isSetDebugSession()) {
+          oprot.writeString(struct.debugSession);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, getThreadsRunningIn_args struct) throws TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(1);
+        if (incoming.get(0)) {
+          struct.debugSession = iprot.readString();
+          struct.setDebugSessionIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class getThreadsRunningIn_result implements org.apache.thrift.TBase<getThreadsRunningIn_result, getThreadsRunningIn_result._Fields>, java.io.Serializable, Cloneable, Comparable<getThreadsRunningIn_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getThreadsRunningIn_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.SET, (short)0);
+    private static final org.apache.thrift.protocol.TField KERNEL_EXCEPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("kernelException", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new getThreadsRunningIn_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getThreadsRunningIn_resultTupleSchemeFactory());
+    }
+
+    private Set<ThreadInfoStruct> success; // required
+    private DroidStalkerKernelException kernelException; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success"),
+      KERNEL_EXCEPTION((short)1, "kernelException");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          case 1: // KERNEL_EXCEPTION
+            return KERNEL_EXCEPTION;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.SetMetaData(org.apache.thrift.protocol.TType.SET, 
+              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, ThreadInfoStruct.class))));
+      tmpMap.put(_Fields.KERNEL_EXCEPTION, new org.apache.thrift.meta_data.FieldMetaData("kernelException", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getThreadsRunningIn_result.class, metaDataMap);
+    }
+
+    public getThreadsRunningIn_result() {
+    }
+
+    public getThreadsRunningIn_result(
+      Set<ThreadInfoStruct> success,
+      DroidStalkerKernelException kernelException)
+    {
+      this();
+      this.success = success;
+      this.kernelException = kernelException;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getThreadsRunningIn_result(getThreadsRunningIn_result other) {
+      if (other.isSetSuccess()) {
+        Set<ThreadInfoStruct> __this__success = new HashSet<ThreadInfoStruct>(other.success.size());
+        for (ThreadInfoStruct other_element : other.success) {
+          __this__success.add(new ThreadInfoStruct(other_element));
+        }
+        this.success = __this__success;
+      }
+      if (other.isSetKernelException()) {
+        this.kernelException = new DroidStalkerKernelException(other.kernelException);
+      }
+    }
+
+    public getThreadsRunningIn_result deepCopy() {
+      return new getThreadsRunningIn_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+      this.kernelException = null;
+    }
+
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public java.util.Iterator<ThreadInfoStruct> getSuccessIterator() {
+      return (this.success == null) ? null : this.success.iterator();
+    }
+
+    public void addToSuccess(ThreadInfoStruct elem) {
+      if (this.success == null) {
+        this.success = new HashSet<ThreadInfoStruct>();
+      }
+      this.success.add(elem);
+    }
+
+    public Set<ThreadInfoStruct> getSuccess() {
+      return this.success;
+    }
+
+    public void setSuccess(Set<ThreadInfoStruct> success) {
+      this.success = success;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public DroidStalkerKernelException getKernelException() {
+      return this.kernelException;
+    }
+
+    public void setKernelException(DroidStalkerKernelException kernelException) {
+      this.kernelException = kernelException;
+    }
+
+    public void unsetKernelException() {
+      this.kernelException = null;
+    }
+
+    /** Returns true if field kernelException is set (has been assigned a value) and false otherwise */
+    public boolean isSetKernelException() {
+      return this.kernelException != null;
+    }
+
+    public void setKernelExceptionIsSet(boolean value) {
+      if (!value) {
+        this.kernelException = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((Set<ThreadInfoStruct>)value);
+        }
+        break;
+
+      case KERNEL_EXCEPTION:
+        if (value == null) {
+          unsetKernelException();
+        } else {
+          setKernelException((DroidStalkerKernelException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      case KERNEL_EXCEPTION:
+        return getKernelException();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      case KERNEL_EXCEPTION:
+        return isSetKernelException();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getThreadsRunningIn_result)
+        return this.equals((getThreadsRunningIn_result)that);
+      return false;
+    }
+
+    public boolean equals(getThreadsRunningIn_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      boolean this_present_kernelException = true && this.isSetKernelException();
+      boolean that_present_kernelException = true && that.isSetKernelException();
+      if (this_present_kernelException || that_present_kernelException) {
+        if (!(this_present_kernelException && that_present_kernelException))
+          return false;
+        if (!this.kernelException.equals(that.kernelException))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    @Override
+    public int compareTo(getThreadsRunningIn_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(other.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetKernelException()).compareTo(other.isSetKernelException());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetKernelException()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.kernelException, other.kernelException);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getThreadsRunningIn_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("kernelException:");
+      if (this.kernelException == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.kernelException);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class getThreadsRunningIn_resultStandardSchemeFactory implements SchemeFactory {
+      public getThreadsRunningIn_resultStandardScheme getScheme() {
+        return new getThreadsRunningIn_resultStandardScheme();
+      }
+    }
+
+    private static class getThreadsRunningIn_resultStandardScheme extends StandardScheme<getThreadsRunningIn_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getThreadsRunningIn_result struct) throws TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.SET) {
+                {
+                  org.apache.thrift.protocol.TSet _set8 = iprot.readSetBegin();
+                  struct.success = new HashSet<ThreadInfoStruct>(2*_set8.size);
+                  for (int _i9 = 0; _i9 < _set8.size; ++_i9)
+                  {
+                    ThreadInfoStruct _elem10;
+                    _elem10 = new ThreadInfoStruct();
+                    _elem10.read(iprot);
+                    struct.success.add(_elem10);
+                  }
+                  iprot.readSetEnd();
+                }
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 1: // KERNEL_EXCEPTION
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.kernelException = new DroidStalkerKernelException();
+                struct.kernelException.read(iprot);
+                struct.setKernelExceptionIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getThreadsRunningIn_result struct) throws TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          {
+            oprot.writeSetBegin(new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
+            for (ThreadInfoStruct _iter11 : struct.success)
+            {
+              _iter11.write(oprot);
+            }
+            oprot.writeSetEnd();
+          }
+          oprot.writeFieldEnd();
+        }
+        if (struct.kernelException != null) {
+          oprot.writeFieldBegin(KERNEL_EXCEPTION_FIELD_DESC);
+          struct.kernelException.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class getThreadsRunningIn_resultTupleSchemeFactory implements SchemeFactory {
+      public getThreadsRunningIn_resultTupleScheme getScheme() {
+        return new getThreadsRunningIn_resultTupleScheme();
+      }
+    }
+
+    private static class getThreadsRunningIn_resultTupleScheme extends TupleScheme<getThreadsRunningIn_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, getThreadsRunningIn_result struct) throws TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        if (struct.isSetKernelException()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetSuccess()) {
+          {
+            oprot.writeI32(struct.success.size());
+            for (ThreadInfoStruct _iter12 : struct.success)
+            {
+              _iter12.write(oprot);
+            }
+          }
+        }
+        if (struct.isSetKernelException()) {
+          struct.kernelException.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, getThreadsRunningIn_result struct) throws TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          {
+            org.apache.thrift.protocol.TSet _set13 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new HashSet<ThreadInfoStruct>(2*_set13.size);
+            for (int _i14 = 0; _i14 < _set13.size; ++_i14)
+            {
+              ThreadInfoStruct _elem15;
+              _elem15 = new ThreadInfoStruct();
+              _elem15.read(iprot);
+              struct.success.add(_elem15);
             }
           }
           struct.setSuccessIsSet(true);

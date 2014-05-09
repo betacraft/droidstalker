@@ -33,27 +33,24 @@ exception DroidStalkerKernelException{
 }
 
 /**
- * Session Device setup manager serviceComponent
+ * DroidStalker Kernel Service
  */
 service DroidStalkerKernelService {
     /**
-     * Method to start kernel
+     * Method to get the list of devices
      */
-    void boot(1: string adbLocation) throws (1: DroidStalkerKernelException kernelException),
+    set<DeviceStruct.DeviceStruct> getDevices() throws (1: DroidStalkerKernelException kernelException),
     /**
-     * Method to check if kernel is running or not
+     * Method to get installed apps from device
      */
-    bool isRunning() throws (1: DroidStalkerKernelException kernelException),
+    set<AndroidAppStruct.AndroidAppStruct> getInstalledAppsOn(1: DeviceStruct.DeviceStruct device)
+    throws (1: DroidStalkerKernelException kernelException),
     /**
      * Start app for debug
      * Returns debug session id
      */
     string startDebugSessionFor(1: DeviceStruct.DeviceStruct device, 2: AndroidAppStruct.AndroidAppStruct app)
     throws (1: DroidStalkerKernelException kernelException),
-    /**
-     * Method to start session
-     */
-    set<DeviceStruct.DeviceStruct> getDevices() throws (1: DroidStalkerKernelException kernelException),
     /**
      * Method to get all running threads in a debug session
      */

@@ -1,4 +1,4 @@
-package main.java.com.rc.droid_stalker.services;
+package com.rc.droid_stalker.native_services;
 
 import android.os.IBinder;
 import android.util.Log;

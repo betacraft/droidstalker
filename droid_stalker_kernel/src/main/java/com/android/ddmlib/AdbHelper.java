@@ -35,7 +35,7 @@ import java.util.concurrent.TimeUnit;
  * <p/>This currently uses spin-wait non-blocking I/O. A Selector would be more efficient,
  * but seems like overkill for what we're doing here.
  */
-final class AdbHelper {
+public final class AdbHelper {
     private static final Logger logger = LoggerFactory.getLogger(AdbHelper.class);
 
     // public static final long kOkay = 0x59414b4fL;
@@ -563,7 +563,7 @@ final class AdbHelper {
      * @throws AdbCommandRejectedException if adb rejects the command
      * @throws java.io.IOException         in case of I/O error on the connection.
      */
-    public static void createForward(InetSocketAddress adbSockAddr, Device device,
+    public static void createForward(InetSocketAddress adbSockAddr, IDevice device,
                                      String localPortSpec, String remotePortSpec)
             throws TimeoutException, AdbCommandRejectedException, IOException {
 
@@ -608,7 +608,7 @@ final class AdbHelper {
      * @throws AdbCommandRejectedException if adb rejects the command
      * @throws java.io.IOException         in case of I/O error on the connection.
      */
-    public static void removeForward(InetSocketAddress adbSockAddr, Device device,
+    public static void removeForward(InetSocketAddress adbSockAddr, IDevice device,
                                      String localPortSpec, String remotePortSpec)
             throws TimeoutException, AdbCommandRejectedException, IOException {
 

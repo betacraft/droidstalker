@@ -8,5 +8,7 @@ namespace java com.rc.droid_stalker.thrift
  */
 struct AndroidAppStruct {
     1: required string packageName,
-    2: required string activityName
+    2: required string activityName,
+    3: required string applicationName,
+    4: required string applicationIcon
 }

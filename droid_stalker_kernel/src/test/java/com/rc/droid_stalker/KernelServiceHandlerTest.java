@@ -24,15 +24,8 @@ public class KernelServiceHandlerTest {
     @Before
     public void setUp() throws Exception {
         mKernelConnection = KernelConnection.get();
-        mKernelConnection.getClient().boot(ADB_LOCATION);
     }
 
-
-    @Test
-    public void testIsRunning() throws Exception {
-        mKernelConnection.getClient().isRunning();
-        assert true;
-    }
 
     @Test
     public void testGetDevices() throws Exception {
@@ -43,9 +36,13 @@ public class KernelServiceHandlerTest {
         assert true;
     }
 
+
+
+
+
     @Test
     public void testStartDebugSessionFor() throws Exception {
-        Set<DeviceStruct> deviceStructSet = mKernelConnection.getClient().getDevices();
+       Set<DeviceStruct> deviceStructSet = mKernelConnection.getClient().getDevices();
         DeviceStruct device = null;
         for (DeviceStruct deviceStruct : deviceStructSet) {
             device = deviceStruct;
@@ -57,10 +54,11 @@ public class KernelServiceHandlerTest {
         String debugSessionId = mKernelConnection.getClient().startDebugSessionFor(device,
                 new AndroidAppStruct("com.obeat" +
                         ".advertdisplay",
-                        "com.obeat.advertdisplay.activities.Boot"));
+                        "com.obeat.advertdisplay.activities.Boot", "asda", ""));
         for (ThreadInfoStruct threadInfoStruct : mKernelConnection.getClient().getThreadsRunningIn(debugSessionId)) {
             System.out.println(threadInfoStruct.getName());
         }
+        assert true;
     }
 
 

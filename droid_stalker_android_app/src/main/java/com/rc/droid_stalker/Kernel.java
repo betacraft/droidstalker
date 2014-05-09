@@ -1,10 +1,12 @@
-package main.java.com.rc.droid_stalker;
+package com.rc.droid_stalker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import main.java.com.rc.droid_stalker.services.BatteryStatsService;
-import main.java.com.rc.droid_stalker.services.WindowManagerService;
+import com.rc.droid_stalker.native_services.BatteryStatsService;
+import com.rc.droid_stalker.native_services.WindowManagerService;
+import com.rc.droid_stalker.service.DroidStalkerService;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -19,6 +21,7 @@ public class Kernel extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getApplicationContext().startService(new Intent(getApplicationContext(), DroidStalkerService.class));
         try {
             WindowManagerService windowManagerService = new WindowManagerService();
             Log.d(TAG, "rotation " + windowManagerService.getCurrentRotation());
@@ -36,6 +39,5 @@ public class Kernel extends Activity {
 
             Log.e(TAG, "", e);
         }
-
     }
 }

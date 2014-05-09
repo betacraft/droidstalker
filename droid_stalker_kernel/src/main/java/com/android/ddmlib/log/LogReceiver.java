@@ -22,7 +22,7 @@ import com.android.ddmlib.utils.ArrayHelper;
 import java.security.InvalidParameterException;
 
 /**
- * Receiver able to provide low level parsing for device-side log services.
+ * Receiver able to provide low level parsing for device-side log native_services.
  */
 public final class LogReceiver {
 

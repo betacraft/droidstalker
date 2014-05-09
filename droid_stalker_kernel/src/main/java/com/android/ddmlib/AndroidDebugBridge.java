@@ -228,7 +228,7 @@ public final class AndroidDebugBridge {
      * Terminates the ddm library. This must be called upon application termination.
      */
     public static synchronized void terminate() {
-        // kill the monitoring services
+        // kill the monitoring native_services
         if (sThis != null && sThis.mDeviceMonitor != null) {
             sThis.mDeviceMonitor.stop();
             sThis.mDeviceMonitor = null;
@@ -731,7 +731,7 @@ public final class AndroidDebugBridge {
 
         mStarted = true;
 
-        // now that the bridge is connected, we start the underlying services.
+        // now that the bridge is connected, we start the underlying native_services.
         mDeviceMonitor = new DeviceMonitor(this);
         mDeviceMonitor.start();
         return true;
@@ -748,7 +748,7 @@ public final class AndroidDebugBridge {
             return false;
         }
 
-        // kill the monitoring services
+        // kill the monitoring native_services
         mDeviceMonitor.stop();
         mDeviceMonitor = null;
 
@@ -761,7 +761,7 @@ public final class AndroidDebugBridge {
     }
 
     /**
-     * Restarts adb, but not the services around it.
+     * Restarts adb, but not the native_services around it.
      *
      * @return true if success.
      */

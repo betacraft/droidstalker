@@ -48,17 +48,6 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
         }
     }
 
-    // DroidStalkerKernelService implementation
-    @Override
-    public void boot(final String adbLocation) throws DroidStalkerKernelException {
-
-    }
-
-    @Override
-    public boolean isRunning() throws DroidStalkerKernelException {
-        return true;
-    }
-
     @Override
     public String startDebugSessionFor(final DeviceStruct device, final AndroidAppStruct androidApp) throws
             DroidStalkerKernelException {
@@ -72,7 +61,7 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
         if (mCurrentDebugSession != null)
             mCurrentDebugSession.closeSession();
         try {
-            mCurrentDebugSession = DebugSession.startFor(mADB.getAndroidDebugBridge(), debugDevice, androidApp);
+            mCurrentDebugSession = DebugSession.startFor(debugDevice, androidApp);
         } catch (TimeoutException e) {
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.FAILED_TO_START_APP, e.getMessage());
         } catch (AdbCommandRejectedException e) {
@@ -91,6 +80,12 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
         logger.debug("get devices");
         return getConnectedDevicesStructList();
     }
+
+    @Override
+    public Set<AndroidAppStruct> getInstalledAppsOn(final DeviceStruct device) throws DroidStalkerKernelException {
+        return null;
+    }
+
 
     @Override
     public Set<ThreadInfoStruct> getThreadsRunningIn(final String debugSession) throws DroidStalkerKernelException {

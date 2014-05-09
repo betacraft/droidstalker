@@ -1,4 +1,4 @@
-package main.java.com.rc.droid_stalker.services;
+package com.rc.droid_stalker.native_services;
 
 import android.util.Log;
 
@@ -11,11 +11,14 @@ import java.lang.reflect.Method;
  * Date  : 5/5/14
  * Time  : 7:56 PM
  */
-public final class ActivityManagerService extends NativeServiceWrapper {
-    private static final String TAG = "###ActivityManagerService###";
+public final class BatteryStatsService extends NativeServiceWrapper {
 
 
-    public ActivityManagerService() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    private static final String TAG = "###BatteryStatsService###";
+
+
+    public BatteryStatsService() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException,
+            IllegalAccessException {
         super("batterystats");
         for (Method method : mServiceStubClass.getMethods()) {
             StringBuilder params = new StringBuilder();
@@ -26,7 +29,8 @@ public final class ActivityManagerService extends NativeServiceWrapper {
                     .getReturnType()
                     .getCanonicalName());
         }
-
+//        byte[] stats = (byte[]) mServiceStubClass.getMethod("getStatistics").invoke(mServiceObject);
+//        Log.d(TAG, "stats " + new String(stats));
     }
 
 

@@ -42,6 +42,7 @@ import java.util.HashMap;
 public class Client {
 
     private static final Logger logger = LoggerFactory.getLogger(Client.class);
+
     private static final int SERVER_PROTOCOL_VERSION = 1;
 
     /**

@@ -6,6 +6,7 @@ import com.rc.droid_stalker.thrift.AndroidAppStruct;
 import com.rc.droid_stalker.thrift.DroidStalkerKernelException;
 import com.rc.droid_stalker.thrift.KernelExceptionErrorCode;
 import com.rc.droid_stalker.thrift.ThreadInfoStruct;
+import org.apache.thrift.TException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,17 +28,39 @@ public final class DebugSession {
     private IDevice mDevice;
     private Client mClient;
     private String mSessionId;
-    private AndroidDebugBridge mDebugBridge;
+    public static final String START_DROID_STALKER_SERVICE = "am startservice com.rc.droid_stalker/" +
+            ".service.DroidStalkerService";
+    private static final String STOP_DROID_STALKER_SERVICE = "am force-stop com.rc.droid_stalker/" +
+            ".service.DroidStalkerService";
     private static final String START_APP_COMMAND_FORMAT = "am start -n %s/%s";
+    private static final String FORCE_STOP_APP_COMMAND_FORMAT = "am force-stop %s";
     private AndroidDebugBridge.IClientChangeListener mSessionClientDetector;
 
-    private DebugSession(final AndroidDebugBridge debugBridge, final IDevice device, final AndroidAppStruct androidApp)
+
+    private DebugSession(final IDevice device, final AndroidAppStruct androidApp)
             throws TimeoutException, AdbCommandRejectedException, ShellCommandUnresponsiveException, IOException, DroidStalkerKernelException {
-        mDebugBridge = debugBridge;
         mAndroidApp = androidApp;
         mDevice = device;
         mSessionId = UUID.randomUUID().toString();
         final CountDownLatch commandExecutionLatch = new CountDownLatch(1);
+        mDevice.executeShellCommand(String.format(FORCE_STOP_APP_COMMAND_FORMAT, mAndroidApp.getPackageName()),
+                new IShellOutputReceiver() {
+                    @Override
+                    public void addOutput(byte[] data, int offset, int length) {
+                        logger.debug(new String(data));
+                    }
+
+                    @Override
+                    public void flush() {
+
+                    }
+
+                    @Override
+                    public boolean isCancelled() {
+                        return false;
+                    }
+                });
+
         mSessionClientDetector = new AndroidDebugBridge.IClientChangeListener() {
             @Override
             public void clientChanged(Client client, int changeMask) {
@@ -77,7 +100,6 @@ public final class DebugSession {
         if (mClient == null)
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.APP_COULD_NOT_START,
                     "Failed to get hold of the client");
-
     }
 
     public String getSessionId() {
@@ -86,15 +108,20 @@ public final class DebugSession {
 
     public Set<ThreadInfoStruct> getAllThreads() {
         Set<ThreadInfoStruct> runningThreads = new LinkedHashSet<ThreadInfoStruct>();
+
         for (final ThreadInfo threadInfo : mClient.getClientData().getThreads()) {
             runningThreads.add(ThriftStructHelpers.prepareThreadInfoStruct(threadInfo));
         }
         return runningThreads;
     }
 
-    public static DebugSession startFor(final AndroidDebugBridge debugBridge, final IDevice device,
+    public Set<AndroidAppStruct> getInstalledApplications() throws TException {
+        return null;
+    }
+
+    public static DebugSession startFor(final IDevice device,
                                         final AndroidAppStruct androidApp) throws TimeoutException, AdbCommandRejectedException, ShellCommandUnresponsiveException, IOException, DroidStalkerKernelException {
-        return new DebugSession(debugBridge, device, androidApp);
+        return new DebugSession(device, androidApp);
     }
 
     public void closeSession() {

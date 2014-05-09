@@ -7,6 +7,8 @@
 package com.rc.droid_stalker.thrift;
 
 
+import java.util.Map;
+import java.util.HashMap;
 import org.apache.thrift.TEnum;
 
 /**

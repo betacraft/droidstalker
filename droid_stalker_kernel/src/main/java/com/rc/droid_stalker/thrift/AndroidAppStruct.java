@@ -6,15 +6,31 @@
  */
 package com.rc.droid_stalker.thrift;
 
-import org.apache.thrift.TException;
-import org.apache.thrift.protocol.TProtocolException;
-import org.apache.thrift.protocol.TTupleProtocol;
 import org.apache.thrift.scheme.IScheme;
 import org.apache.thrift.scheme.SchemeFactory;
 import org.apache.thrift.scheme.StandardScheme;
-import org.apache.thrift.scheme.TupleScheme;
 
-import java.util.*;
+import org.apache.thrift.scheme.TupleScheme;
+import org.apache.thrift.protocol.TTupleProtocol;
+import org.apache.thrift.protocol.TProtocolException;
+import org.apache.thrift.EncodingUtils;
+import org.apache.thrift.TException;
+import org.apache.thrift.async.AsyncMethodCallback;
+import org.apache.thrift.server.AbstractNonblockingServer.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.EnumMap;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.EnumSet;
+import java.util.Collections;
+import java.util.BitSet;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Device Structure
@@ -24,6 +40,8 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
 
   private static final org.apache.thrift.protocol.TField PACKAGE_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("packageName", org.apache.thrift.protocol.TType.STRING, (short)1);
   private static final org.apache.thrift.protocol.TField ACTIVITY_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("activityName", org.apache.thrift.protocol.TType.STRING, (short)2);
+  private static final org.apache.thrift.protocol.TField APPLICATION_NAME_FIELD_DESC = new org.apache.thrift.protocol.TField("applicationName", org.apache.thrift.protocol.TType.STRING, (short)3);
+  private static final org.apache.thrift.protocol.TField APPLICATION_ICON_FIELD_DESC = new org.apache.thrift.protocol.TField("applicationIcon", org.apache.thrift.protocol.TType.STRING, (short)4);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -33,11 +51,15 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
 
   private String packageName; // required
   private String activityName; // required
+  private String applicationName; // required
+  private String applicationIcon; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     PACKAGE_NAME((short)1, "packageName"),
-    ACTIVITY_NAME((short)2, "activityName");
+    ACTIVITY_NAME((short)2, "activityName"),
+    APPLICATION_NAME((short)3, "applicationName"),
+    APPLICATION_ICON((short)4, "applicationIcon");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -56,6 +78,10 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
           return PACKAGE_NAME;
         case 2: // ACTIVITY_NAME
           return ACTIVITY_NAME;
+        case 3: // APPLICATION_NAME
+          return APPLICATION_NAME;
+        case 4: // APPLICATION_ICON
+          return APPLICATION_ICON;
         default:
           return null;
       }
@@ -103,6 +129,10 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     tmpMap.put(_Fields.ACTIVITY_NAME, new org.apache.thrift.meta_data.FieldMetaData("activityName", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.APPLICATION_NAME, new org.apache.thrift.meta_data.FieldMetaData("applicationName", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.APPLICATION_ICON, new org.apache.thrift.meta_data.FieldMetaData("applicationIcon", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(AndroidAppStruct.class, metaDataMap);
   }
@@ -112,11 +142,15 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
 
   public AndroidAppStruct(
     String packageName,
-    String activityName)
+    String activityName,
+    String applicationName,
+    String applicationIcon)
   {
     this();
     this.packageName = packageName;
     this.activityName = activityName;
+    this.applicationName = applicationName;
+    this.applicationIcon = applicationIcon;
   }
 
   /**
@@ -129,6 +163,12 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
     if (other.isSetActivityName()) {
       this.activityName = other.activityName;
     }
+    if (other.isSetApplicationName()) {
+      this.applicationName = other.applicationName;
+    }
+    if (other.isSetApplicationIcon()) {
+      this.applicationIcon = other.applicationIcon;
+    }
   }
 
   public AndroidAppStruct deepCopy() {
@@ -139,6 +179,8 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
   public void clear() {
     this.packageName = null;
     this.activityName = null;
+    this.applicationName = null;
+    this.applicationIcon = null;
   }
 
   public String getPackageName() {
@@ -187,6 +229,52 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
     }
   }
 
+  public String getApplicationName() {
+    return this.applicationName;
+  }
+
+  public void setApplicationName(String applicationName) {
+    this.applicationName = applicationName;
+  }
+
+  public void unsetApplicationName() {
+    this.applicationName = null;
+  }
+
+  /** Returns true if field applicationName is set (has been assigned a value) and false otherwise */
+  public boolean isSetApplicationName() {
+    return this.applicationName != null;
+  }
+
+  public void setApplicationNameIsSet(boolean value) {
+    if (!value) {
+      this.applicationName = null;
+    }
+  }
+
+  public String getApplicationIcon() {
+    return this.applicationIcon;
+  }
+
+  public void setApplicationIcon(String applicationIcon) {
+    this.applicationIcon = applicationIcon;
+  }
+
+  public void unsetApplicationIcon() {
+    this.applicationIcon = null;
+  }
+
+  /** Returns true if field applicationIcon is set (has been assigned a value) and false otherwise */
+  public boolean isSetApplicationIcon() {
+    return this.applicationIcon != null;
+  }
+
+  public void setApplicationIconIsSet(boolean value) {
+    if (!value) {
+      this.applicationIcon = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
     case PACKAGE_NAME:
@@ -205,6 +293,22 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
       }
       break;
 
+    case APPLICATION_NAME:
+      if (value == null) {
+        unsetApplicationName();
+      } else {
+        setApplicationName((String)value);
+      }
+      break;
+
+    case APPLICATION_ICON:
+      if (value == null) {
+        unsetApplicationIcon();
+      } else {
+        setApplicationIcon((String)value);
+      }
+      break;
+
     }
   }
 
@@ -215,6 +319,12 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
 
     case ACTIVITY_NAME:
       return getActivityName();
+
+    case APPLICATION_NAME:
+      return getApplicationName();
+
+    case APPLICATION_ICON:
+      return getApplicationIcon();
 
     }
     throw new IllegalStateException();
@@ -231,6 +341,10 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
       return isSetPackageName();
     case ACTIVITY_NAME:
       return isSetActivityName();
+    case APPLICATION_NAME:
+      return isSetApplicationName();
+    case APPLICATION_ICON:
+      return isSetApplicationIcon();
     }
     throw new IllegalStateException();
   }
@@ -263,6 +377,24 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
       if (!(this_present_activityName && that_present_activityName))
         return false;
       if (!this.activityName.equals(that.activityName))
+        return false;
+    }
+
+    boolean this_present_applicationName = true && this.isSetApplicationName();
+    boolean that_present_applicationName = true && that.isSetApplicationName();
+    if (this_present_applicationName || that_present_applicationName) {
+      if (!(this_present_applicationName && that_present_applicationName))
+        return false;
+      if (!this.applicationName.equals(that.applicationName))
+        return false;
+    }
+
+    boolean this_present_applicationIcon = true && this.isSetApplicationIcon();
+    boolean that_present_applicationIcon = true && that.isSetApplicationIcon();
+    if (this_present_applicationIcon || that_present_applicationIcon) {
+      if (!(this_present_applicationIcon && that_present_applicationIcon))
+        return false;
+      if (!this.applicationIcon.equals(that.applicationIcon))
         return false;
     }
 
@@ -302,6 +434,26 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
         return lastComparison;
       }
     }
+    lastComparison = Boolean.valueOf(isSetApplicationName()).compareTo(other.isSetApplicationName());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetApplicationName()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.applicationName, other.applicationName);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetApplicationIcon()).compareTo(other.isSetApplicationIcon());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetApplicationIcon()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.applicationIcon, other.applicationIcon);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     return 0;
   }
 
@@ -337,6 +489,22 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
       sb.append(this.activityName);
     }
     first = false;
+    if (!first) sb.append(", ");
+    sb.append("applicationName:");
+    if (this.applicationName == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.applicationName);
+    }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("applicationIcon:");
+    if (this.applicationIcon == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.applicationIcon);
+    }
+    first = false;
     sb.append(")");
     return sb.toString();
   }
@@ -349,6 +517,14 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
 
     if (!isSetActivityName()) {
       throw new TProtocolException("Required field 'activityName' is unset! Struct:" + toString());
+    }
+
+    if (!isSetApplicationName()) {
+      throw new TProtocolException("Required field 'applicationName' is unset! Struct:" + toString());
+    }
+
+    if (!isSetApplicationIcon()) {
+      throw new TProtocolException("Required field 'applicationIcon' is unset! Struct:" + toString());
     }
 
     // check for sub-struct validity
@@ -404,6 +580,22 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
+          case 3: // APPLICATION_NAME
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.applicationName = iprot.readString();
+              struct.setApplicationNameIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 4: // APPLICATION_ICON
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.applicationIcon = iprot.readString();
+              struct.setApplicationIconIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
           default:
             org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
         }
@@ -427,6 +619,16 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
         oprot.writeString(struct.activityName);
         oprot.writeFieldEnd();
       }
+      if (struct.applicationName != null) {
+        oprot.writeFieldBegin(APPLICATION_NAME_FIELD_DESC);
+        oprot.writeString(struct.applicationName);
+        oprot.writeFieldEnd();
+      }
+      if (struct.applicationIcon != null) {
+        oprot.writeFieldBegin(APPLICATION_ICON_FIELD_DESC);
+        oprot.writeString(struct.applicationIcon);
+        oprot.writeFieldEnd();
+      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -446,6 +648,8 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
       TTupleProtocol oprot = (TTupleProtocol) prot;
       oprot.writeString(struct.packageName);
       oprot.writeString(struct.activityName);
+      oprot.writeString(struct.applicationName);
+      oprot.writeString(struct.applicationIcon);
     }
 
     @Override
@@ -455,6 +659,10 @@ public class AndroidAppStruct implements org.apache.thrift.TBase<AndroidAppStruc
       struct.setPackageNameIsSet(true);
       struct.activityName = iprot.readString();
       struct.setActivityNameIsSet(true);
+      struct.applicationName = iprot.readString();
+      struct.setApplicationNameIsSet(true);
+      struct.applicationIcon = iprot.readString();
+      struct.setApplicationIconIsSet(true);
     }
   }
 

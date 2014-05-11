@@ -1,11 +1,11 @@
 package com.rc.droid_stalker.service;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.util.Log;
 import com.rc.droid_stalker.thrift.AndroidAppStruct;
 import com.rc.droid_stalker.thrift.DroidStalkerAppException;
 import com.rc.droid_stalker.thrift.DroidStalkerAppService;
@@ -33,20 +33,27 @@ public final class DroidStalkerAppServiceHandler implements DroidStalkerAppServi
     public Set<AndroidAppStruct> getInstalledApps() throws DroidStalkerAppException {
         final PackageManager pm = mContext.getPackageManager();
         final List<PackageInfo> installedAppPackageInformationList = pm.getInstalledPackages
-                (PackageManager
-                        .GET_META_DATA);
-        final Set<AndroidAppStruct> installedAppStructs = new LinkedHashSet<AndroidAppStruct>();
+                (PackageManager.GET_ACTIVITIES);
+        final Set<AndroidAppStruct> installedAppStructSet = new LinkedHashSet<AndroidAppStruct>();
         for (final PackageInfo installedAppPackageInfo : installedAppPackageInformationList) {
-            Log.d(TAG, pm.getLaunchIntentForPackage(installedAppPackageInfo.packageName).getAction());
+            if (pm.getLaunchIntentForPackage(installedAppPackageInfo.packageName) == null)
+                continue;
+            if ((installedAppPackageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0)
+                continue;
             final Bitmap icon = ((BitmapDrawable) pm.getApplicationIcon
                     (installedAppPackageInfo
                             .applicationInfo)).getBitmap();
+            if (icon == null)
+                continue;
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             icon.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] byteArray = stream.toByteArray();
-            installedAppStructs.add(new AndroidAppStruct(installedAppPackageInfo.packageName, "",
-                    installedAppPackageInfo.applicationInfo.name, new String(byteArray)));
+
+            installedAppStructSet.add(new AndroidAppStruct(installedAppPackageInfo.packageName,
+                    pm.getLaunchIntentForPackage(installedAppPackageInfo.packageName).getComponent().getClassName(),
+                    pm.getApplicationLabel(installedAppPackageInfo.applicationInfo).toString(),
+                    new String(byteArray)));
         }
-        return installedAppStructs;
+        return installedAppStructSet;
     }
 }

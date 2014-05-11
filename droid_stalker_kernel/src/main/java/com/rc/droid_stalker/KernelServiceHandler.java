@@ -5,6 +5,7 @@ import com.rc.droid_stalker.models.ThriftStructHelpers;
 import com.rc.droid_stalker.sessions.DebugSession;
 import com.rc.droid_stalker.thrift.*;
 import com.rc.droid_stalker.wrappers.ADB;
+import org.apache.thrift.transport.TTransportException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,11 +39,7 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
 
     public KernelServiceHandler() {
         try {
-            mADB = ADB.initialize(String.format(ANDROID_SDK_LOCATION_FORMAT, "/home/akshay/android-sdk-linux"));
-            for (final IDevice connectedDevice : mADB.getDevices()) {
-                logger.debug("Adding {} as connected device", connectedDevice.getSerialNumber());
-                mConnectedDevices.put(connectedDevice.getSerialNumber(), connectedDevice);
-            }
+            mADB = ADB.initialize(String.format(ANDROID_SDK_LOCATION_FORMAT, "/home/akshay/android-sdk-linux"), this);
         } catch (DroidStalkerKernelException e) {
             e.printStackTrace();
         }
@@ -70,6 +67,8 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.FAILED_TO_START_APP, e.getMessage());
         } catch (IOException e) {
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.FAILED_TO_START_APP, e.getMessage());
+        } catch (TTransportException e) {
+            throw new DroidStalkerKernelException(KernelExceptionErrorCode.FAILED_TO_START_APP, e.getMessage());
         }
         return mCurrentDebugSession.getSessionId();
     }
@@ -83,7 +82,7 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
 
     @Override
     public Set<AndroidAppStruct> getInstalledAppsOn(final DeviceStruct device) throws DroidStalkerKernelException {
-        return null;
+            return mCurrentDebugSession.getInstalledApplications();
     }
 
 
@@ -110,6 +109,15 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
     @Override
     public void deviceConnected(final IDevice device) {
         logger.debug("{} device got connected", device.getSerialNumber());
+        try {
+            AdbHelper.createForward(AndroidDebugBridge.getSocketAddress(), device, "tcp:11000", "tcp:11000");
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        } catch (AdbCommandRejectedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         mConnectedDevices.put(device.getSerialNumber(), device);
     }
 

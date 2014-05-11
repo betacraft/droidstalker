@@ -33,7 +33,8 @@ public final class ADB implements AndroidDebugBridge.IDebugBridgeChangeListener 
      *
      * @param adbPath adb path
      */
-    private ADB(final String adbPath) throws DroidStalkerKernelException {
+    private ADB(final String adbPath, final AndroidDebugBridge.IDeviceChangeListener deviceChangeListener)
+            throws DroidStalkerKernelException {
         if (mIsInitialized.getAndSet(true))
             return;
         //TODO generate available ports and then use them
@@ -58,17 +59,25 @@ public final class ADB implements AndroidDebugBridge.IDebugBridgeChangeListener 
             logger.debug("Debug bridge is not connected so restarting it");
             mAndroidDebugBridge.restart();
         }     */
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        //TODO add a check after 10 retries throw an error
+        while (!mAndroidDebugBridge.isConnected())
+            waitABit();
+        if (deviceChangeListener != null)
+            AndroidDebugBridge.addDeviceChangeListener(deviceChangeListener);
         if (mAndroidDebugBridge.isConnected()) {
             logger.debug("ADB bridge is connected");
         } else {
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.KERNEL_BOOT_FAILED, "ADB connection failed");
         }
-        mAndroidDebugBridge.addDebugBridgeChangeListener(this);
+        AndroidDebugBridge.addDebugBridgeChangeListener(this);
+    }
+
+    private void waitABit() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -77,10 +86,11 @@ public final class ADB implements AndroidDebugBridge.IDebugBridgeChangeListener 
      * @return
      */
 
-    public static ADB initialize(final String adbPath) throws DroidStalkerKernelException {
+    public static ADB initialize(final String adbPath, final AndroidDebugBridge.IDeviceChangeListener deviceChangeListener) throws
+            DroidStalkerKernelException {
         if (INSTANCE != null)
             return INSTANCE;
-        INSTANCE = new ADB(adbPath);
+        INSTANCE = new ADB(adbPath, deviceChangeListener);
         return INSTANCE;
     }
 

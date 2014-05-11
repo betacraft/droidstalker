@@ -58,6 +58,9 @@ public class KernelServiceHandlerTest {
         for (ThreadInfoStruct threadInfoStruct : mKernelConnection.getClient().getThreadsRunningIn(debugSessionId)) {
             System.out.println(threadInfoStruct.getName());
         }
+        for(AndroidAppStruct app : mKernelConnection.getClient().getInstalledAppsOn(device)){
+            System.out.println(app.getApplicationName());
+        }
         assert true;
     }
 

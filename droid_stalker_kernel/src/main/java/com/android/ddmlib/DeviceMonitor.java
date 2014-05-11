@@ -795,7 +795,6 @@ final class DeviceMonitor {
                     pid,
                     port);
 
-
             clientSocket = AdbHelper.createPassThroughConnection(
                     AndroidDebugBridge.getSocketAddress(), device, pid);
 

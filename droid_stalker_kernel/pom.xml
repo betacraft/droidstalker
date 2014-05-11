@@ -15,12 +15,6 @@
     <packaging>jar</packaging>
 
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>com.android.tools.ddms</groupId>-->
-            <!--<artifactId>ddmlib</artifactId>-->
-            <!--<version>22.2.1</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

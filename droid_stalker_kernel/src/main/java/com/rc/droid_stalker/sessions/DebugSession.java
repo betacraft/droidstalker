@@ -1,12 +1,14 @@
 package com.rc.droid_stalker.sessions;
 
 import com.android.ddmlib.*;
+import com.rc.droid_stalker.components.AppConnection;
 import com.rc.droid_stalker.models.ThriftStructHelpers;
 import com.rc.droid_stalker.thrift.AndroidAppStruct;
 import com.rc.droid_stalker.thrift.DroidStalkerKernelException;
 import com.rc.droid_stalker.thrift.KernelExceptionErrorCode;
 import com.rc.droid_stalker.thrift.ThreadInfoStruct;
 import org.apache.thrift.TException;
+import org.apache.thrift.transport.TTransportException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,10 +37,11 @@ public final class DebugSession {
     private static final String START_APP_COMMAND_FORMAT = "am start -n %s/%s";
     private static final String FORCE_STOP_APP_COMMAND_FORMAT = "am force-stop %s";
     private AndroidDebugBridge.IClientChangeListener mSessionClientDetector;
+    private AppConnection mAppConnection;
 
 
     private DebugSession(final IDevice device, final AndroidAppStruct androidApp)
-            throws TimeoutException, AdbCommandRejectedException, ShellCommandUnresponsiveException, IOException, DroidStalkerKernelException {
+            throws TimeoutException, AdbCommandRejectedException, ShellCommandUnresponsiveException, IOException, DroidStalkerKernelException, TTransportException {
         mAndroidApp = androidApp;
         mDevice = device;
         mSessionId = UUID.randomUUID().toString();
@@ -97,6 +100,7 @@ public final class DebugSession {
             commandExecutionLatch.await();
         } catch (InterruptedException ignored) {
         }
+        mAppConnection = AppConnection.get();
         if (mClient == null)
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.APP_COULD_NOT_START,
                     "Failed to get hold of the client");
@@ -115,12 +119,16 @@ public final class DebugSession {
         return runningThreads;
     }
 
-    public Set<AndroidAppStruct> getInstalledApplications() throws TException {
-        return null;
+    public Set<AndroidAppStruct> getInstalledApplications() throws DroidStalkerKernelException {
+        try {
+            return mAppConnection.getClient().getInstalledApps();
+        } catch (TException e) {
+            throw new DroidStalkerKernelException(KernelExceptionErrorCode.APP_NOT_FOUND, e.getMessage());
+        }
     }
 
     public static DebugSession startFor(final IDevice device,
-                                        final AndroidAppStruct androidApp) throws TimeoutException, AdbCommandRejectedException, ShellCommandUnresponsiveException, IOException, DroidStalkerKernelException {
+                                        final AndroidAppStruct androidApp) throws TimeoutException, AdbCommandRejectedException, ShellCommandUnresponsiveException, IOException, DroidStalkerKernelException, TTransportException {
         return new DebugSession(device, androidApp);
     }
 

@@ -701,15 +701,15 @@ final class DeviceMonitor {
 
             if (!resp.okay) {
                 // request was refused by adb!
-                Log.e("DeviceMonitor", "adb refused request: " + resp.message);
+                logger.error("adb refused request: {}",resp.message);
             }
 
             return resp.okay;
         } catch (TimeoutException e) {
-            Log.e("DeviceMonitor", "Sending jdwp tracking request timed out!");
+            logger.error("Sending jdwp tracking request timed out!",e);
             throw e;
         } catch (IOException e) {
-            Log.e("DeviceMonitor", "Sending jdwp tracking request failed!");
+            logger.error("Sending jdwp tracking request failed!",e);
             throw e;
         }
     }
@@ -840,6 +840,7 @@ final class DeviceMonitor {
         Client client = new Client(device, socket, pid);
 
         if (client.sendHandshake()) {
+
 
             try {
                 if (AndroidDebugBridge.getClientSupport()) {

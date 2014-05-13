@@ -12,6 +12,7 @@ import com.rc.droid_stalker.native_services.BatteryStatsService;
 import com.rc.droid_stalker.native_services.WindowManagerService;
 import com.rc.droid_stalker.service.DroidStalkerService;
 import com.rc.droid_stalker.thrift.AndroidAppStruct;
+import com.rc.droid_stalker.thrift.CPUStatsStruct;
 import com.rc.droid_stalker.thrift.DroidStalkerAppException;
 import org.apache.thrift.TException;
 import org.apache.thrift.transport.TTransportException;
@@ -47,9 +48,13 @@ public class Kernel extends Activity {
         findViewById(R.id.test_get_applications_function).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 testGetInstalledApps();
-
+            }
+        });
+        findViewById(R.id.get_cpu_stats).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                testGetCPUStats();
             }
         });
         getApplicationContext().startService(new Intent(getApplicationContext(), DroidStalkerService.class));
@@ -70,6 +75,35 @@ public class Kernel extends Activity {
 
             Log.e(TAG, "", e);
         }
+    }
+
+    private void testGetCPUStats() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final AppConnection appConnection = AppConnection.get();
+                    final CPUStatsStruct cpuStatsStruct = appConnection.getClient().getCPUStatsFor(android.os.Process
+                            .myPid(),2000);
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getBaseContext(), cpuStatsStruct.getPid() + " " + cpuStatsStruct
+                                    .getTotalCPU() + " " + cpuStatsStruct.getPidCPU(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } catch (TTransportException e) {
+                    e.printStackTrace();
+                } catch (DroidStalkerAppException e) {
+                    e.printStackTrace();
+                } catch (TException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }).start();
     }
 
     private Intent getDroidStalkerServiceIntent() {

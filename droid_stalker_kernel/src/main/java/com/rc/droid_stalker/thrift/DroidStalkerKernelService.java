@@ -67,6 +67,15 @@ public class DroidStalkerKernelService {
      */
     public Set<ThreadInfoStruct> getThreadsRunningIn(String debugSession) throws DroidStalkerKernelException, TException;
 
+    /**
+     * Method to get CPU stats associated with debug session
+     * 
+     * 
+     * @param debugSession
+     * @param span
+     */
+    public CPUStatsStruct getCPUStatsFor(String debugSession, int span) throws DroidStalkerKernelException, TException;
+
   }
 
   public interface AsyncIface {
@@ -78,6 +87,8 @@ public class DroidStalkerKernelService {
     public void startDebugSessionFor(DeviceStruct device, AndroidAppStruct app, AsyncMethodCallback resultHandler) throws TException;
 
     public void getThreadsRunningIn(String debugSession, AsyncMethodCallback resultHandler) throws TException;
+
+    public void getCPUStatsFor(String debugSession, int span, AsyncMethodCallback resultHandler) throws TException;
 
   }
 
@@ -203,6 +214,33 @@ public class DroidStalkerKernelService {
         throw result.kernelException;
       }
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getThreadsRunningIn failed: unknown result");
+    }
+
+    public CPUStatsStruct getCPUStatsFor(String debugSession, int span) throws DroidStalkerKernelException, TException
+    {
+      send_getCPUStatsFor(debugSession, span);
+      return recv_getCPUStatsFor();
+    }
+
+    public void send_getCPUStatsFor(String debugSession, int span) throws TException
+    {
+      getCPUStatsFor_args args = new getCPUStatsFor_args();
+      args.setDebugSession(debugSession);
+      args.setSpan(span);
+      sendBase("getCPUStatsFor", args);
+    }
+
+    public CPUStatsStruct recv_getCPUStatsFor() throws DroidStalkerKernelException, TException
+    {
+      getCPUStatsFor_result result = new getCPUStatsFor_result();
+      receiveBase(result, "getCPUStatsFor");
+      if (result.isSetSuccess()) {
+        return result.success;
+      }
+      if (result.kernelException != null) {
+        throw result.kernelException;
+      }
+      throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getCPUStatsFor failed: unknown result");
     }
 
   }
@@ -351,6 +389,41 @@ public class DroidStalkerKernelService {
       }
     }
 
+    public void getCPUStatsFor(String debugSession, int span, AsyncMethodCallback resultHandler) throws TException {
+      checkReady();
+      getCPUStatsFor_call method_call = new getCPUStatsFor_call(debugSession, span, resultHandler, this, ___protocolFactory, ___transport);
+      this.___currentMethod = method_call;
+      ___manager.call(method_call);
+    }
+
+    public static class getCPUStatsFor_call extends org.apache.thrift.async.TAsyncMethodCall {
+      private String debugSession;
+      private int span;
+      public getCPUStatsFor_call(String debugSession, int span, AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws TException {
+        super(client, protocolFactory, transport, resultHandler, false);
+        this.debugSession = debugSession;
+        this.span = span;
+      }
+
+      public void write_args(org.apache.thrift.protocol.TProtocol prot) throws TException {
+        prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getCPUStatsFor", org.apache.thrift.protocol.TMessageType.CALL, 0));
+        getCPUStatsFor_args args = new getCPUStatsFor_args();
+        args.setDebugSession(debugSession);
+        args.setSpan(span);
+        args.write(prot);
+        prot.writeMessageEnd();
+      }
+
+      public CPUStatsStruct getResult() throws DroidStalkerKernelException, TException {
+        if (getState() != State.RESPONSE_READ) {
+          throw new IllegalStateException("Method call not finished!");
+        }
+        org.apache.thrift.transport.TMemoryInputTransport memoryTransport = new org.apache.thrift.transport.TMemoryInputTransport(getFrameBuffer().array());
+        org.apache.thrift.protocol.TProtocol prot = client.getProtocolFactory().getProtocol(memoryTransport);
+        return (new Client(prot)).recv_getCPUStatsFor();
+      }
+    }
+
   }
 
   public static class Processor<I extends Iface> extends org.apache.thrift.TBaseProcessor<I> implements org.apache.thrift.TProcessor {
@@ -368,6 +441,7 @@ public class DroidStalkerKernelService {
       processMap.put("getInstalledAppsOn", new getInstalledAppsOn());
       processMap.put("startDebugSessionFor", new startDebugSessionFor());
       processMap.put("getThreadsRunningIn", new getThreadsRunningIn());
+      processMap.put("getCPUStatsFor", new getCPUStatsFor());
       return processMap;
     }
 
@@ -467,6 +541,30 @@ public class DroidStalkerKernelService {
       }
     }
 
+    public static class getCPUStatsFor<I extends Iface> extends org.apache.thrift.ProcessFunction<I, getCPUStatsFor_args> {
+      public getCPUStatsFor() {
+        super("getCPUStatsFor");
+      }
+
+      public getCPUStatsFor_args getEmptyArgsInstance() {
+        return new getCPUStatsFor_args();
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public getCPUStatsFor_result getResult(I iface, getCPUStatsFor_args args) throws TException {
+        getCPUStatsFor_result result = new getCPUStatsFor_result();
+        try {
+          result.success = iface.getCPUStatsFor(args.debugSession, args.span);
+        } catch (DroidStalkerKernelException kernelException) {
+          result.kernelException = kernelException;
+        }
+        return result;
+      }
+    }
+
   }
 
   public static class AsyncProcessor<I extends AsyncIface> extends org.apache.thrift.TBaseAsyncProcessor<I> {
@@ -484,6 +582,7 @@ public class DroidStalkerKernelService {
       processMap.put("getInstalledAppsOn", new getInstalledAppsOn());
       processMap.put("startDebugSessionFor", new startDebugSessionFor());
       processMap.put("getThreadsRunningIn", new getThreadsRunningIn());
+      processMap.put("getCPUStatsFor", new getCPUStatsFor());
       return processMap;
     }
 
@@ -712,6 +811,63 @@ public class DroidStalkerKernelService {
 
       public void start(I iface, getThreadsRunningIn_args args, AsyncMethodCallback<Set<ThreadInfoStruct>> resultHandler) throws TException {
         iface.getThreadsRunningIn(args.debugSession,resultHandler);
+      }
+    }
+
+    public static class getCPUStatsFor<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, getCPUStatsFor_args, CPUStatsStruct> {
+      public getCPUStatsFor() {
+        super("getCPUStatsFor");
+      }
+
+      public getCPUStatsFor_args getEmptyArgsInstance() {
+        return new getCPUStatsFor_args();
+      }
+
+      public AsyncMethodCallback<CPUStatsStruct> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+        final org.apache.thrift.AsyncProcessFunction fcall = this;
+        return new AsyncMethodCallback<CPUStatsStruct>() {
+          public void onComplete(CPUStatsStruct o) {
+            getCPUStatsFor_result result = new getCPUStatsFor_result();
+            result.success = o;
+            try {
+              fcall.sendResponse(fb,result, org.apache.thrift.protocol.TMessageType.REPLY,seqid);
+              return;
+            } catch (Exception e) {
+              LOGGER.error("Exception writing to internal frame buffer", e);
+            }
+            fb.close();
+          }
+          public void onError(Exception e) {
+            byte msgType = org.apache.thrift.protocol.TMessageType.REPLY;
+            org.apache.thrift.TBase msg;
+            getCPUStatsFor_result result = new getCPUStatsFor_result();
+            if (e instanceof DroidStalkerKernelException) {
+                        result.kernelException = (DroidStalkerKernelException) e;
+                        result.setKernelExceptionIsSet(true);
+                        msg = result;
+            }
+             else 
+            {
+              msgType = org.apache.thrift.protocol.TMessageType.EXCEPTION;
+              msg = (org.apache.thrift.TBase)new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.INTERNAL_ERROR, e.getMessage());
+            }
+            try {
+              fcall.sendResponse(fb,msg,msgType,seqid);
+              return;
+            } catch (Exception ex) {
+              LOGGER.error("Exception writing to internal frame buffer", ex);
+            }
+            fb.close();
+          }
+        };
+      }
+
+      protected boolean isOneway() {
+        return false;
+      }
+
+      public void start(I iface, getCPUStatsFor_args args, AsyncMethodCallback<CPUStatsStruct> resultHandler) throws TException {
+        iface.getCPUStatsFor(args.debugSession, args.span,resultHandler);
       }
     }
 
@@ -4086,6 +4242,911 @@ public class DroidStalkerKernelService {
               struct.success.add(_elem23);
             }
           }
+          struct.setSuccessIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.kernelException = new DroidStalkerKernelException();
+          struct.kernelException.read(iprot);
+          struct.setKernelExceptionIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class getCPUStatsFor_args implements org.apache.thrift.TBase<getCPUStatsFor_args, getCPUStatsFor_args._Fields>, java.io.Serializable, Cloneable, Comparable<getCPUStatsFor_args>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getCPUStatsFor_args");
+
+    private static final org.apache.thrift.protocol.TField DEBUG_SESSION_FIELD_DESC = new org.apache.thrift.protocol.TField("debugSession", org.apache.thrift.protocol.TType.STRING, (short)1);
+    private static final org.apache.thrift.protocol.TField SPAN_FIELD_DESC = new org.apache.thrift.protocol.TField("span", org.apache.thrift.protocol.TType.I32, (short)2);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new getCPUStatsFor_argsStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getCPUStatsFor_argsTupleSchemeFactory());
+    }
+
+    private String debugSession; // required
+    private int span; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      DEBUG_SESSION((short)1, "debugSession"),
+      SPAN((short)2, "span");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 1: // DEBUG_SESSION
+            return DEBUG_SESSION;
+          case 2: // SPAN
+            return SPAN;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    private static final int __SPAN_ISSET_ID = 0;
+    private byte __isset_bitfield = 0;
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.DEBUG_SESSION, new org.apache.thrift.meta_data.FieldMetaData("debugSession", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+      tmpMap.put(_Fields.SPAN, new org.apache.thrift.meta_data.FieldMetaData("span", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getCPUStatsFor_args.class, metaDataMap);
+    }
+
+    public getCPUStatsFor_args() {
+    }
+
+    public getCPUStatsFor_args(
+      String debugSession,
+      int span)
+    {
+      this();
+      this.debugSession = debugSession;
+      this.span = span;
+      setSpanIsSet(true);
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getCPUStatsFor_args(getCPUStatsFor_args other) {
+      __isset_bitfield = other.__isset_bitfield;
+      if (other.isSetDebugSession()) {
+        this.debugSession = other.debugSession;
+      }
+      this.span = other.span;
+    }
+
+    public getCPUStatsFor_args deepCopy() {
+      return new getCPUStatsFor_args(this);
+    }
+
+    @Override
+    public void clear() {
+      this.debugSession = null;
+      setSpanIsSet(false);
+      this.span = 0;
+    }
+
+    public String getDebugSession() {
+      return this.debugSession;
+    }
+
+    public void setDebugSession(String debugSession) {
+      this.debugSession = debugSession;
+    }
+
+    public void unsetDebugSession() {
+      this.debugSession = null;
+    }
+
+    /** Returns true if field debugSession is set (has been assigned a value) and false otherwise */
+    public boolean isSetDebugSession() {
+      return this.debugSession != null;
+    }
+
+    public void setDebugSessionIsSet(boolean value) {
+      if (!value) {
+        this.debugSession = null;
+      }
+    }
+
+    public int getSpan() {
+      return this.span;
+    }
+
+    public void setSpan(int span) {
+      this.span = span;
+      setSpanIsSet(true);
+    }
+
+    public void unsetSpan() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SPAN_ISSET_ID);
+    }
+
+    /** Returns true if field span is set (has been assigned a value) and false otherwise */
+    public boolean isSetSpan() {
+      return EncodingUtils.testBit(__isset_bitfield, __SPAN_ISSET_ID);
+    }
+
+    public void setSpanIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __SPAN_ISSET_ID, value);
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case DEBUG_SESSION:
+        if (value == null) {
+          unsetDebugSession();
+        } else {
+          setDebugSession((String)value);
+        }
+        break;
+
+      case SPAN:
+        if (value == null) {
+          unsetSpan();
+        } else {
+          setSpan((Integer)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case DEBUG_SESSION:
+        return getDebugSession();
+
+      case SPAN:
+        return Integer.valueOf(getSpan());
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case DEBUG_SESSION:
+        return isSetDebugSession();
+      case SPAN:
+        return isSetSpan();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getCPUStatsFor_args)
+        return this.equals((getCPUStatsFor_args)that);
+      return false;
+    }
+
+    public boolean equals(getCPUStatsFor_args that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_debugSession = true && this.isSetDebugSession();
+      boolean that_present_debugSession = true && that.isSetDebugSession();
+      if (this_present_debugSession || that_present_debugSession) {
+        if (!(this_present_debugSession && that_present_debugSession))
+          return false;
+        if (!this.debugSession.equals(that.debugSession))
+          return false;
+      }
+
+      boolean this_present_span = true;
+      boolean that_present_span = true;
+      if (this_present_span || that_present_span) {
+        if (!(this_present_span && that_present_span))
+          return false;
+        if (this.span != that.span)
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    @Override
+    public int compareTo(getCPUStatsFor_args other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetDebugSession()).compareTo(other.isSetDebugSession());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetDebugSession()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.debugSession, other.debugSession);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetSpan()).compareTo(other.isSetSpan());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSpan()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.span, other.span);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+    }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getCPUStatsFor_args(");
+      boolean first = true;
+
+      sb.append("debugSession:");
+      if (this.debugSession == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.debugSession);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("span:");
+      sb.append(this.span);
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+      // check for sub-struct validity
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        // it doesn't seem like you should have to do this, but java serialization is wacky, and doesn't call the default constructor.
+        __isset_bitfield = 0;
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class getCPUStatsFor_argsStandardSchemeFactory implements SchemeFactory {
+      public getCPUStatsFor_argsStandardScheme getScheme() {
+        return new getCPUStatsFor_argsStandardScheme();
+      }
+    }
+
+    private static class getCPUStatsFor_argsStandardScheme extends StandardScheme<getCPUStatsFor_args> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getCPUStatsFor_args struct) throws TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 1: // DEBUG_SESSION
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+                struct.debugSession = iprot.readString();
+                struct.setDebugSessionIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 2: // SPAN
+              if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+                struct.span = iprot.readI32();
+                struct.setSpanIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getCPUStatsFor_args struct) throws TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.debugSession != null) {
+          oprot.writeFieldBegin(DEBUG_SESSION_FIELD_DESC);
+          oprot.writeString(struct.debugSession);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldBegin(SPAN_FIELD_DESC);
+        oprot.writeI32(struct.span);
+        oprot.writeFieldEnd();
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class getCPUStatsFor_argsTupleSchemeFactory implements SchemeFactory {
+      public getCPUStatsFor_argsTupleScheme getScheme() {
+        return new getCPUStatsFor_argsTupleScheme();
+      }
+    }
+
+    private static class getCPUStatsFor_argsTupleScheme extends TupleScheme<getCPUStatsFor_args> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, getCPUStatsFor_args struct) throws TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetDebugSession()) {
+          optionals.set(0);
+        }
+        if (struct.isSetSpan()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetDebugSession()) {
+          oprot.writeString(struct.debugSession);
+        }
+        if (struct.isSetSpan()) {
+          oprot.writeI32(struct.span);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, getCPUStatsFor_args struct) throws TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.debugSession = iprot.readString();
+          struct.setDebugSessionIsSet(true);
+        }
+        if (incoming.get(1)) {
+          struct.span = iprot.readI32();
+          struct.setSpanIsSet(true);
+        }
+      }
+    }
+
+  }
+
+  public static class getCPUStatsFor_result implements org.apache.thrift.TBase<getCPUStatsFor_result, getCPUStatsFor_result._Fields>, java.io.Serializable, Cloneable, Comparable<getCPUStatsFor_result>   {
+    private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getCPUStatsFor_result");
+
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
+    private static final org.apache.thrift.protocol.TField KERNEL_EXCEPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("kernelException", org.apache.thrift.protocol.TType.STRUCT, (short)1);
+
+    private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
+    static {
+      schemes.put(StandardScheme.class, new getCPUStatsFor_resultStandardSchemeFactory());
+      schemes.put(TupleScheme.class, new getCPUStatsFor_resultTupleSchemeFactory());
+    }
+
+    private CPUStatsStruct success; // required
+    private DroidStalkerKernelException kernelException; // required
+
+    /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
+    public enum _Fields implements org.apache.thrift.TFieldIdEnum {
+      SUCCESS((short)0, "success"),
+      KERNEL_EXCEPTION((short)1, "kernelException");
+
+      private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
+
+      static {
+        for (_Fields field : EnumSet.allOf(_Fields.class)) {
+          byName.put(field.getFieldName(), field);
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, or null if its not found.
+       */
+      public static _Fields findByThriftId(int fieldId) {
+        switch(fieldId) {
+          case 0: // SUCCESS
+            return SUCCESS;
+          case 1: // KERNEL_EXCEPTION
+            return KERNEL_EXCEPTION;
+          default:
+            return null;
+        }
+      }
+
+      /**
+       * Find the _Fields constant that matches fieldId, throwing an exception
+       * if it is not found.
+       */
+      public static _Fields findByThriftIdOrThrow(int fieldId) {
+        _Fields fields = findByThriftId(fieldId);
+        if (fields == null) throw new IllegalArgumentException("Field " + fieldId + " doesn't exist!");
+        return fields;
+      }
+
+      /**
+       * Find the _Fields constant that matches name, or null if its not found.
+       */
+      public static _Fields findByName(String name) {
+        return byName.get(name);
+      }
+
+      private final short _thriftId;
+      private final String _fieldName;
+
+      _Fields(short thriftId, String fieldName) {
+        _thriftId = thriftId;
+        _fieldName = fieldName;
+      }
+
+      public short getThriftFieldId() {
+        return _thriftId;
+      }
+
+      public String getFieldName() {
+        return _fieldName;
+      }
+    }
+
+    // isset id assignments
+    public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
+    static {
+      Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+      tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, CPUStatsStruct.class)));
+      tmpMap.put(_Fields.KERNEL_EXCEPTION, new org.apache.thrift.meta_data.FieldMetaData("kernelException", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+          new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
+      metaDataMap = Collections.unmodifiableMap(tmpMap);
+      org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getCPUStatsFor_result.class, metaDataMap);
+    }
+
+    public getCPUStatsFor_result() {
+    }
+
+    public getCPUStatsFor_result(
+      CPUStatsStruct success,
+      DroidStalkerKernelException kernelException)
+    {
+      this();
+      this.success = success;
+      this.kernelException = kernelException;
+    }
+
+    /**
+     * Performs a deep copy on <i>other</i>.
+     */
+    public getCPUStatsFor_result(getCPUStatsFor_result other) {
+      if (other.isSetSuccess()) {
+        this.success = new CPUStatsStruct(other.success);
+      }
+      if (other.isSetKernelException()) {
+        this.kernelException = new DroidStalkerKernelException(other.kernelException);
+      }
+    }
+
+    public getCPUStatsFor_result deepCopy() {
+      return new getCPUStatsFor_result(this);
+    }
+
+    @Override
+    public void clear() {
+      this.success = null;
+      this.kernelException = null;
+    }
+
+    public CPUStatsStruct getSuccess() {
+      return this.success;
+    }
+
+    public void setSuccess(CPUStatsStruct success) {
+      this.success = success;
+    }
+
+    public void unsetSuccess() {
+      this.success = null;
+    }
+
+    /** Returns true if field success is set (has been assigned a value) and false otherwise */
+    public boolean isSetSuccess() {
+      return this.success != null;
+    }
+
+    public void setSuccessIsSet(boolean value) {
+      if (!value) {
+        this.success = null;
+      }
+    }
+
+    public DroidStalkerKernelException getKernelException() {
+      return this.kernelException;
+    }
+
+    public void setKernelException(DroidStalkerKernelException kernelException) {
+      this.kernelException = kernelException;
+    }
+
+    public void unsetKernelException() {
+      this.kernelException = null;
+    }
+
+    /** Returns true if field kernelException is set (has been assigned a value) and false otherwise */
+    public boolean isSetKernelException() {
+      return this.kernelException != null;
+    }
+
+    public void setKernelExceptionIsSet(boolean value) {
+      if (!value) {
+        this.kernelException = null;
+      }
+    }
+
+    public void setFieldValue(_Fields field, Object value) {
+      switch (field) {
+      case SUCCESS:
+        if (value == null) {
+          unsetSuccess();
+        } else {
+          setSuccess((CPUStatsStruct)value);
+        }
+        break;
+
+      case KERNEL_EXCEPTION:
+        if (value == null) {
+          unsetKernelException();
+        } else {
+          setKernelException((DroidStalkerKernelException)value);
+        }
+        break;
+
+      }
+    }
+
+    public Object getFieldValue(_Fields field) {
+      switch (field) {
+      case SUCCESS:
+        return getSuccess();
+
+      case KERNEL_EXCEPTION:
+        return getKernelException();
+
+      }
+      throw new IllegalStateException();
+    }
+
+    /** Returns true if field corresponding to fieldID is set (has been assigned a value) and false otherwise */
+    public boolean isSet(_Fields field) {
+      if (field == null) {
+        throw new IllegalArgumentException();
+      }
+
+      switch (field) {
+      case SUCCESS:
+        return isSetSuccess();
+      case KERNEL_EXCEPTION:
+        return isSetKernelException();
+      }
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean equals(Object that) {
+      if (that == null)
+        return false;
+      if (that instanceof getCPUStatsFor_result)
+        return this.equals((getCPUStatsFor_result)that);
+      return false;
+    }
+
+    public boolean equals(getCPUStatsFor_result that) {
+      if (that == null)
+        return false;
+
+      boolean this_present_success = true && this.isSetSuccess();
+      boolean that_present_success = true && that.isSetSuccess();
+      if (this_present_success || that_present_success) {
+        if (!(this_present_success && that_present_success))
+          return false;
+        if (!this.success.equals(that.success))
+          return false;
+      }
+
+      boolean this_present_kernelException = true && this.isSetKernelException();
+      boolean that_present_kernelException = true && that.isSetKernelException();
+      if (this_present_kernelException || that_present_kernelException) {
+        if (!(this_present_kernelException && that_present_kernelException))
+          return false;
+        if (!this.kernelException.equals(that.kernelException))
+          return false;
+      }
+
+      return true;
+    }
+
+    @Override
+    public int hashCode() {
+      return 0;
+    }
+
+    @Override
+    public int compareTo(getCPUStatsFor_result other) {
+      if (!getClass().equals(other.getClass())) {
+        return getClass().getName().compareTo(other.getClass().getName());
+      }
+
+      int lastComparison = 0;
+
+      lastComparison = Boolean.valueOf(isSetSuccess()).compareTo(other.isSetSuccess());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetSuccess()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.success, other.success);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      lastComparison = Boolean.valueOf(isSetKernelException()).compareTo(other.isSetKernelException());
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+      if (isSetKernelException()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.kernelException, other.kernelException);
+        if (lastComparison != 0) {
+          return lastComparison;
+        }
+      }
+      return 0;
+    }
+
+    public _Fields fieldForId(int fieldId) {
+      return _Fields.findByThriftId(fieldId);
+    }
+
+    public void read(org.apache.thrift.protocol.TProtocol iprot) throws TException {
+      schemes.get(iprot.getScheme()).getScheme().read(iprot, this);
+    }
+
+    public void write(org.apache.thrift.protocol.TProtocol oprot) throws TException {
+      schemes.get(oprot.getScheme()).getScheme().write(oprot, this);
+      }
+
+    @Override
+    public String toString() {
+      StringBuilder sb = new StringBuilder("getCPUStatsFor_result(");
+      boolean first = true;
+
+      sb.append("success:");
+      if (this.success == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.success);
+      }
+      first = false;
+      if (!first) sb.append(", ");
+      sb.append("kernelException:");
+      if (this.kernelException == null) {
+        sb.append("null");
+      } else {
+        sb.append(this.kernelException);
+      }
+      first = false;
+      sb.append(")");
+      return sb.toString();
+    }
+
+    public void validate() throws TException {
+      // check for required fields
+      // check for sub-struct validity
+      if (success != null) {
+        success.validate();
+      }
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
+      try {
+        write(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(out)));
+      } catch (TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private void readObject(java.io.ObjectInputStream in) throws java.io.IOException, ClassNotFoundException {
+      try {
+        read(new org.apache.thrift.protocol.TCompactProtocol(new org.apache.thrift.transport.TIOStreamTransport(in)));
+      } catch (TException te) {
+        throw new java.io.IOException(te);
+      }
+    }
+
+    private static class getCPUStatsFor_resultStandardSchemeFactory implements SchemeFactory {
+      public getCPUStatsFor_resultStandardScheme getScheme() {
+        return new getCPUStatsFor_resultStandardScheme();
+      }
+    }
+
+    private static class getCPUStatsFor_resultStandardScheme extends StandardScheme<getCPUStatsFor_result> {
+
+      public void read(org.apache.thrift.protocol.TProtocol iprot, getCPUStatsFor_result struct) throws TException {
+        org.apache.thrift.protocol.TField schemeField;
+        iprot.readStructBegin();
+        while (true)
+        {
+          schemeField = iprot.readFieldBegin();
+          if (schemeField.type == org.apache.thrift.protocol.TType.STOP) { 
+            break;
+          }
+          switch (schemeField.id) {
+            case 0: // SUCCESS
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.success = new CPUStatsStruct();
+                struct.success.read(iprot);
+                struct.setSuccessIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            case 1: // KERNEL_EXCEPTION
+              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
+                struct.kernelException = new DroidStalkerKernelException();
+                struct.kernelException.read(iprot);
+                struct.setKernelExceptionIsSet(true);
+              } else { 
+                org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+              }
+              break;
+            default:
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+          }
+          iprot.readFieldEnd();
+        }
+        iprot.readStructEnd();
+        struct.validate();
+      }
+
+      public void write(org.apache.thrift.protocol.TProtocol oprot, getCPUStatsFor_result struct) throws TException {
+        struct.validate();
+
+        oprot.writeStructBegin(STRUCT_DESC);
+        if (struct.success != null) {
+          oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
+          struct.success.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        if (struct.kernelException != null) {
+          oprot.writeFieldBegin(KERNEL_EXCEPTION_FIELD_DESC);
+          struct.kernelException.write(oprot);
+          oprot.writeFieldEnd();
+        }
+        oprot.writeFieldStop();
+        oprot.writeStructEnd();
+      }
+
+    }
+
+    private static class getCPUStatsFor_resultTupleSchemeFactory implements SchemeFactory {
+      public getCPUStatsFor_resultTupleScheme getScheme() {
+        return new getCPUStatsFor_resultTupleScheme();
+      }
+    }
+
+    private static class getCPUStatsFor_resultTupleScheme extends TupleScheme<getCPUStatsFor_result> {
+
+      @Override
+      public void write(org.apache.thrift.protocol.TProtocol prot, getCPUStatsFor_result struct) throws TException {
+        TTupleProtocol oprot = (TTupleProtocol) prot;
+        BitSet optionals = new BitSet();
+        if (struct.isSetSuccess()) {
+          optionals.set(0);
+        }
+        if (struct.isSetKernelException()) {
+          optionals.set(1);
+        }
+        oprot.writeBitSet(optionals, 2);
+        if (struct.isSetSuccess()) {
+          struct.success.write(oprot);
+        }
+        if (struct.isSetKernelException()) {
+          struct.kernelException.write(oprot);
+        }
+      }
+
+      @Override
+      public void read(org.apache.thrift.protocol.TProtocol prot, getCPUStatsFor_result struct) throws TException {
+        TTupleProtocol iprot = (TTupleProtocol) prot;
+        BitSet incoming = iprot.readBitSet(2);
+        if (incoming.get(0)) {
+          struct.success = new CPUStatsStruct();
+          struct.success.read(iprot);
           struct.setSuccessIsSet(true);
         }
         if (incoming.get(1)) {

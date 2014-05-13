@@ -3,10 +3,7 @@ package com.rc.droid_stalker.sessions;
 import com.android.ddmlib.*;
 import com.rc.droid_stalker.components.AppConnection;
 import com.rc.droid_stalker.models.ThriftStructHelpers;
-import com.rc.droid_stalker.thrift.AndroidAppStruct;
-import com.rc.droid_stalker.thrift.DroidStalkerKernelException;
-import com.rc.droid_stalker.thrift.KernelExceptionErrorCode;
-import com.rc.droid_stalker.thrift.ThreadInfoStruct;
+import com.rc.droid_stalker.thrift.*;
 import org.apache.thrift.TException;
 import org.apache.thrift.transport.TTransportException;
 import org.slf4j.Logger;
@@ -123,7 +120,20 @@ public final class DebugSession {
         try {
             return mAppConnection.getClient().getInstalledApps();
         } catch (TException e) {
-            throw new DroidStalkerKernelException(KernelExceptionErrorCode.APP_NOT_FOUND, e.getMessage());
+            logger.error("Error while getting installed applications",e);
+            throw new DroidStalkerKernelException(KernelExceptionErrorCode.APP_NOT_FOUND,
+                    "Error message: " +e.getMessage());
+        }
+    }
+
+    public CPUStatsStruct getCPUStats(final int span) throws DroidStalkerKernelException {
+        logger.debug("Getting CPU stats for {} span {}",mClient.getClientData().getPid(),span);
+        try {
+            return mAppConnection.getClient().getCPUStatsFor(mClient.getClientData().getPid(), span);
+        } catch (TException e) {
+            logger.error("Error while getting CPU stats", e);
+            throw new DroidStalkerKernelException(KernelExceptionErrorCode.KERNEL_CRASHED,
+                    "Error message: "+e.getMessage());
         }
     }
 
@@ -131,6 +141,7 @@ public final class DebugSession {
                                         final AndroidAppStruct androidApp) throws TimeoutException, AdbCommandRejectedException, ShellCommandUnresponsiveException, IOException, DroidStalkerKernelException, TTransportException {
         return new DebugSession(device, androidApp);
     }
+
 
     public void closeSession() {
 

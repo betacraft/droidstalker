@@ -15,6 +15,7 @@ import org.apache.thrift.TEnum;
  * Kernel exception error codes
  */
 public enum KernelExceptionErrorCode implements TEnum {
+  KERNEL_ERROR(0),
   KERNEL_BOOT_FAILED(1),
   KERNEL_CRASHED(2),
   DEVICE_DISCONNECTED(3),
@@ -43,6 +44,8 @@ public enum KernelExceptionErrorCode implements TEnum {
    */
   public static KernelExceptionErrorCode findByValue(int value) { 
     switch (value) {
+      case 0:
+        return KERNEL_ERROR;
       case 1:
         return KERNEL_BOOT_FAILED;
       case 2:

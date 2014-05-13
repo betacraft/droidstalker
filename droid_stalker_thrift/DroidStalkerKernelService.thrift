@@ -5,6 +5,7 @@
 include "DeviceStruct.thrift"
 include "ThreadInfoStruct.thrift"
 include "AndroidAppStruct.thrift"
+include "CPUStatsStruct.thrift"
 
 namespace java com.rc.droid_stalker.thrift
 
@@ -14,6 +15,7 @@ namespace java com.rc.droid_stalker.thrift
  * Kernel exception error codes
  */
 enum KernelExceptionErrorCode{
+    KERNEL_ERROR =0,
     KERNEL_BOOT_FAILED = 1,
     KERNEL_CRASHED = 2,
     DEVICE_DISCONNECTED = 3,
@@ -55,5 +57,10 @@ service DroidStalkerKernelService {
      * Method to get all running threads in a debug session
      */
     set<ThreadInfoStruct.ThreadInfoStruct> getThreadsRunningIn(1: string debugSession) throws
+    (1: DroidStalkerKernelException kernelException),
+    /**
+     * Method to get CPU stats associated with debug session
+     **/
+    CPUStatsStruct.CPUStatsStruct getCPUStatsFor(1: string debugSession, 2: i32 span) throws
     (1: DroidStalkerKernelException kernelException),
 }

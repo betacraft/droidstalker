@@ -3,9 +3,9 @@
  */
 
 include "AndroidAppStruct.thrift"
+include "CPUStatsStruct.thrift"
 
 namespace java com.rc.droid_stalker.thrift
-
 
 
 /**
@@ -30,6 +30,10 @@ service DroidStalkerAppService {
     /**
      * Method to get installed apps from device
      */
-    set<AndroidAppStruct.AndroidAppStruct> getInstalledApps() throws (1: DroidStalkerAppException kernelException),
-
+    set<AndroidAppStruct.AndroidAppStruct> getInstalledApps() throws (1: DroidStalkerAppException appException),
+    /**
+     * Method to get CPU stats associated with a pid
+     **/
+    CPUStatsStruct.CPUStatsStruct getCPUStatsFor(1: i32 pid, 2: i32 span) throws (1: DroidStalkerAppException
+    appException),
 }

@@ -17,7 +17,10 @@ import org.jboss.netty.util.HashedWheelTimer;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -41,6 +44,7 @@ public class DroidStalkerService extends Service {
     private NettyServerTransport mDroidStalkerThriftServer;
     private ExecutorService mBossExecutor;
     private ExecutorService mWorkerExecutor;
+
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -139,15 +143,4 @@ public class DroidStalkerService extends Service {
     }
 
 
-    private static final class ApplicationListStalker implements Runnable {
-
-        private static final String TAG = "###ApplicationListStalker###";
-        private Context mContext;
-        private ConcurrentLinkedDeque<String> stalkList;
-
-        @Override
-        public void run() {
-
-        }
-    }
 }

@@ -2,6 +2,7 @@ package com.rc.droid_stalker;
 
 import com.rc.droid_stalker.components.KernelConnection;
 import com.rc.droid_stalker.thrift.AndroidAppStruct;
+import com.rc.droid_stalker.thrift.CPUStatsStruct;
 import com.rc.droid_stalker.thrift.DeviceStruct;
 import com.rc.droid_stalker.thrift.ThreadInfoStruct;
 import org.junit.After;
@@ -37,12 +38,10 @@ public class KernelServiceHandlerTest {
     }
 
 
-
-
-
     @Test
     public void testStartDebugSessionFor() throws Exception {
-       Set<DeviceStruct> deviceStructSet = mKernelConnection.getClient().getDevices();
+
+        Set<DeviceStruct> deviceStructSet = mKernelConnection.getClient().getDevices();
         DeviceStruct device = null;
         for (DeviceStruct deviceStruct : deviceStructSet) {
             device = deviceStruct;
@@ -58,9 +57,16 @@ public class KernelServiceHandlerTest {
         for (ThreadInfoStruct threadInfoStruct : mKernelConnection.getClient().getThreadsRunningIn(debugSessionId)) {
             System.out.println(threadInfoStruct.getName());
         }
-        for(AndroidAppStruct app : mKernelConnection.getClient().getInstalledAppsOn(device)){
+        for (AndroidAppStruct app : mKernelConnection.getClient().getInstalledAppsOn(device)) {
             System.out.println(app.getApplicationName());
         }
+        for (int i = 0; i < 100; ++i) {
+            CPUStatsStruct cpuStatsStruct = mKernelConnection.getClient().getCPUStatsFor(debugSessionId, 2000);
+            System.out.println(String.format("CPU stas %s %s %s", cpuStatsStruct.getPid(), cpuStatsStruct.getTotalCPU(),
+                    cpuStatsStruct.getPidCPU()));
+
+        }
+
         assert true;
     }
 

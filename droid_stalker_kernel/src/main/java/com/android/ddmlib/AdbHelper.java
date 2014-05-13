@@ -128,6 +128,7 @@ public final class AdbHelper {
             throws TimeoutException, AdbCommandRejectedException, IOException {
 
         SocketChannel adbChan = SocketChannel.open(adbSockAddr);
+        logger.debug("adb chan finishi connect: {}", adbChan.finishConnect());
         try {
             logger.debug("Is passthrough socket channel connected : {}", adbChan.isConnected());
             adbChan.configureBlocking(false);

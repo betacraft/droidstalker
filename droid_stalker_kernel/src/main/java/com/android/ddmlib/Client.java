@@ -155,6 +155,7 @@ public class Client {
      * @param pid    the client pid.
      */
     Client(Device device, SocketChannel chan, int pid) {
+
         mDevice = device;
         mChan = chan;
 

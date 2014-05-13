@@ -33,13 +33,14 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
      * Initialization block
      */ {
         mConnectedDevices = new ConcurrentHashMap<String, IDevice>();
-
-
     }
 
     public KernelServiceHandler() {
         try {
             mADB = ADB.initialize(String.format(ANDROID_SDK_LOCATION_FORMAT, "/home/akshay/android-sdk-linux"), this);
+            for (final IDevice device : mADB.getDevices()) {
+                addDevice(device);
+            }
         } catch (DroidStalkerKernelException e) {
             e.printStackTrace();
         }
@@ -48,6 +49,7 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
     @Override
     public String startDebugSessionFor(final DeviceStruct device, final AndroidAppStruct androidApp) throws
             DroidStalkerKernelException {
+        logger.debug("Starting debug session for {}",device.getSerialNumber());
         if (device == null) {
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.APP_COULD_NOT_START, "Device is null");
         }
@@ -60,16 +62,22 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
         try {
             mCurrentDebugSession = DebugSession.startFor(debugDevice, androidApp);
         } catch (TimeoutException e) {
+            logger.error("Error while creating debug session",e);
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.FAILED_TO_START_APP, e.getMessage());
         } catch (AdbCommandRejectedException e) {
+            logger.error("Error while creating debug session",e);
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.FAILED_TO_START_APP, e.getMessage());
         } catch (ShellCommandUnresponsiveException e) {
+            logger.error("Error while creating debug session",e);
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.FAILED_TO_START_APP, e.getMessage());
         } catch (IOException e) {
+            logger.error("Error while creating debug session",e);
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.FAILED_TO_START_APP, e.getMessage());
         } catch (TTransportException e) {
+            logger.error("Error while creating debug session",e);
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.FAILED_TO_START_APP, e.getMessage());
         }
+        logger.debug("Debug session created successfully");
         return mCurrentDebugSession.getSessionId();
     }
 
@@ -82,7 +90,7 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
 
     @Override
     public Set<AndroidAppStruct> getInstalledAppsOn(final DeviceStruct device) throws DroidStalkerKernelException {
-            return mCurrentDebugSession.getInstalledApplications();
+        return mCurrentDebugSession.getInstalledApplications();
     }
 
 
@@ -93,6 +101,12 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
                     "Illegal debug session");
         }
         return mCurrentDebugSession.getAllThreads();
+    }
+
+    @Override
+    public CPUStatsStruct getCPUStatsFor(final String debugSession,
+                                         final int span) throws DroidStalkerKernelException {
+        return mCurrentDebugSession.getCPUStats(span);
     }
 
     private Set<DeviceStruct> getConnectedDevicesStructList() {
@@ -109,13 +123,21 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
     @Override
     public void deviceConnected(final IDevice device) {
         logger.debug("{} device got connected", device.getSerialNumber());
+        addDevice(device);
+    }
+
+    private void addDevice(final IDevice device) {
+        logger.debug("adding {} device", device.getSerialNumber());
         try {
+            //ProcessKiller.killProcessRunningOnPort(11000);
             AdbHelper.createForward(AndroidDebugBridge.getSocketAddress(), device, "tcp:11000", "tcp:11000");
         } catch (TimeoutException e) {
             e.printStackTrace();
         } catch (AdbCommandRejectedException e) {
             e.printStackTrace();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mConnectedDevices.put(device.getSerialNumber(), device);

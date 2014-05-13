@@ -17,6 +17,7 @@
 package com.android.ddmlib;
 
 import com.android.ddmlib.ClientData.DebuggerStatus;
+import com.rc.droid_stalker.components.ProcessKiller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,7 +68,10 @@ class Debugger {
      * on a specific port.
      */
     Debugger(Client client, int listenPort) throws IOException {
-
+        try {
+            ProcessKiller.killProcessRunningOnPort(listenPort);
+        } catch (Exception ignored) {
+        }
         mClient = client;
         mListenPort = listenPort;
 
@@ -80,7 +84,6 @@ class Debugger {
         mListenChannel.setOption(StandardSocketOptions.SO_REUSEADDR, true);
         //mListenChannel.socket().setReuseAddress(true);  // enable SO_REUSEADDR
         mListenChannel.socket().bind(addr);
-
         mReadBuffer = ByteBuffer.allocate(INITIAL_BUF_SIZE);
         mPreDataBuffer = ByteBuffer.allocate(PRE_DATA_BUF_SIZE);
         mConnState = ST_NOT_CONNECTED;

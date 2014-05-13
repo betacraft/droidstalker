@@ -6,9 +6,8 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import com.rc.droid_stalker.thrift.AndroidAppStruct;
-import com.rc.droid_stalker.thrift.DroidStalkerAppException;
-import com.rc.droid_stalker.thrift.DroidStalkerAppService;
+import com.rc.droid_stalker.components.AndroidOSUtils;
+import com.rc.droid_stalker.thrift.*;
 
 import java.io.ByteArrayOutputStream;
 import java.util.LinkedHashSet;
@@ -55,5 +54,50 @@ public final class DroidStalkerAppServiceHandler implements DroidStalkerAppServi
                     new String(byteArray)));
         }
         return installedAppStructSet;
+    }
+
+    @Override
+    public CPUStatsStruct getCPUStatsFor(final int pid, final int span) throws DroidStalkerAppException {
+        final CPUStatsStruct cpuStatsStruct = new CPUStatsStruct();
+        cpuStatsStruct.setPid(pid);
+        final AndroidOSUtils androidOSUtils = new AndroidOSUtils();
+        String cpuStat1 = androidOSUtils.readSystemStat();
+        String pidStat1 = androidOSUtils.readProcessStat(pid);
+
+        try {
+            Thread.sleep(span);
+        } catch (Exception ignored) {
+        }
+
+        String cpuStat2 = androidOSUtils.readSystemStat();
+        String pidStat2 = androidOSUtils.readProcessStat(pid);
+
+        float cpu = androidOSUtils
+                .getSystemCpuUsage(cpuStat1, cpuStat2);
+
+        if (cpu >= 0.0f) {
+
+            cpuStatsStruct.setTotalCPU(cpu);
+        } else {
+            throw new DroidStalkerAppException(AppExceptionErrorCode.ERROR_WHILE_EXECUTING_CODE,
+                    "TOTAL CPU is below than 0");
+        }
+
+        String[] toks = cpuStat1.split(" ");
+        long cpu1 = androidOSUtils.getSystemUptime(toks);
+
+        toks = cpuStat2.split(" ");
+        long cpu2 = androidOSUtils.getSystemUptime(toks);
+
+        cpu = androidOSUtils.getProcessCpuUsage(pidStat1, pidStat2,
+                cpu2 - cpu1);
+        if (cpu >= 0.0f) {
+            cpuStatsStruct.setPidCPU(cpu);
+        } else {
+            throw new DroidStalkerAppException(AppExceptionErrorCode.ERROR_WHILE_EXECUTING_CODE,
+                    "Pid CPU is below than 0");
+        }
+
+        return cpuStatsStruct;
     }
 }

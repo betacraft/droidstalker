@@ -1,5 +1,6 @@
 #!/bin/sh
 
+thrift --gen java:beans CPUStatsStruct.thrift
 thrift --gen java:beans AndroidAppStruct.thrift
 thrift --gen java:beans DeviceStruct.thrift
 thrift --gen java:beans ThreadInfoStruct.thrift

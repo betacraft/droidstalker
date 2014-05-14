@@ -12,35 +12,32 @@ import java.lang.reflect.Method;
  * Date  : 5/5/14
  * Time  : 7:56 PM
  */
-public final class BatteryStatsService extends NativeServiceWrapper {
+public final class NetworkStatsService extends NativeServiceWrapper {
 
 
-    private static final String TAG = "###BatteryStatsService###";
+    private static final String TAG = "###NetworkStatsService###";
     private Context mContext;
 
-    public BatteryStatsService(final Context context) throws ClassNotFoundException, NoSuchMethodException,
+    public NetworkStatsService(final Context context) throws ClassNotFoundException, NoSuchMethodException,
             InvocationTargetException,
             IllegalAccessException {
-        super("batterystats");
+        super("netstats");
         mContext = context;
         for (Method method : mServiceStubClass.getMethods()) {
             StringBuilder params = new StringBuilder();
             for (Class type : method.getParameterTypes()) {
                 params.append(type.getCanonicalName()).append(", ");
             }
-            Log.d(TAG, "Battery Stats -> " + method.getName() + "(" + params + "):" + method
+            Log.d(TAG, "Network Stats -> " + method.getName() + "(" + params + "):" + method
                     .getReturnType()
                     .getCanonicalName());
         }
 
-       // mServiceStubClass.getMethod("publish", Context.class).invoke(mServiceObject,mContext);
-       /* byte[] stats = (byte[]) mServiceStubClass.getMethod("getStatistics").invoke(mServiceObject);
-        Log.d(TAG, "stats " + new String(stats));  */
     }
 
 
     @Override
     protected String getServiceClassName() {
-        return "com.android.internal.app.IBatteryStats";
+        return "android.net.INetworkStatsService";
     }
 }

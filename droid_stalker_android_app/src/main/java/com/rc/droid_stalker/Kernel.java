@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Toast;
 import com.rc.droid_stalker.components.AppConnection;
 import com.rc.droid_stalker.native_services.BatteryStatsService;
+import com.rc.droid_stalker.native_services.NetworkStatsService;
 import com.rc.droid_stalker.native_services.WindowManagerService;
 import com.rc.droid_stalker.service.DroidStalkerService;
 import com.rc.droid_stalker.thrift.AndroidAppStruct;
@@ -51,17 +52,39 @@ public class Kernel extends Activity {
                 testGetInstalledApps();
             }
         });
+        findViewById(R.id.get_network_stats).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    getNetworkStats();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         findViewById(R.id.get_cpu_stats).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 testGetCPUStats();
             }
         });
+        findViewById(R.id.get_battery_stats_info).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getBatterStats();
+            }
+        });
         getApplicationContext().startService(new Intent(getApplicationContext(), DroidStalkerService.class));
         try {
             WindowManagerService windowManagerService = new WindowManagerService();
             Log.d(TAG, "rotation " + windowManagerService.getCurrentRotation());
-            BatteryStatsService serviceManager = new BatteryStatsService();
+            BatteryStatsService serviceManager = new BatteryStatsService(getBaseContext());
 
         } catch (ClassNotFoundException e) {
             Log.e(TAG, "", e);
@@ -75,6 +98,14 @@ public class Kernel extends Activity {
 
             Log.e(TAG, "", e);
         }
+    }
+
+    private void getNetworkStats() throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+        NetworkStatsService networkStatsService = new NetworkStatsService(getBaseContext());
+    }
+
+    private void getBatterStats() {
+
     }
 
     private void testGetCPUStats() {

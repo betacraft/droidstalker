@@ -8,6 +8,7 @@ include "AndroidAppStruct.thrift"
 include "CPUStatsStruct.thrift"
 
 namespace java com.rc.droid_stalker.thrift
+namespace js js.droid_stalker.thrift
 
 
 

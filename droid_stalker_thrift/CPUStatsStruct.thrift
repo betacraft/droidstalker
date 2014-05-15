@@ -2,6 +2,7 @@
  * Thrift definition file for CPU stats struct
  */
 namespace java com.rc.droid_stalker.thrift
+namespace js js.droid_stalker.thrift
 
 /**
  * CPU stats Structure

@@ -2,6 +2,7 @@
  * Thrift definition file for Device struct
  */
 namespace java com.rc.droid_stalker.thrift
+namespace js js.droid_stalker.thrift
 
 /**
  * Device Structure

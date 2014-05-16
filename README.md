@@ -34,6 +34,23 @@ Java kernel is core of entire logic related with debugging. The entire interface
 
 This acts as a helper project for Java Kernel
 
+
+## Feature list
+
+### Backend
+
+[x] Get thread info
+[x] Get CPU info
+[] Get Heap dump
+[] Get Network stats
+[] Get Battery info
+[x] Get installed apps
+[] Get display info
+
+### Frontend
+
+@rtdp and @kaunteya update this :P
+
 ## Dependencies
 
 1. Node-Webkit : https://github.com/rogerwang/node-webkit

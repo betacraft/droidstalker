@@ -39,13 +39,13 @@ This acts as a helper project for Java Kernel
 
 ### Backend
 
--[x] Get thread info
--[x] Get CPU info
--[] Get Heap dump
--[] Get Network stats
--[] Get Battery info
--[x] Get installed apps
--[] Get display info
+- [x] Get thread info
+- [x] Get CPU info
+- [ ] Get Heap dump
+- [ ] Get Network stats
+- [ ] Get Battery info
+- [x] Get installed apps
+- [ ] Get display info
 
 ### Frontend
 

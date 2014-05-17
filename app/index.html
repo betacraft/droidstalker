@@ -146,7 +146,7 @@
 		<div id="sidebar-left" class="col-xs-2 col-sm-2">
 			<ul class="nav main-menu">
 				<li>
-					<a href="pages/dashboard.html" class="active ajax-link">
+					<a href="/index.html" class="active">
 						<i class="fa fa-dashboard"></i>
 						<span class="hidden-xs">Dashboard</span>
 					</a>
@@ -155,10 +155,127 @@
 		</div>
 		<!--Start Content-->
 		<div id="content" class="col-xs-12 col-sm-10">
-			<div class="preloader">
+			<!-- <div class="preloader">
 				<img src="img/devoops_getdata.gif" class="devoops-getdata" alt="preloader"/>
+			</div> -->
+			<div id="ajax-content">
+				<div class="row">
+					<div id="breadcrumb" class="col-md-12">
+						<ol class="breadcrumb">
+							<li><a href="index.html">Dashboard</a></li>
+							<li><a href="#">Charts</a></li>
+							<li><a href="#">Flot graphs</a></li>
+						</ol>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-6" style="min-height: 100px;">
+						<div class="box">
+							<div class="box-header">
+								<div class="box-name">
+									<i class="fa fa-search"></i>
+									<span>Realtime (see FlotGraph1 function)</span>
+								</div>
+								<div class="box-icons">
+									<a class="collapse-link">
+										<i class="fa fa-chevron-up"></i>
+									</a>
+									<a class="expand-link">
+										<i class="fa fa-expand"></i>
+									</a>
+									<a class="close-link">
+										<i class="fa fa-times"></i>
+									</a>
+								</div>
+								<div class="no-move"></div>
+							</div>
+							<div class="box-content">
+								<div id="box-one-content" style="min-height: 200px;"></div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-12 col-sm-6">
+						<div class="box">
+							<div class="box-header">
+								<div class="box-name">
+									<i class="fa fa-search"></i>
+									<span>Math plots</span>
+								</div>
+								<div class="box-icons">
+									<a class="collapse-link">
+										<i class="fa fa-chevron-up"></i>
+									</a>
+									<a class="expand-link">
+										<i class="fa fa-expand"></i>
+									</a>
+									<a class="close-link">
+										<i class="fa fa-times"></i>
+									</a>
+								</div>
+								<div class="no-move"></div>
+							</div>
+							<div class="box-content">
+								<div id="box-two-content" style="min-height: 200px;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="box boxtest">
+							<div class="box-header">
+								<div class="box-name">
+									<i class="fa fa-search"></i>
+									<span>Thresholds</span>
+								</div>
+								<div class="box-icons">
+									<a class="collapse-link">
+										<i class="fa fa-chevron-up"></i>
+									</a>
+									<a class="expand-link">
+										<i class="fa fa-expand"></i>
+									</a>
+									<a class="close-link">
+										<i class="fa fa-times"></i>
+									</a>
+								</div>
+								<div class="no-move"></div>
+							</div>
+							<div class="box-content">
+								<div id="box-three-content" style="min-height: 200px;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="box">
+							<div class="box-header">
+								<div class="box-name">
+									<i class="fa fa-search"></i>
+									<span>Series Types</span>
+								</div>
+								<div class="box-icons">
+									<a class="collapse-link">
+										<i class="fa fa-chevron-up"></i>
+									</a>
+									<a class="expand-link">
+										<i class="fa fa-expand"></i>
+									</a>
+									<a class="close-link">
+										<i class="fa fa-times"></i>
+									</a>
+								</div>
+								<div class="no-move"></div>
+							</div>
+							<div class="box-content">
+								<div id="box-four-content" style="min-height: 400px;"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
 			</div>
-			<div id="ajax-content"></div>
 		</div>
 		<!--End Content-->
 	</div>
@@ -173,9 +290,30 @@
 <script src="plugins/justified-gallery/jquery.justifiedgallery.min.js"></script>
 <script src="plugins/tinymce/tinymce.min.js"></script>
 <script src="plugins/tinymce/jquery.tinymce.min.js"></script>
-<!-- All functions for this theme + document.ready processing -->
-<script src="js/devoops.js"></script>
 
-<script src="thrift/DroidStalkerKernelService.js"></script>
+<script src="plugins/flot/jquery.flot.js"></script>
+<script src="plugins/flot/jquery.flot.resize.js"></script>
+<script src="plugins/flot/jquery.flot.time.js"></script>
+<script src="js-plain/demo-graphs.js"></script>
+<script src="js-node/utils.js"></script>
+<!-- All functions for this theme + document.ready processing -->
+<!-- <script src="js/devoops.js"></script> -->
+
+<!-- <script src="thrift/DroidStalkerKernelService.js"></script> -->
+
+<script type="text/javascript">
+// Draw all Flot Charts
+function DrawAllFlotCharts(){
+	FlotGraph1();
+	FlotGraph2();
+	FlotGraph3();
+	FlotGraph4();
+}
+$(document).ready(function() {
+	// Load required Flot scripts and draw charts
+	DrawAllFlotCharts();
+	// WinMove();
+});
+</script>
 </body>
 </html>

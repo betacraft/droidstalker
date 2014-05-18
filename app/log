@@ -1,0 +1,527 @@
+Operating system: Linux
+                  0.0.0 Linux 3.2.0-52-generic #78-Ubuntu SMP Fri Jul 26 16:21:44 UTC 2013 x86_64
+CPU: amd64
+     family 6 model 42 stepping 7
+     4 CPUs
+
+Crash reason:  SIGSEGV
+Crash address: 0xb28d0981bb0
+
+Thread 0 (crashed)
+ 0  nw + 0xee46bc
+    rbx = 0x00003b40ddb16f28   r12 = 0x0000000000000000
+    r13 = 0x0000000000000001   r14 = 0x0000000000000001
+    r15 = 0x0000000004399cc0   rip = 0x00000000012e46bc
+    rsp = 0x00007fff87ba60b0   rbp = 0x00007fef359892d0
+    Found by: given as instruction pointer in context
+ 1  nw + 0x20fd084
+    rip = 0x00000000024fd084   rsp = 0x00007fff87ba60c0
+    Found by: stack scanning
+ 2  nw + 0x20fd077
+    rip = 0x00000000024fd077   rsp = 0x00007fff87ba60e0
+    Found by: stack scanning
+ 3  nw + 0x20fd077
+    rip = 0x00000000024fd077   rsp = 0x00007fff87ba6100
+    Found by: stack scanning
+ 4  nw + 0x20fd077
+    rip = 0x00000000024fd077   rsp = 0x00007fff87ba6120
+    Found by: stack scanning
+ 5  nw + 0x20fd077
+    rip = 0x00000000024fd077   rsp = 0x00007fff87ba6140
+    Found by: stack scanning
+ 6  nw + 0x20fd0eb
+    rip = 0x00000000024fd0eb   rsp = 0x00007fff87ba6160
+    Found by: stack scanning
+ 7  nw + 0x20fa6eb
+    rip = 0x00000000024fa6eb   rsp = 0x00007fff87ba6170
+    Found by: stack scanning
+ 8  nw + 0x20fa769
+    rip = 0x00000000024fa769   rsp = 0x00007fff87ba6190
+    Found by: stack scanning
+ 9  nw + 0x20f5917
+    rip = 0x00000000024f5917   rsp = 0x00007fff87ba61a0
+    Found by: stack scanning
+10  nw + 0x20f59d9
+    rip = 0x00000000024f59d9   rsp = 0x00007fff87ba61c0
+    Found by: stack scanning
+11  nw + 0x21ce1c6
+    rip = 0x00000000025ce1c6   rsp = 0x00007fff87ba61d0
+    Found by: stack scanning
+12  libstdc++.so.6.0.16 + 0x6ab58
+    rip = 0x00007fef30947b58   rsp = 0x00007fff87ba6200
+    Found by: stack scanning
+13  nw + 0x99d2d7
+    rip = 0x0000000000d9d2d7   rsp = 0x00007fff87ba6230
+    Found by: stack scanning
+14  nw + 0x99d432
+    rip = 0x0000000000d9d432   rsp = 0x00007fff87ba6270
+    Found by: stack scanning
+15  nw + 0x3f99cc0
+    rip = 0x0000000004399cc0   rsp = 0x00007fff87ba6278
+    Found by: stack scanning
+16  nw + 0x33435d4
+    rip = 0x00000000037435d4   rsp = 0x00007fff87ba62a0
+    Found by: stack scanning
+17  nw + 0x20f12b0
+    rip = 0x00000000024f12b0   rsp = 0x00007fff87ba62c0
+    Found by: stack scanning
+18  nw + 0x20f60fa
+    rip = 0x00000000024f60fa   rsp = 0x00007fff87ba62f0
+    Found by: stack scanning
+19  nw + 0x3f99cc0
+    rip = 0x0000000004399cc0   rsp = 0x00007fff87ba6358
+    Found by: stack scanning
+20  nw + 0x31796f4
+    rip = 0x00000000035796f4   rsp = 0x00007fff87ba6370
+    Found by: stack scanning
+21  nw + 0x2dccb00
+    rip = 0x00000000031ccb00   rsp = 0x00007fff87ba6380
+    Found by: stack scanning
+22  ld-2.15.so + 0xf176
+    rip = 0x00007fef3590f176   rsp = 0x00007fff87ba63a0
+    Found by: stack scanning
+23  ld-2.15.so + 0x13700
+    rip = 0x00007fef35913700   rsp = 0x00007fff87ba63c8
+    Found by: stack scanning
+24  nw + 0x2dccb84
+    rip = 0x00000000031ccb84   rsp = 0x00007fff87ba6408
+    Found by: stack scanning
+25  libstdc++.so.6.0.16 + 0x9f842
+    rip = 0x00007fef3097c842   rsp = 0x00007fff87ba6480
+    Found by: stack scanning
+26  ld-2.15.so + 0x13348
+    rip = 0x00007fef35913348   rsp = 0x00007fff87ba64d0
+    Found by: stack scanning
+27  nw + 0x2dccb84
+    rip = 0x00000000031ccb84   rsp = 0x00007fff87ba64f8
+    Found by: stack scanning
+28  libdl-2.15.so + 0xf26
+    rip = 0x00007fef34fb5f26   rsp = 0x00007fff87ba6500
+    Found by: stack scanning
+29  nw + 0x28fef45
+    rip = 0x0000000002cfef45   rsp = 0x00007fff87ba6570
+    Found by: stack scanning
+30  libdl-2.15.so + 0xf26
+    rip = 0x00007fef34fb5f26   rsp = 0x00007fff87ba6580
+    Found by: stack scanning
+31  nw + 0x33179d8
+    rip = 0x00000000037179d8   rsp = 0x00007fff87ba6590
+    Found by: stack scanning
+32  libdl-2.15.so + 0xec0
+    rip = 0x00007fef34fb5ec0   rsp = 0x00007fff87ba65d8
+    Found by: stack scanning
+33  nw + 0x28ff265
+    rip = 0x0000000002cff265   rsp = 0x00007fff87ba6610
+    Found by: stack scanning
+34  nw + 0x28f6f89
+    rip = 0x0000000002cf6f89   rsp = 0x00007fff87ba6640
+    Found by: stack scanning
+35  nw + 0x2dcc959
+    rip = 0x00000000031cc959   rsp = 0x00007fff87ba6670
+    Found by: stack scanning
+
+Thread 1
+ 0  libc-2.15.so + 0xf0619
+    rbx = 0x00007fef359a3900   r12 = 0x00007fef359be800
+    r13 = 0x0000000000000000   r14 = 0x00007fef359bedf8
+    r15 = 0x0000000004fa0c80   rip = 0x00007fef300fb619
+    rsp = 0x00007fef2c130588   rbp = 0x00007fef359808e0
+    Found by: given as instruction pointer in context
+ 1  nw + 0x880a7a
+    rip = 0x0000000000c80a7a   rsp = 0x00007fef2c130590
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+ 2  nw + 0x880511
+    rip = 0x0000000000c80511   rsp = 0x00007fef2c1305a0
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+ 3  nw + 0x87e3f5
+    rip = 0x0000000000c7e3f5   rsp = 0x00007fef2c1305e0
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+ 4  nw + 0x29c25b0
+    rip = 0x0000000002dc25b0   rsp = 0x00007fef2c130618
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+ 5  nw + 0x41ed93c
+    rip = 0x00000000045ed93c   rsp = 0x00007fef2c130620
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+ 6  nw + 0x41ed7f8
+    rip = 0x00000000045ed7f8   rsp = 0x00007fef2c130628
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+ 7  nw + 0x29c38f9
+    rip = 0x0000000002dc38f9   rsp = 0x00007fef2c130638
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+ 8  nw + 0x1e420d
+    rip = 0x00000000005e420d   rsp = 0x00007fef2c130670
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+ 9  nw + 0x2674a0
+    rip = 0x00000000006674a0   rsp = 0x00007fef2c130700
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+10  librt-2.15.so + 0x415d
+    rip = 0x00007fef351bd15d   rsp = 0x00007fef2c130710
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+11  nw + 0x23597f
+    rip = 0x000000000063597f   rsp = 0x00007fef2c130720
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+12  nw + 0x216db7
+    rip = 0x0000000000616db7   rsp = 0x00007fef2c130730
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+13  nw + 0x235f7e
+    rip = 0x0000000000635f7e   rsp = 0x00007fef2c130740
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+14  nw + 0x216dda
+    rip = 0x0000000000616dda   rsp = 0x00007fef2c130750
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+15  nw + 0x28ffa3a
+    rip = 0x0000000002cffa3a   rsp = 0x00007fef2c130760
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+16  nw + 0x236f3d
+    rip = 0x0000000000636f3d   rsp = 0x00007fef2c130780
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+17  libpthread-2.15.so + 0xb104
+    rip = 0x00007fef31263104   rsp = 0x00007fef2c1307a0
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+18  nw + 0x237040
+    rip = 0x0000000000637040   rsp = 0x00007fef2c1307b0
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+19  nw + 0x227eb5
+    rip = 0x0000000000627eb5   rsp = 0x00007fef2c1307e0
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+20  nw + 0x33179d8
+    rip = 0x00000000037179d8   rsp = 0x00007fef2c1307f0
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+21  libpthread-2.15.so + 0xb104
+    rip = 0x00007fef31263104   rsp = 0x00007fef2c130810
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+22  nw + 0x205ffa
+    rip = 0x0000000000605ffa   rsp = 0x00007fef2c130860
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+23  nw + 0x217510
+    rip = 0x0000000000617510   rsp = 0x00007fef2c130870
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+24  nw + 0x227db5
+    rip = 0x0000000000627db5   rsp = 0x00007fef2c130880
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+25  libstdc++.so.6.0.16 + 0x6ab58
+    rip = 0x00007fef30947b58   rsp = 0x00007fef2c130890
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+26  nw + 0x227eb5
+    rip = 0x0000000000627eb5   rsp = 0x00007fef2c1308a0
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+27  nw + 0x237deb
+    rip = 0x0000000000637deb   rsp = 0x00007fef2c130980
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+28  nw + 0x2175f8
+    rip = 0x00000000006175f8   rsp = 0x00007fef2c130a00
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+29  nw + 0x201404
+    rip = 0x0000000000601404   rsp = 0x00007fef2c130a10
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+30  nw + 0x2313f9
+    rip = 0x00000000006313f9   rsp = 0x00007fef2c130a50
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+31  nw + 0x232d6d
+    rip = 0x0000000000632d6d   rsp = 0x00007fef2c130a70
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+32  nw + 0x232e63
+    rip = 0x0000000000632e63   rsp = 0x00007fef2c130ab0
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+33  nw + 0x232f73
+    rip = 0x0000000000632f73   rsp = 0x00007fef2c130af0
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+34  nw + 0x33be239
+    rip = 0x00000000037be239   rsp = 0x00007fef2c130b20
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+35  libstdc++.so.6.0.16 + 0xa05e3
+    rip = 0x00007fef3097d5e3   rsp = 0x00007fef2c130b40
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+36  nw + 0x23359c
+    rip = 0x000000000063359c   rsp = 0x00007fef2c130b70
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+37  nw + 0x22a8e0
+    rip = 0x000000000062a8e0   rsp = 0x00007fef2c130bc0
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+38  nw + 0x22a9c4
+    rip = 0x000000000062a9c4   rsp = 0x00007fef2c130c00
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+39  ld-2.15.so + 0x15235
+    rip = 0x00007fef35915235   rsp = 0x00007fef2c130c20
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+40  libpthread-2.15.so + 0x7e9a
+    rip = 0x00007fef3125fe9a   rsp = 0x00007fef2c130c70
+    rbp = 0x00007fef359808e0
+    Found by: stack scanning
+
+Thread 2
+ 0  libpthread-2.15.so + 0xbd84
+    rbx = 0x0000000000000000   r12 = 0xfffffffffff0bdc0
+    r13 = 0x0000003800bded84   r14 = 0x00007fef2a895490
+    r15 = 0x0000000000000003   rip = 0x00007fef31263d84
+    rsp = 0x00007fef2a895270   rbp = 0x00003b40dd5a3fd0
+    Found by: given as instruction pointer in context
+ 1  nw + 0x2662b1
+    rip = 0x00000000006662b1   rsp = 0x00007fef2a8952a0
+    Found by: stack scanning
+ 2  nw + 0x28ff444
+    rip = 0x0000000002cff444   rsp = 0x00007fef2a8952e0
+    Found by: stack scanning
+ 3  nw + 0x25bdce
+    rip = 0x000000000065bdce   rsp = 0x00007fef2a895300
+    Found by: stack scanning
+ 4  nw + 0x28ff265
+    rip = 0x0000000002cff265   rsp = 0x00007fef2a895320
+    Found by: stack scanning
+ 5  nw + 0x28f6f89
+    rip = 0x0000000002cf6f89   rsp = 0x00007fef2a895350
+    Found by: stack scanning
+ 6  linux-gate.so + 0x959
+    rip = 0x00007fff87baf959   rsp = 0x00007fef2a8953d0
+    Found by: stack scanning
+ 7  librt-2.15.so + 0x415d
+    rip = 0x00007fef351bd15d   rsp = 0x00007fef2a895400
+    Found by: stack scanning
+ 8  nw + 0x23597f
+    rip = 0x000000000063597f   rsp = 0x00007fef2a895410
+    Found by: stack scanning
+ 9  nw + 0x235f7e
+    rip = 0x0000000000635f7e   rsp = 0x00007fef2a895430
+    Found by: stack scanning
+10  nw + 0x228790
+    rip = 0x0000000000628790   rsp = 0x00007fef2a895440
+    Found by: stack scanning
+11  nw + 0x28f6e00
+    rip = 0x0000000002cf6e00   rsp = 0x00007fef2a895460
+    Found by: stack scanning
+12  nw + 0x2287c1
+    rip = 0x00000000006287c1   rsp = 0x00007fef2a895500
+    Found by: stack scanning
+13  nw + 0x33179d8
+    rip = 0x00000000037179d8   rsp = 0x00007fef2a895520
+    Found by: stack scanning
+14  nw + 0x223ed2a
+    rip = 0x000000000263ed2a   rsp = 0x00007fef2a895548
+    Found by: stack scanning
+15  nw + 0x2070c8
+    rip = 0x00000000006070c8   rsp = 0x00007fef2a895620
+    Found by: stack scanning
+16  nw + 0x223e420
+    rip = 0x000000000263e420   rsp = 0x00007fef2a895648
+    Found by: stack scanning
+17  nw + 0x41539cf
+    rip = 0x00000000045539cf   rsp = 0x00007fef2a895650
+    Found by: stack scanning
+18  nw + 0x4153890
+    rip = 0x0000000004553890   rsp = 0x00007fef2a895658
+    Found by: stack scanning
+19  nw + 0x223ed2a
+    rip = 0x000000000263ed2a   rsp = 0x00007fef2a895668
+    Found by: stack scanning
+20  nw + 0x202dcb
+    rip = 0x0000000000602dcb   rsp = 0x00007fef2a895680
+    Found by: stack scanning
+21  nw + 0x20770b
+    rip = 0x000000000060770b   rsp = 0x00007fef2a8956a0
+    Found by: stack scanning
+22  nw + 0x2674a0
+    rip = 0x00000000006674a0   rsp = 0x00007fef2a895700
+    Found by: stack scanning
+23  librt-2.15.so + 0x415d
+    rip = 0x00007fef351bd15d   rsp = 0x00007fef2a895710
+    Found by: stack scanning
+24  nw + 0x23597f
+    rip = 0x000000000063597f   rsp = 0x00007fef2a895720
+    Found by: stack scanning
+25  nw + 0x216db7
+    rip = 0x0000000000616db7   rsp = 0x00007fef2a895730
+    Found by: stack scanning
+26  nw + 0x235f7e
+    rip = 0x0000000000635f7e   rsp = 0x00007fef2a895740
+    Found by: stack scanning
+27  nw + 0x216dda
+    rip = 0x0000000000616dda   rsp = 0x00007fef2a895750
+    Found by: stack scanning
+28  nw + 0x28ffa3a
+    rip = 0x0000000002cffa3a   rsp = 0x00007fef2a895760
+    Found by: stack scanning
+29  nw + 0x236f3d
+    rip = 0x0000000000636f3d   rsp = 0x00007fef2a895780
+    Found by: stack scanning
+30  nw + 0x237040
+    rip = 0x0000000000637040   rsp = 0x00007fef2a8957b0
+    Found by: stack scanning
+31  nw + 0x227eb5
+    rip = 0x0000000000627eb5   rsp = 0x00007fef2a8957e0
+    Found by: stack scanning
+32  nw + 0x33179d8
+    rip = 0x00000000037179d8   rsp = 0x00007fef2a8957f0
+    Found by: stack scanning
+33  nw + 0x28f6e10
+    rip = 0x0000000002cf6e10   rsp = 0x00007fef2a895800
+    Found by: stack scanning
+34  nw + 0x28ffae3
+    rip = 0x0000000002cffae3   rsp = 0x00007fef2a895810
+    Found by: stack scanning
+35  nw + 0x227eb5
+    rip = 0x0000000000627eb5   rsp = 0x00007fef2a895830
+    Found by: stack scanning
+36  nw + 0x205ffa
+    rip = 0x0000000000605ffa   rsp = 0x00007fef2a895860
+    Found by: stack scanning
+37  nw + 0x217510
+    rip = 0x0000000000617510   rsp = 0x00007fef2a895870
+    Found by: stack scanning
+38  nw + 0x227db5
+    rip = 0x0000000000627db5   rsp = 0x00007fef2a895880
+    Found by: stack scanning
+39  libstdc++.so.6.0.16 + 0x6ab58
+    rip = 0x00007fef30947b58   rsp = 0x00007fef2a895890
+    Found by: stack scanning
+40  nw + 0x227eb5
+    rip = 0x0000000000627eb5   rsp = 0x00007fef2a8958a0
+    Found by: stack scanning
+41  nw + 0x237deb
+    rip = 0x0000000000637deb   rsp = 0x00007fef2a895980
+    Found by: stack scanning
+42  nw + 0x2175f8
+    rip = 0x00000000006175f8   rsp = 0x00007fef2a895a00
+    Found by: stack scanning
+43  nw + 0x201404
+    rip = 0x0000000000601404   rsp = 0x00007fef2a895a10
+    Found by: stack scanning
+44  nw + 0x2313f9
+    rip = 0x00000000006313f9   rsp = 0x00007fef2a895a50
+    Found by: stack scanning
+45  libstdc++.so.6.0.16 + 0x6ab90
+    rip = 0x00007fef30947b90   rsp = 0x00007fef2a895a80
+    Found by: stack scanning
+46  nw + 0x232d6d
+    rip = 0x0000000000632d6d   rsp = 0x00007fef2a895ab0
+    Found by: stack scanning
+47  nw + 0x232f48
+    rip = 0x0000000000632f48   rsp = 0x00007fef2a895af0
+    Found by: stack scanning
+48  nw + 0x33be239
+    rip = 0x00000000037be239   rsp = 0x00007fef2a895b20
+    Found by: stack scanning
+49  libstdc++.so.6.0.16 + 0xa05e3
+    rip = 0x00007fef3097d5e3   rsp = 0x00007fef2a895b40
+    Found by: stack scanning
+50  nw + 0x23359c
+    rip = 0x000000000063359c   rsp = 0x00007fef2a895b70
+    Found by: stack scanning
+51  nw + 0x22a8e0
+    rip = 0x000000000062a8e0   rsp = 0x00007fef2a895bc0
+    Found by: stack scanning
+52  nw + 0x22a9c4
+    rip = 0x000000000062a9c4   rsp = 0x00007fef2a895c00
+    Found by: stack scanning
+53  libpthread-2.15.so + 0x7e9a
+    rip = 0x00007fef3125fe9a   rsp = 0x00007fef2a895c70
+    Found by: stack scanning
+
+Loaded modules:
+0x00400000 - 0x04f7cfff  nw  ???  (main)  (WARNING: No symbols, nw, 73E30E5B35B2E9F8F9384794B20040240)
+0x7fef29985000 - 0x7fef299cafff  Arial_Bold.ttf  ???
+0x7fef299cb000 - 0x7fef29d47fff  UnDotum.ttf  ???
+0x7fef2a897000 - 0x7fef2a89dfff  gconv-modules.cache  ???
+0x7fef2a8da000 - 0x7fef2a91dfff  Arial.ttf  ???
+0x7fef2c132000 - 0x7fef2c39efff  libfreebl3.so  ???
+0x7fef2c3a3000 - 0x7fef2c644fff  libsqlite3.so.0.8.6  ???
+0x7fef2c646000 - 0x7fef2c87ffff  libsoftokn3.so  ???
+0x7fef2c880000 - 0x7fef2c993fff  libffmpegsumo.so  ???
+0x7fef2ca47000 - 0x7fef2d1f8fff  nw.pak  ???
+0x7fef2d1f9000 - 0x7fef2d4c4fff  locale-archive  ???
+0x7fef2d4c5000 - 0x7fef2d6defff  libresolv-2.15.so  ???
+0x7fef2d6e1000 - 0x7fef2d8fefff  libselinux.so.1  ???
+0x7fef2d900000 - 0x7fef2db05fff  libXdmcp.so.6.0.0  ???
+0x7fef2db06000 - 0x7fef2dd08fff  libXau.so.6.0.0  ???
+0x7fef2dd09000 - 0x7fef2df2efff  libdbus-glib-1.so.2.2.2  ???
+0x7fef2df2f000 - 0x7fef2e132fff  libplds4.so  ???
+0x7fef2e133000 - 0x7fef2e349fff  libz.so.1.2.3.4  ???
+0x7fef2e34a000 - 0x7fef2e553fff  libxcb-render.so.0.0.0  ???
+0x7fef2e554000 - 0x7fef2e756fff  libxcb-shm.so.0.0.0  ???
+0x7fef2e757000 - 0x7fef2e97efff  libpng12.so.0.46.0  ???
+0x7fef2e97f000 - 0x7fef2ec15fff  libpixman-1.so.0.30.2  ???
+0x7fef2ec16000 - 0x7fef2ee19fff  libgmodule-2.0.so.0.3200.4  ???
+0x7fef2ee1a000 - 0x7fef2f023fff  libXcursor.so.1.0.2  ???
+0x7fef2f024000 - 0x7fef2f22bfff  libXrandr.so.2.2.0  ???
+0x7fef2f22c000 - 0x7fef2f42efff  libXinerama.so.1.0.0  ???
+0x7fef2f42f000 - 0x7fef2f658fff  libpangoft2-1.0.so.0.3000.0  ???
+0x7fef2f659000 - 0x7fef2f9a5fff  libgio-2.0.so.0.3200.4  ???
+0x7fef2f9a8000 - 0x7fef2fbe4fff  libpcre.so.3.12.1  ???
+0x7fef2fbe5000 - 0x7fef2fdecfff  libffi.so.6.0.0  ???
+0x7fef2fded000 - 0x7fef3000afff  libxcb.so.1.1.0  ???
+0x7fef3000b000 - 0x7fef303c5fff  libc-2.15.so  ???  (WARNING: No symbols, libc-2.15.so, 7C4F5153D69A476103AC01FD7CBCC9D30)
+0x7fef303cb000 - 0x7fef305e0fff  libgcc_s.so.1  ???
+0x7fef305e1000 - 0x7fef308dcfff  libm-2.15.so  ???
+0x7fef308dd000 - 0x7fef30bc7fff  libstdc++.so.6.0.16  ???  (WARNING: No symbols, libstdc++.so.6.0.16, 72DA34B5065D42A067EB2FEB92B9CC140)
+0x7fef30bdd000 - 0x7fef30de9fff  libudev.so.0.13.0  ???
+0x7fef30dea000 - 0x7fef3102dfff  libdbus-1.so.3.5.8  ???
+0x7fef3102e000 - 0x7fef31257fff  libexpat.so.1.5.2  ???
+0x7fef31258000 - 0x7fef31470fff  libpthread-2.15.so  ???  (WARNING: No symbols, libpthread-2.15.so, 9DAF40C397EE7CC1730F7D03693286C50)
+0x7fef31475000 - 0x7fef31677fff  libXdamage.so.1.1.0  ???
+0x7fef31678000 - 0x7fef31964fff  libasound.so.2.0.0  ???
+0x7fef31965000 - 0x7fef31b6afff  libXfixes.so.3.1.0  ???
+0x7fef31b6b000 - 0x7fef31d7bfff  libXext.so.6.4.0  ???
+0x7fef31d7c000 - 0x7fef31fa9fff  libgconf-2.so.4.1.5  ???
+0x7fef31faa000 - 0x7fef321e6fff  libnspr4.so  ???
+0x7fef321e9000 - 0x7fef323edfff  libplc4.so  ???
+0x7fef323ee000 - 0x7fef32614fff  libsmime3.so  ???
+0x7fef32615000 - 0x7fef3283bfff  libnssutil3.so  ???
+0x7fef3283c000 - 0x7fef32b43fff  libnss3.so  ???
+0x7fef32b45000 - 0x7fef32d47fff  libXcomposite.so.1.0.0  ???
+0x7fef32d48000 - 0x7fef32f57fff  libXi.so.6.1.0  ???
+0x7fef32f58000 - 0x7fef3318dfff  libfontconfig.so.1.4.4  ???
+0x7fef3318e000 - 0x7fef33429fff  libfreetype.so.6.8.0  ???
+0x7fef3342a000 - 0x7fef33672fff  libpango-1.0.so.0.3000.0  ???
+0x7fef33673000 - 0x7fef3392dfff  libcairo.so.2.11000.2  ???
+0x7fef33931000 - 0x7fef33b50fff  libgdk_pixbuf-2.0.so.0.2600.1  ???
+0x7fef33b51000 - 0x7fef33d5cfff  libpangocairo-1.0.so.0.3000.0  ???
+0x7fef33d5d000 - 0x7fef33f7efff  libatk-1.0.so.0.20409.1  ???
+0x7fef33f7f000 - 0x7fef34230fff  libgdk-x11-2.0.so.0.2400.10  ???
+0x7fef34231000 - 0x7fef34868fff  libgtk-x11-2.0.so.0.2400.10  ???
+0x7fef3486b000 - 0x7fef34a70fff  libXtst.so.6.1.0  ???
+0x7fef34a71000 - 0x7fef34d64fff  libglib-2.0.so.0.3200.4  ???
+0x7fef34d66000 - 0x7fef34fb4fff  libgobject-2.0.so.0.3200.4  ???
+0x7fef34fb5000 - 0x7fef351b8fff  libdl-2.15.so  ???  (WARNING: No symbols, libdl-2.15.so, 55AF81D1BB1D3EC49D55913D532635FD0)
+0x7fef351b9000 - 0x7fef353c0fff  librt-2.15.so  ???  (WARNING: No symbols, librt-2.15.so, 375B2C35503AC4E6AB881A5DB6F5766F0)
+0x7fef353c1000 - 0x7fef355cafff  libXrender.so.1.3.0  ???
+0x7fef355cb000 - 0x7fef358fffff  libX11.so.6.3.0  ???
+0x7fef35900000 - 0x7fef35921fff  ld-2.15.so  ???  (WARNING: No symbols, ld-2.15.so, 930BB4832FBD66D2F12E008E61309FC00)
+0x7fff87baf000 - 0x7fff87baffff  linux-gate.so  ???  (WARNING: No symbols, linux-gate.so, E68476C2B161309F51B3F4EFEFE2D3C70)

@@ -13,13 +13,13 @@ var js = {
 // DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
 //
 var Thrift = require('thrift').Thrift;
-var DeviceStruct_ttypes = require('./thrift/DeviceStruct_types')
-var ThreadInfoStruct_ttypes = require('./thrift/ThreadInfoStruct_types')
-var AndroidAppStruct_ttypes = require('./thrift/AndroidAppStruct_types')
-var CPUStatsStruct_ttypes = require('./thrift/CPUStatsStruct_types')
+var DeviceStruct_ttypes = require('./DeviceStruct_types')
+var ThreadInfoStruct_ttypes = require('./ThreadInfoStruct_types')
+var AndroidAppStruct_ttypes = require('./AndroidAppStruct_types')
+var CPUStatsStruct_ttypes = require('./CPUStatsStruct_types')
 
 
-var ttypes = require('./thrift/DroidStalkerKernelService_types');
+var ttypes = require('./DroidStalkerKernelService_types');
 //HELPER FUNCTIONS AND STRUCTURES
 
 js.droid_stalker.thrift.DroidStalkerKernelService_getDevices_args = function(args) {
@@ -726,6 +726,7 @@ js.droid_stalker.thrift.DroidStalkerKernelServiceClient.prototype = {};
 js.droid_stalker.thrift.DroidStalkerKernelServiceClient.prototype.seqid = function() { return this._seqid; }
 js.droid_stalker.thrift.DroidStalkerKernelServiceClient.prototype.new_seqid = function() { this._seqid += 1; }
 js.droid_stalker.thrift.DroidStalkerKernelServiceClient.prototype.getDevices = function(callback) {
+  console.log('inside getDevices with: ' + callback)
   this._seqid = this.new_seqid();
   this._reqs[this.seqid()] = callback;
   this.send_getDevices();

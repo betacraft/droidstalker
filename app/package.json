@@ -1,0 +1,11 @@
+{
+  "name": "droidstalk-node",
+  "main": "index.html",
+  "window" : {
+  },
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-node-webkit-builder": "~0.1.21",
+    "thrift": "0.7.0"
+  }
+}

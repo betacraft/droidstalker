@@ -97,6 +97,18 @@ public final class DebugSession {
             commandExecutionLatch.await();
         } catch (InterruptedException ignored) {
         }
+        try {
+            //ProcessKiller.killProcessRunningOnPort(11000);
+            AdbHelper.createForward(AndroidDebugBridge.getSocketAddress(), device, "tcp:11000", "tcp:11000");
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        } catch (AdbCommandRejectedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         mAppConnection = AppConnection.get();
         if (mClient == null)
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.APP_COULD_NOT_START,

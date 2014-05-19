@@ -112,6 +112,7 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
     private Set<DeviceStruct> getConnectedDevicesStructList() {
         final Set<DeviceStruct> deviceStructArrayList = new HashSet<DeviceStruct>();
         for (Map.Entry<String, IDevice> connectedDeviceEntry : mConnectedDevices.entrySet()) {
+            logger.debug("Adding {} to connected devices list", connectedDeviceEntry.getValue().getSerialNumber());
             deviceStructArrayList.add(ThriftStructHelpers.prepareDeviceStruct(connectedDeviceEntry.getValue()));
         }
         return deviceStructArrayList;
@@ -128,18 +129,6 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
 
     private void addDevice(final IDevice device) {
         logger.debug("adding {} device", device.getSerialNumber());
-        try {
-            //ProcessKiller.killProcessRunningOnPort(11000);
-            AdbHelper.createForward(AndroidDebugBridge.getSocketAddress(), device, "tcp:11000", "tcp:11000");
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-        } catch (AdbCommandRejectedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         mConnectedDevices.put(device.getSerialNumber(), device);
     }
 

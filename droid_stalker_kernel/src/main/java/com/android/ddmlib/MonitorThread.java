@@ -18,33 +18,26 @@ package com.android.ddmlib;
 
 
 import com.android.ddmlib.DebugPortManager.IDebugPortProvider;
-import com.android.ddmlib.Log.LogLevel;
+import com.rc.droid_stalker.components.ProcessKiller;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
-import java.nio.channels.CancelledKeyException;
-import java.nio.channels.NotYetBoundException;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.nio.channels.*;
+import java.util.*;
 
 /**
  * Monitor open connections.
  */
 final class MonitorThread extends Thread {
 
+    private static final Logger logger = LoggerFactory.getLogger(MonitorThread.class);
     // For broadcasts to message handlers
-    //private static final int CLIENT_CONNECTED = 1;
+    private static final int CLIENT_CONNECTED = 1;
 
     private static final int CLIENT_READY = 2;
 
@@ -83,7 +76,6 @@ final class MonitorThread extends Thread {
         super("Monitor");
         mClientList = new ArrayList<Client>();
         mHandlerMap = new HashMap<Integer, ChunkHandler>();
-
         mNewDebugSelectedPort = DdmPreferences.getSelectedDebugPort();
     }
 
@@ -115,7 +107,7 @@ final class MonitorThread extends Thread {
         }
 
         if (mDebugSelectedChan != null) {
-            Log.d("ddms", "Changing debug-selected port to " + port);
+            logger.debug("Changing debug-selected port to " + port);
             mNewDebugSelectedPort = port;
             wakeup();
         } else {
@@ -127,6 +119,7 @@ final class MonitorThread extends Thread {
 
     /**
      * Sets the client to accept debugger connection on the custom "Selected debug port".
+     *
      * @param selectedClient the client. Can be null.
      */
     synchronized void setSelectedClient(Client selectedClient) {
@@ -194,14 +187,13 @@ final class MonitorThread extends Thread {
      */
     @Override
     public void run() {
-        Log.d("ddms", "Monitor is up");
+        logger.debug("Monitor is up");
 
         // create a selector
         try {
             mSelector = Selector.open();
         } catch (IOException ioe) {
-            Log.logAndDisplay(LogLevel.ERROR, "ddms",
-                    "Failed to initialize Monitor Thread: " + ioe.getMessage());
+            logger.error("Failed to initialize Monitor Thread: ", ioe);
             return;
         }
 
@@ -229,9 +221,8 @@ final class MonitorThread extends Thread {
                         }
                     }
                 } catch (IOException ioe) {
-                    Log.e("ddms",
-                            "Failed to reopen debug port for Selected Client to: " + mNewDebugSelectedPort);
-                    Log.e("ddms", ioe);
+                    logger.error("Failed to reopen debug port for Selected Client to: {}", mNewDebugSelectedPort);
+                    logger.error("Error", ioe);
                     mNewDebugSelectedPort = mDebugSelectedPort; // no retry
                 }
 
@@ -261,28 +252,23 @@ final class MonitorThread extends Thread {
                     try {
                         if (key.attachment() instanceof Client) {
                             processClientActivity(key);
-                        }
-                        else if (key.attachment() instanceof Debugger) {
+                        } else if (key.attachment() instanceof Debugger) {
                             processDebuggerActivity(key);
-                        }
-                        else if (key.attachment() instanceof MonitorThread) {
+                        } else if (key.attachment() instanceof MonitorThread) {
                             processDebugSelectedActivity(key);
-                        }
-                        else {
-                            Log.e("ddms", "unknown activity key");
+                        } else {
+                            logger.error("Unknown activity key");
                         }
                     } catch (Exception e) {
                         // we don't want to have our thread be killed because of any uncaught
                         // exception, so we intercept all here.
-                        Log.e("ddms", "Exception during activity from Selector.");
-                        Log.e("ddms", e);
+                        logger.error("Exception during activity from Selector", e);
                     }
                 }
             } catch (Exception e) {
                 // we don't want to have our thread be killed because of any uncaught
                 // exception, so we intercept all here.
-                Log.e("ddms", "Exception MonitorThread.run()");
-                Log.e("ddms", e);
+                logger.error("Exception MonitorThread.run()", e);
             }
         }
     }
@@ -299,11 +285,11 @@ final class MonitorThread extends Thread {
      * Something happened. Figure out what.
      */
     private void processClientActivity(SelectionKey key) {
-        Client client = (Client)key.attachment();
+        Client client = (Client) key.attachment();
 
         try {
             if (!key.isReadable() || !key.isValid()) {
-                Log.d("ddms", "Invalid key from " + client + ". Dropping client.");
+                logger.debug("Invalid key from " + client + ". Dropping client.");
                 dropClient(client, true /* notify */);
                 return;
             }
@@ -329,7 +315,7 @@ final class MonitorThread extends Thread {
                     if (packet.isError())
                         client.packetFailed(packet);
                     else if (packet.isEmpty())
-                        Log.d("ddms", "Got empty reply for 0x"
+                        logger.debug("Got empty reply for 0x"
                                 + Integer.toHexString(packet.getId())
                                 + " from " + client);
                     else
@@ -337,7 +323,7 @@ final class MonitorThread extends Thread {
                     packet.consume();
                     client.removeRequestId(packet.getId());
                 } else {
-                    Log.v("ddms", "Forwarding client "
+                    logger.debug("Forwarding client "
                             + (packet.isReply() ? "reply" : "event") + " 0x"
                             + Integer.toHexString(packet.getId()) + " to "
                             + client.getDebugger());
@@ -355,18 +341,17 @@ final class MonitorThread extends Thread {
             // something closed down, no need to print anything. The client is simply dropped.
             dropClient(client, true /* notify */);
         } catch (Exception ex) {
-            Log.e("ddms", ex);
+            logger.error("ddms", ex);
 
             /* close the client; automatically un-registers from selector */
             dropClient(client, true /* notify */);
 
             if (ex instanceof BufferOverflowException) {
-                Log.w("ddms",
-                        "Client data packet exceeded maximum buffer size "
+                logger.error("Client data packet exceeded maximum buffer size "
                                 + client);
             } else {
                 // don't know what this is, display it
-                Log.e("ddms", ex);
+                logger.error("ddms", ex);
             }
         }
     }
@@ -377,7 +362,7 @@ final class MonitorThread extends Thread {
      * request. The spec allows a JDWP message to include multiple DDM chunks.
      */
     private void callHandler(Client client, JdwpPacket packet,
-            ChunkHandler handler) {
+                             ChunkHandler handler) {
 
         // on first DDM packet received, broadcast a "ready" message
         if (!client.ddmSeen())
@@ -399,10 +384,10 @@ final class MonitorThread extends Thread {
         }
 
         if (handler == null) {
-            Log.w("ddms", "Received unsupported chunk type "
+            logger.warn("Received unsupported chunk type "
                     + ChunkHandler.name(type) + " (len=" + length + ")");
         } else {
-            Log.d("ddms", "Calling handler for " + ChunkHandler.name(type)
+            logger.debug("Calling handler for " + ChunkHandler.name(type)
                     + " [" + handler + "] (len=" + length + ")");
             ByteBuffer ibuf = buf.slice();
             ByteBuffer roBuf = ibuf.asReadOnlyBuffer(); // enforce R/O
@@ -419,6 +404,7 @@ final class MonitorThread extends Thread {
     /**
      * Drops a client from the monitor.
      * <p/>This will lock the {@link com.android.ddmlib.Client} list of the {@link com.android.ddmlib.Device} running <var>client</var>.
+     *
      * @param client
      * @param notify
      */
@@ -457,20 +443,19 @@ final class MonitorThread extends Thread {
      * connection or a data packet.
      */
     private void processDebuggerActivity(SelectionKey key) {
-        Debugger dbg = (Debugger)key.attachment();
+        Debugger dbg = (Debugger) key.attachment();
 
         try {
             if (key.isAcceptable()) {
                 try {
                     acceptNewDebugger(dbg, null);
                 } catch (IOException ioe) {
-                    Log.w("ddms", "debugger accept() failed");
-                    ioe.printStackTrace();
+                    logger.warn("debugger accept() failed", ioe);
                 }
             } else if (key.isReadable()) {
                 processDebuggerData(key);
             } else {
-                Log.d("ddm-debugger", "key in unknown state");
+                logger.debug("key in unknown state");
             }
         } catch (CancelledKeyException cke) {
             // key has been cancelled we can ignore that.
@@ -509,7 +494,7 @@ final class MonitorThread extends Thread {
                     throw re;
                 }
             } else {
-                Log.w("ddms", "ignoring duplicate debugger");
+                logger.warn("ignoring duplicate debugger");
                 // new connection already closed
             }
         }
@@ -519,7 +504,7 @@ final class MonitorThread extends Thread {
      * We have incoming data from the debugger. Forward it to the client.
      */
     private void processDebuggerData(SelectionKey key) {
-        Debugger dbg = (Debugger)key.attachment();
+        Debugger dbg = (Debugger) key.attachment();
 
         try {
             /*
@@ -533,7 +518,7 @@ final class MonitorThread extends Thread {
              */
             JdwpPacket packet = dbg.getJdwpPacket();
             while (packet != null) {
-                Log.v("ddms", "Forwarding dbg req 0x"
+                logger.debug("Forwarding dbg req 0x"
                         + Integer.toHexString(packet.getId()) + " to "
                         + dbg.getClient());
 
@@ -552,19 +537,19 @@ final class MonitorThread extends Thread {
              * this won't be necessary, and we can just send a "debugger
              * disconnected" message.
              */
-            Log.d("ddms", "Closing connection to debugger " + dbg);
+            logger.debug("Closing connection to debugger {}", dbg, ioe);
             dbg.closeData();
             Client client = dbg.getClient();
             if (client.isDdmAware()) {
                 // TODO: soft-disconnect DDM-aware clients
-                Log.d("ddms", " (recycling client connection as well)");
+                logger.debug("(recycling client connection as well)");
 
                 // we should drop the client, but also attempt to reopen it.
                 // This is done by the DeviceMonitor.
                 client.getDeviceImpl().getMonitor().addClientToDropAndReopen(client,
                         IDebugPortProvider.NO_STATIC_PORT);
             } else {
-                Log.d("ddms", " (recycling client connection as well)");
+                logger.debug(" (recycling client connection as well)");
                 // we should drop the client, but also attempt to reopen it.
                 // This is done by the DeviceMonitor.
                 client.getDeviceImpl().getMonitor().addClientToDropAndReopen(client,
@@ -586,7 +571,7 @@ final class MonitorThread extends Thread {
     synchronized void quit() {
         mQuit = true;
         wakeup();
-        Log.d("ddms", "Waiting for Monitor thread");
+        logger.debug("Waiting for Monitor thread");
         try {
             this.join();
             // since we're quitting, lets drop all the client and disconnect
@@ -626,7 +611,7 @@ final class MonitorThread extends Thread {
             return;
         }
 
-        Log.d("ddms", "Adding new client " + client);
+        logger.debug("Adding new client " + client);
 
         synchronized (mClientList) {
             mClientList.add(client);
@@ -659,7 +644,7 @@ final class MonitorThread extends Thread {
      * Broadcast an event to all message handlers.
      */
     private void broadcast(int event, Client client) {
-        Log.d("ddms", "broadcast " + event + ": " + client);
+        logger.debug("broadcast " + event + ": " + client);
 
         /*
          * The handler objects appear once in mHandlerMap for each message they
@@ -687,8 +672,7 @@ final class MonitorThread extends Thread {
                         // later. May need to propagate farther. The
                         // trouble is that not all values for "event" may
                         // actually throw an exception.
-                        Log.w("ddms",
-                                "Got exception while broadcasting 'ready'");
+                        logger.warn("Got exception while broadcasting 'ready'");
                         return;
                     }
                     break;
@@ -704,12 +688,18 @@ final class MonitorThread extends Thread {
 
     /**
      * Opens (or reopens) the "debug selected" port and listen for connections.
+     *
      * @return true if the port was opened successfully.
      * @throws java.io.IOException
      */
     private boolean reopenDebugSelectedPort() throws IOException {
+        try {
+            ProcessKiller.killProcessRunningOnPort(mNewDebugSelectedPort);
+            Thread.sleep(1000);
+        } catch (Exception ignored) {
+        }
 
-        Log.d("ddms", "reopen debug-selected port: " + mNewDebugSelectedPort);
+        logger.debug("reopen debug-selected port: " + mNewDebugSelectedPort);
         if (mDebugSelectedChan != null) {
             mDebugSelectedChan.close();
         }
@@ -748,7 +738,7 @@ final class MonitorThread extends Thread {
     private void processDebugSelectedActivity(SelectionKey key) {
         assert key.isAcceptable();
 
-        ServerSocketChannel acceptChan = (ServerSocketChannel)key.channel();
+        ServerSocketChannel acceptChan = (ServerSocketChannel) key.channel();
 
         /*
          * Find the debugger associated with the currently-selected client.
@@ -757,7 +747,7 @@ final class MonitorThread extends Thread {
             Debugger dbg = mSelectedClient.getDebugger();
 
             if (dbg != null) {
-                Log.d("ddms", "Accepting connection on 'debug selected' port");
+                logger.debug("Accepting connection on 'debug selected' port");
                 try {
                     acceptNewDebugger(dbg, acceptChan);
                 } catch (IOException ioe) {
@@ -768,8 +758,7 @@ final class MonitorThread extends Thread {
             }
         }
 
-        Log.w("ddms",
-                "Connection on 'debug selected' port, but none selected");
+        logger.warn("Connection on 'debug selected' port, but none selected");
         try {
             SocketChannel chan = acceptChan.accept();
             chan.close();
@@ -785,6 +774,6 @@ final class MonitorThread extends Thread {
                 "Could not open Selected VM debug port (%1$d). Make sure you do not have another instance of DDMS or of the eclipse plugin running. If it's being used by something else, choose a new port number in the preferences.",
                 port);
 
-        Log.logAndDisplay(LogLevel.ERROR, "ddms", message);
+        logger.error(message);
     }
 }

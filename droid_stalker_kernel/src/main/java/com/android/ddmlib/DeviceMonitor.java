@@ -247,12 +247,38 @@ final class DeviceMonitor {
     }
 
     /**
+     * @return
+     * @throws java.io.IOException
+     */
+    private boolean sendDeviceListMonitoringRequest() throws TimeoutException, IOException {
+        byte[] request = AdbHelper.formAdbRequest("host:track-devices"); //$NON-NLS-1$
+
+        try {
+            AdbHelper.write(mMainAdbConnection, request);
+            AdbResponse resp = AdbHelper.readAdbResponse(mMainAdbConnection,
+                    false /* readDiagString */);
+
+            if (!resp.okay) {
+                // request was refused by adb!
+                Log.e("DeviceMonitor", "adb refused request: " + resp.message);
+            }
+
+            return resp.okay;
+        } catch (IOException e) {
+            logger.error("Sending tracking request failed", e);
+            mMainAdbConnection.close();
+            throw e;
+        }
+    }
+
+
+    /**
      * Attempts to connect to the debug bridge server.
      *
      * @return a connect socket if success, null otherwise
      */
     private SocketChannel openAdbConnection() {
-        Log.d("DeviceMonitor", "Connecting to adb for Device List Monitoring...");
+        logger.debug("Connecting to adb for Device List Monitoring...");
 
         SocketChannel adbChannel = null;
         // AMD change
@@ -276,32 +302,6 @@ final class DeviceMonitor {
             logger.debug("Trying attempt to make adb channel : {}", retryNo);
         }
         return adbChannel;
-    }
-
-
-    /**
-     * @return
-     * @throws java.io.IOException
-     */
-    private boolean sendDeviceListMonitoringRequest() throws TimeoutException, IOException {
-        byte[] request = AdbHelper.formAdbRequest("host:track-devices"); //$NON-NLS-1$
-
-        try {
-            AdbHelper.write(mMainAdbConnection, request);
-            AdbResponse resp = AdbHelper.readAdbResponse(mMainAdbConnection,
-                    false /* readDiagString */);
-
-            if (!resp.okay) {
-                // request was refused by adb!
-                Log.e("DeviceMonitor", "adb refused request: " + resp.message);
-            }
-
-            return resp.okay;
-        } catch (IOException e) {
-            logger.error("Sending tracking request failed", e);
-            mMainAdbConnection.close();
-            throw e;
-        }
     }
 
     /**
@@ -557,9 +557,8 @@ final class DeviceMonitor {
                 } catch (IOException e1) {
                     // we can ignore that one. It may already have been closed.
                 }
-                Log.d("DeviceMonitor",
-                        "Connection Failure when starting to monitor device '"
-                                + device + "' : timeout");
+                logger.debug("Connection Failure when starting to monitor device '"
+                        + device + "' : timeout");
             } catch (AdbCommandRejectedException e) {
                 try {
                     // attempt to close the socket if needed.
@@ -567,9 +566,8 @@ final class DeviceMonitor {
                 } catch (IOException e1) {
                     // we can ignore that one. It may already have been closed.
                 }
-                Log.d("DeviceMonitor",
-                        "Adb refused to start monitoring device '"
-                                + device + "' : " + e.getMessage());
+                logger.debug("Adb refused to start monitoring device '"
+                        + device + "' : " + e.getMessage());
             } catch (IOException e) {
                 try {
                     // attempt to close the socket if needed.
@@ -577,9 +575,8 @@ final class DeviceMonitor {
                 } catch (IOException e1) {
                     // we can ignore that one. It may already have been closed.
                 }
-                Log.d("DeviceMonitor",
-                        "Connection Failure when starting to monitor device '"
-                                + device + "' : " + e.getMessage());
+                logger.debug("Connection Failure when starting to monitor device '"
+                        + device + "' : " + e.getMessage());
             }
         }
 
@@ -701,15 +698,15 @@ final class DeviceMonitor {
 
             if (!resp.okay) {
                 // request was refused by adb!
-                logger.error("adb refused request: {}",resp.message);
+                logger.error("adb refused request: {}", resp.message);
             }
 
             return resp.okay;
         } catch (TimeoutException e) {
-            logger.error("Sending jdwp tracking request timed out!",e);
+            logger.error("Sending jdwp tracking request timed out!", e);
             throw e;
         } catch (IOException e) {
-            logger.error("Sending jdwp tracking request failed!",e);
+            logger.error("Sending jdwp tracking request failed!", e);
             throw e;
         }
     }
@@ -838,10 +835,7 @@ final class DeviceMonitor {
          */
 
         Client client = new Client(device, socket, pid);
-
         if (client.sendHandshake()) {
-
-
             try {
                 if (AndroidDebugBridge.getClientSupport()) {
                     client.listenForDebugger(debuggerPort);

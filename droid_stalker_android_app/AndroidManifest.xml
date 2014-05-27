@@ -24,7 +24,11 @@
 
         </activity>
 
-        <service android:name=".service.DroidStalkerService"/>
+        <service android:name=".service.DroidStalkerService">
+            <intent-filter>
+                <action android:name="com.rc.droid_stalker.service.DroidStalkerService.StartService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

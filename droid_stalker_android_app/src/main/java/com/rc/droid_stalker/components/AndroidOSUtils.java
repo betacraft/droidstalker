@@ -1,6 +1,7 @@
 package com.rc.droid_stalker.components;
 
 /**
+ * Android OS utils
  * Author: akshay deo (akshay@rainingclouds.com)
  * Date  : 5/12/14
  * Time  : 4:54 PM

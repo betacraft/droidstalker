@@ -3,7 +3,9 @@ package com.rc.droid_stalker.sessions;
 import com.android.ddmlib.*;
 import com.rc.droid_stalker.components.AppConnection;
 import com.rc.droid_stalker.models.ThriftStructHelpers;
+import com.rc.droid_stalker.sessions.components.CPUStats;
 import com.rc.droid_stalker.thrift.*;
+import com.rc.droid_stalker.workers.ScheduledWorkers;
 import org.apache.thrift.TException;
 import org.apache.thrift.transport.TTransportException;
 import org.slf4j.Logger;
@@ -27,22 +29,46 @@ public final class DebugSession {
     private IDevice mDevice;
     private Client mClient;
     private String mSessionId;
-    public static final String START_DROID_STALKER_SERVICE = "am startservice com.rc.droid_stalker/" +
-            ".service.DroidStalkerService";
+    public static final String START_DROID_STALKER_SERVICE = "am startservice com.rc.droid_stalker.service" +
+            ".DroidStalkerService.StartService";
     private static final String STOP_DROID_STALKER_SERVICE = "am force-stop com.rc.droid_stalker/" +
             ".service.DroidStalkerService";
     private static final String START_APP_COMMAND_FORMAT = "am start -n %s/%s";
     private static final String FORCE_STOP_APP_COMMAND_FORMAT = "am force-stop %s";
     private AndroidDebugBridge.IClientChangeListener mSessionClientDetector;
     private AppConnection mAppConnection;
+    private ScheduledWorkers mScheduledWorker;
+    private CPUStats mCpuStats;
 
+    {
+        mSessionId = UUID.randomUUID().toString();
+        mCpuStats = new CPUStats();
+        mScheduledWorker = new ScheduledWorkers();
+    }
 
     private DebugSession(final IDevice device, final AndroidAppStruct androidApp)
             throws TimeoutException, AdbCommandRejectedException, ShellCommandUnresponsiveException, IOException, DroidStalkerKernelException, TTransportException {
         mAndroidApp = androidApp;
         mDevice = device;
-        mSessionId = UUID.randomUUID().toString();
+
         final CountDownLatch commandExecutionLatch = new CountDownLatch(1);
+        mDevice.executeShellCommand(START_DROID_STALKER_SERVICE,
+                new IShellOutputReceiver() {
+                    @Override
+                    public void addOutput(byte[] data, int offset, int length) {
+                        logger.debug(new String(data));
+                    }
+
+                    @Override
+                    public void flush() {
+
+                    }
+
+                    @Override
+                    public boolean isCancelled() {
+                        return false;
+                    }
+                });
         mDevice.executeShellCommand(String.format(FORCE_STOP_APP_COMMAND_FORMAT, mAndroidApp.getPackageName()),
                 new IShellOutputReceiver() {
                     @Override
@@ -60,7 +86,6 @@ public final class DebugSession {
                         return false;
                     }
                 });
-
         mSessionClientDetector = new AndroidDebugBridge.IClientChangeListener() {
             @Override
             public void clientChanged(Client client, int changeMask) {
@@ -132,20 +157,23 @@ public final class DebugSession {
         try {
             return mAppConnection.getClient().getInstalledApps();
         } catch (TException e) {
-            logger.error("Error while getting installed applications",e);
+            logger.error("Error while getting installed applications", e);
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.APP_NOT_FOUND,
-                    "Error message: " +e.getMessage());
+                    "Error message: " + e.getMessage());
         }
     }
 
     public CPUStatsStruct getCPUStats(final int span) throws DroidStalkerKernelException {
-        logger.debug("Getting CPU stats for {} span {}",mClient.getClientData().getPid(),span);
+        logger.debug("Getting CPU stats for {} span {}", mClient.getClientData().getPid(), span);
         try {
-            return mAppConnection.getClient().getCPUStatsFor(mClient.getClientData().getPid(), span);
+            CPUStatsStruct cpuStatsStruct =
+                    mAppConnection.getClient().getCPUStatsFor(mClient.getClientData().getPid(), span);
+            mCpuStats.push(cpuStatsStruct);
+            return cpuStatsStruct;
         } catch (TException e) {
             logger.error("Error while getting CPU stats", e);
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.KERNEL_CRASHED,
-                    "Error message: "+e.getMessage());
+                    "Error message: " + e.getMessage());
         }
     }
 

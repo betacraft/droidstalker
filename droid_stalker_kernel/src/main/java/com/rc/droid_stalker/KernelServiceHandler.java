@@ -37,7 +37,7 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
 
     public KernelServiceHandler() {
         try {
-            mADB = ADB.initialize(String.format(ANDROID_SDK_LOCATION_FORMAT, "/home/akshay/android-sdk-linux"), this);
+            mADB = ADB.initialize(String.format(ANDROID_SDK_LOCATION_FORMAT, "/home/appsurfer/android-sdk-linux"), this);
             for (final IDevice device : mADB.getDevices()) {
                 addDevice(device);
             }

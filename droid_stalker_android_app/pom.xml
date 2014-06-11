@@ -65,7 +65,7 @@
         <dependency>
             <groupId>com.facebook.nifty</groupId>
             <artifactId>nifty-core</artifactId>
-            <version>0.9.0-SNAPSHOT</version>
+            <version>10</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>

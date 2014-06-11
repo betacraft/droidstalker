@@ -33,7 +33,7 @@
         <dependency>
             <groupId>com.facebook.nifty</groupId>
             <artifactId>nifty-core</artifactId>
-            <version>0.9.0-SNAPSHOT</version>
+            <version>0.13.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -43,7 +43,7 @@
         <dependency>
             <groupId>org.zeroturnaround</groupId>
             <artifactId>zt-exec</artifactId>
-            <version>1.6-SNAPSHOT</version>
+            <version>1.7-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>kxml2</groupId>

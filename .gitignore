@@ -29,4 +29,4 @@ target/*
 *.log
 *.class
 commit_message
-
+*/.idea/*

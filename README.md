@@ -49,9 +49,10 @@ This acts as a helper project for Java Kernel
 
 ### Frontend
 
-@rtdp and @kaunteya update this :P
+
 
 ## Dependencies
 
 1. Node-Webkit : https://github.com/rogerwang/node-webkit
 2. Apache-Thrift : https://github.com/apache/thrift
+

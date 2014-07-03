@@ -5,7 +5,7 @@ import com.rc.droid_stalker.components.AppConnection;
 import com.rc.droid_stalker.models.ThriftStructHelpers;
 import com.rc.droid_stalker.sessions.components.CPUStats;
 import com.rc.droid_stalker.thrift.*;
-import com.rc.droid_stalker.workers.ScheduledWorkers;
+import com.rc.droid_stalker.workers.ScheduledWorker;
 import org.apache.thrift.TException;
 import org.apache.thrift.transport.TTransportException;
 import org.slf4j.Logger;
@@ -16,6 +16,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Currently running debug session
@@ -37,13 +38,13 @@ public final class DebugSession {
     private static final String FORCE_STOP_APP_COMMAND_FORMAT = "am force-stop %s";
     private AndroidDebugBridge.IClientChangeListener mSessionClientDetector;
     private AppConnection mAppConnection;
-    private ScheduledWorkers mScheduledWorker;
+    private ScheduledWorker mScheduledWorker;
     private CPUStats mCpuStats;
 
     {
         mSessionId = UUID.randomUUID().toString();
         mCpuStats = new CPUStats();
-        mScheduledWorker = new ScheduledWorkers();
+        mScheduledWorker = new ScheduledWorker();
     }
 
     private DebugSession(final IDevice device, final AndroidAppStruct androidApp)
@@ -135,9 +136,29 @@ public final class DebugSession {
             e.printStackTrace();
         }
         mAppConnection = AppConnection.get();
+        startScheduledWorkers();
         if (mClient == null)
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.APP_COULD_NOT_START,
                     "Failed to get hold of the client");
+    }
+
+
+    /**
+     * Method to start fetching data on schedule
+     */
+    private void startScheduledWorkers() {
+        mScheduledWorker.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Set<CPUStatsStruct> cpuStatsStruct =
+                            mAppConnection.getClient().getCPUStatsFor(mClient.getClientData().getPid(), 1);
+                    mCpuStats.push(cpuStatsStruct);
+                } catch (TException e) {
+                    logger.error("Error while getting CPU stats", e);
+                }
+            }
+        }, 1, TimeUnit.SECONDS);
     }
 
     public String getSessionId() {
@@ -163,18 +184,8 @@ public final class DebugSession {
         }
     }
 
-    public CPUStatsStruct getCPUStats(final int span) throws DroidStalkerKernelException {
-        logger.debug("Getting CPU stats for {} span {}", mClient.getClientData().getPid(), span);
-        try {
-            CPUStatsStruct cpuStatsStruct =
-                    mAppConnection.getClient().getCPUStatsFor(mClient.getClientData().getPid(), span);
-            mCpuStats.push(cpuStatsStruct);
-            return cpuStatsStruct;
-        } catch (TException e) {
-            logger.error("Error while getting CPU stats", e);
-            throw new DroidStalkerKernelException(KernelExceptionErrorCode.KERNEL_CRASHED,
-                    "Error message: " + e.getMessage());
-        }
+    public Set<CPUStatsStruct> getCPUStats(final int lastPackateId) throws DroidStalkerKernelException {
+        return mCpuStats.getAllPacketsAfterId(lastPackateId);
     }
 
     public static DebugSession startFor(final IDevice device,

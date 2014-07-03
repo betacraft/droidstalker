@@ -38,9 +38,12 @@ import org.slf4j.LoggerFactory;
 public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, CPUStatsStruct._Fields>, java.io.Serializable, Cloneable, Comparable<CPUStatsStruct> {
   private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("CPUStatsStruct");
 
-  private static final org.apache.thrift.protocol.TField TOTAL_CPU_FIELD_DESC = new org.apache.thrift.protocol.TField("totalCPU", org.apache.thrift.protocol.TType.DOUBLE, (short)1);
-  private static final org.apache.thrift.protocol.TField PID_CPU_FIELD_DESC = new org.apache.thrift.protocol.TField("pidCPU", org.apache.thrift.protocol.TType.DOUBLE, (short)2);
-  private static final org.apache.thrift.protocol.TField PID_FIELD_DESC = new org.apache.thrift.protocol.TField("pid", org.apache.thrift.protocol.TType.I32, (short)3);
+  private static final org.apache.thrift.protocol.TField PACKET_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("packetId", org.apache.thrift.protocol.TType.I32, (short)1);
+  private static final org.apache.thrift.protocol.TField TOTAL_CPU_FIELD_DESC = new org.apache.thrift.protocol.TField("totalCPU", org.apache.thrift.protocol.TType.DOUBLE, (short)2);
+  private static final org.apache.thrift.protocol.TField PID_CPU_FIELD_DESC = new org.apache.thrift.protocol.TField("pidCPU", org.apache.thrift.protocol.TType.DOUBLE, (short)3);
+  private static final org.apache.thrift.protocol.TField PID_FIELD_DESC = new org.apache.thrift.protocol.TField("pid", org.apache.thrift.protocol.TType.I32, (short)4);
+  private static final org.apache.thrift.protocol.TField START_TIMESTAMP_FIELD_DESC = new org.apache.thrift.protocol.TField("startTimestamp", org.apache.thrift.protocol.TType.STRING, (short)5);
+  private static final org.apache.thrift.protocol.TField END_TIMESTAMP_FIELD_DESC = new org.apache.thrift.protocol.TField("endTimestamp", org.apache.thrift.protocol.TType.STRING, (short)6);
 
   private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
   static {
@@ -48,15 +51,21 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
     schemes.put(TupleScheme.class, new CPUStatsStructTupleSchemeFactory());
   }
 
+  private int packetId; // required
   private double totalCPU; // required
   private double pidCPU; // required
   private int pid; // required
+  private String startTimestamp; // required
+  private String endTimestamp; // required
 
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
-    TOTAL_CPU((short)1, "totalCPU"),
-    PID_CPU((short)2, "pidCPU"),
-    PID((short)3, "pid");
+    PACKET_ID((short)1, "packetId"),
+    TOTAL_CPU((short)2, "totalCPU"),
+    PID_CPU((short)3, "pidCPU"),
+    PID((short)4, "pid"),
+    START_TIMESTAMP((short)5, "startTimestamp"),
+    END_TIMESTAMP((short)6, "endTimestamp");
 
     private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -71,12 +80,18 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
      */
     public static _Fields findByThriftId(int fieldId) {
       switch(fieldId) {
-        case 1: // TOTAL_CPU
+        case 1: // PACKET_ID
+          return PACKET_ID;
+        case 2: // TOTAL_CPU
           return TOTAL_CPU;
-        case 2: // PID_CPU
+        case 3: // PID_CPU
           return PID_CPU;
-        case 3: // PID
+        case 4: // PID
           return PID;
+        case 5: // START_TIMESTAMP
+          return START_TIMESTAMP;
+        case 6: // END_TIMESTAMP
+          return END_TIMESTAMP;
         default:
           return null;
       }
@@ -117,19 +132,26 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
   }
 
   // isset id assignments
-  private static final int __TOTALCPU_ISSET_ID = 0;
-  private static final int __PIDCPU_ISSET_ID = 1;
-  private static final int __PID_ISSET_ID = 2;
+  private static final int __PACKETID_ISSET_ID = 0;
+  private static final int __TOTALCPU_ISSET_ID = 1;
+  private static final int __PIDCPU_ISSET_ID = 2;
+  private static final int __PID_ISSET_ID = 3;
   private byte __isset_bitfield = 0;
   public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
   static {
     Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
+    tmpMap.put(_Fields.PACKET_ID, new org.apache.thrift.meta_data.FieldMetaData("packetId", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
     tmpMap.put(_Fields.TOTAL_CPU, new org.apache.thrift.meta_data.FieldMetaData("totalCPU", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     tmpMap.put(_Fields.PID_CPU, new org.apache.thrift.meta_data.FieldMetaData("pidCPU", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.DOUBLE)));
     tmpMap.put(_Fields.PID, new org.apache.thrift.meta_data.FieldMetaData("pid", org.apache.thrift.TFieldRequirementType.REQUIRED, 
         new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
+    tmpMap.put(_Fields.START_TIMESTAMP, new org.apache.thrift.meta_data.FieldMetaData("startTimestamp", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
+    tmpMap.put(_Fields.END_TIMESTAMP, new org.apache.thrift.meta_data.FieldMetaData("endTimestamp", org.apache.thrift.TFieldRequirementType.REQUIRED, 
+        new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
     metaDataMap = Collections.unmodifiableMap(tmpMap);
     org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(CPUStatsStruct.class, metaDataMap);
   }
@@ -138,17 +160,24 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
   }
 
   public CPUStatsStruct(
+    int packetId,
     double totalCPU,
     double pidCPU,
-    int pid)
+    int pid,
+    String startTimestamp,
+    String endTimestamp)
   {
     this();
+    this.packetId = packetId;
+    setPacketIdIsSet(true);
     this.totalCPU = totalCPU;
     setTotalCPUIsSet(true);
     this.pidCPU = pidCPU;
     setPidCPUIsSet(true);
     this.pid = pid;
     setPidIsSet(true);
+    this.startTimestamp = startTimestamp;
+    this.endTimestamp = endTimestamp;
   }
 
   /**
@@ -156,9 +185,16 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
    */
   public CPUStatsStruct(CPUStatsStruct other) {
     __isset_bitfield = other.__isset_bitfield;
+    this.packetId = other.packetId;
     this.totalCPU = other.totalCPU;
     this.pidCPU = other.pidCPU;
     this.pid = other.pid;
+    if (other.isSetStartTimestamp()) {
+      this.startTimestamp = other.startTimestamp;
+    }
+    if (other.isSetEndTimestamp()) {
+      this.endTimestamp = other.endTimestamp;
+    }
   }
 
   public CPUStatsStruct deepCopy() {
@@ -167,12 +203,38 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
 
   @Override
   public void clear() {
+    setPacketIdIsSet(false);
+    this.packetId = 0;
     setTotalCPUIsSet(false);
     this.totalCPU = 0.0;
     setPidCPUIsSet(false);
     this.pidCPU = 0.0;
     setPidIsSet(false);
     this.pid = 0;
+    this.startTimestamp = null;
+    this.endTimestamp = null;
+  }
+
+  public int getPacketId() {
+    return this.packetId;
+  }
+
+  public void setPacketId(int packetId) {
+    this.packetId = packetId;
+    setPacketIdIsSet(true);
+  }
+
+  public void unsetPacketId() {
+    __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __PACKETID_ISSET_ID);
+  }
+
+  /** Returns true if field packetId is set (has been assigned a value) and false otherwise */
+  public boolean isSetPacketId() {
+    return EncodingUtils.testBit(__isset_bitfield, __PACKETID_ISSET_ID);
+  }
+
+  public void setPacketIdIsSet(boolean value) {
+    __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __PACKETID_ISSET_ID, value);
   }
 
   public double getTotalCPU() {
@@ -241,8 +303,62 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
     __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __PID_ISSET_ID, value);
   }
 
+  public String getStartTimestamp() {
+    return this.startTimestamp;
+  }
+
+  public void setStartTimestamp(String startTimestamp) {
+    this.startTimestamp = startTimestamp;
+  }
+
+  public void unsetStartTimestamp() {
+    this.startTimestamp = null;
+  }
+
+  /** Returns true if field startTimestamp is set (has been assigned a value) and false otherwise */
+  public boolean isSetStartTimestamp() {
+    return this.startTimestamp != null;
+  }
+
+  public void setStartTimestampIsSet(boolean value) {
+    if (!value) {
+      this.startTimestamp = null;
+    }
+  }
+
+  public String getEndTimestamp() {
+    return this.endTimestamp;
+  }
+
+  public void setEndTimestamp(String endTimestamp) {
+    this.endTimestamp = endTimestamp;
+  }
+
+  public void unsetEndTimestamp() {
+    this.endTimestamp = null;
+  }
+
+  /** Returns true if field endTimestamp is set (has been assigned a value) and false otherwise */
+  public boolean isSetEndTimestamp() {
+    return this.endTimestamp != null;
+  }
+
+  public void setEndTimestampIsSet(boolean value) {
+    if (!value) {
+      this.endTimestamp = null;
+    }
+  }
+
   public void setFieldValue(_Fields field, Object value) {
     switch (field) {
+    case PACKET_ID:
+      if (value == null) {
+        unsetPacketId();
+      } else {
+        setPacketId((Integer)value);
+      }
+      break;
+
     case TOTAL_CPU:
       if (value == null) {
         unsetTotalCPU();
@@ -267,11 +383,30 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
       }
       break;
 
+    case START_TIMESTAMP:
+      if (value == null) {
+        unsetStartTimestamp();
+      } else {
+        setStartTimestamp((String)value);
+      }
+      break;
+
+    case END_TIMESTAMP:
+      if (value == null) {
+        unsetEndTimestamp();
+      } else {
+        setEndTimestamp((String)value);
+      }
+      break;
+
     }
   }
 
   public Object getFieldValue(_Fields field) {
     switch (field) {
+    case PACKET_ID:
+      return Integer.valueOf(getPacketId());
+
     case TOTAL_CPU:
       return Double.valueOf(getTotalCPU());
 
@@ -280,6 +415,12 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
 
     case PID:
       return Integer.valueOf(getPid());
+
+    case START_TIMESTAMP:
+      return getStartTimestamp();
+
+    case END_TIMESTAMP:
+      return getEndTimestamp();
 
     }
     throw new IllegalStateException();
@@ -292,12 +433,18 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
     }
 
     switch (field) {
+    case PACKET_ID:
+      return isSetPacketId();
     case TOTAL_CPU:
       return isSetTotalCPU();
     case PID_CPU:
       return isSetPidCPU();
     case PID:
       return isSetPid();
+    case START_TIMESTAMP:
+      return isSetStartTimestamp();
+    case END_TIMESTAMP:
+      return isSetEndTimestamp();
     }
     throw new IllegalStateException();
   }
@@ -314,6 +461,15 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
   public boolean equals(CPUStatsStruct that) {
     if (that == null)
       return false;
+
+    boolean this_present_packetId = true;
+    boolean that_present_packetId = true;
+    if (this_present_packetId || that_present_packetId) {
+      if (!(this_present_packetId && that_present_packetId))
+        return false;
+      if (this.packetId != that.packetId)
+        return false;
+    }
 
     boolean this_present_totalCPU = true;
     boolean that_present_totalCPU = true;
@@ -342,6 +498,24 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
         return false;
     }
 
+    boolean this_present_startTimestamp = true && this.isSetStartTimestamp();
+    boolean that_present_startTimestamp = true && that.isSetStartTimestamp();
+    if (this_present_startTimestamp || that_present_startTimestamp) {
+      if (!(this_present_startTimestamp && that_present_startTimestamp))
+        return false;
+      if (!this.startTimestamp.equals(that.startTimestamp))
+        return false;
+    }
+
+    boolean this_present_endTimestamp = true && this.isSetEndTimestamp();
+    boolean that_present_endTimestamp = true && that.isSetEndTimestamp();
+    if (this_present_endTimestamp || that_present_endTimestamp) {
+      if (!(this_present_endTimestamp && that_present_endTimestamp))
+        return false;
+      if (!this.endTimestamp.equals(that.endTimestamp))
+        return false;
+    }
+
     return true;
   }
 
@@ -358,6 +532,16 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
 
     int lastComparison = 0;
 
+    lastComparison = Boolean.valueOf(isSetPacketId()).compareTo(other.isSetPacketId());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetPacketId()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.packetId, other.packetId);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     lastComparison = Boolean.valueOf(isSetTotalCPU()).compareTo(other.isSetTotalCPU());
     if (lastComparison != 0) {
       return lastComparison;
@@ -388,6 +572,26 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
         return lastComparison;
       }
     }
+    lastComparison = Boolean.valueOf(isSetStartTimestamp()).compareTo(other.isSetStartTimestamp());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetStartTimestamp()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.startTimestamp, other.startTimestamp);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
+    lastComparison = Boolean.valueOf(isSetEndTimestamp()).compareTo(other.isSetEndTimestamp());
+    if (lastComparison != 0) {
+      return lastComparison;
+    }
+    if (isSetEndTimestamp()) {
+      lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.endTimestamp, other.endTimestamp);
+      if (lastComparison != 0) {
+        return lastComparison;
+      }
+    }
     return 0;
   }
 
@@ -408,6 +612,10 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
     StringBuilder sb = new StringBuilder("CPUStatsStruct(");
     boolean first = true;
 
+    sb.append("packetId:");
+    sb.append(this.packetId);
+    first = false;
+    if (!first) sb.append(", ");
     sb.append("totalCPU:");
     sb.append(this.totalCPU);
     first = false;
@@ -419,12 +627,32 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
     sb.append("pid:");
     sb.append(this.pid);
     first = false;
+    if (!first) sb.append(", ");
+    sb.append("startTimestamp:");
+    if (this.startTimestamp == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.startTimestamp);
+    }
+    first = false;
+    if (!first) sb.append(", ");
+    sb.append("endTimestamp:");
+    if (this.endTimestamp == null) {
+      sb.append("null");
+    } else {
+      sb.append(this.endTimestamp);
+    }
+    first = false;
     sb.append(")");
     return sb.toString();
   }
 
   public void validate() throws TException {
     // check for required fields
+    if (!isSetPacketId()) {
+      throw new TProtocolException("Required field 'packetId' is unset! Struct:" + toString());
+    }
+
     if (!isSetTotalCPU()) {
       throw new TProtocolException("Required field 'totalCPU' is unset! Struct:" + toString());
     }
@@ -435,6 +663,14 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
 
     if (!isSetPid()) {
       throw new TProtocolException("Required field 'pid' is unset! Struct:" + toString());
+    }
+
+    if (!isSetStartTimestamp()) {
+      throw new TProtocolException("Required field 'startTimestamp' is unset! Struct:" + toString());
+    }
+
+    if (!isSetEndTimestamp()) {
+      throw new TProtocolException("Required field 'endTimestamp' is unset! Struct:" + toString());
     }
 
     // check for sub-struct validity
@@ -476,7 +712,15 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
           break;
         }
         switch (schemeField.id) {
-          case 1: // TOTAL_CPU
+          case 1: // PACKET_ID
+            if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
+              struct.packetId = iprot.readI32();
+              struct.setPacketIdIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 2: // TOTAL_CPU
             if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
               struct.totalCPU = iprot.readDouble();
               struct.setTotalCPUIsSet(true);
@@ -484,7 +728,7 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 2: // PID_CPU
+          case 3: // PID_CPU
             if (schemeField.type == org.apache.thrift.protocol.TType.DOUBLE) {
               struct.pidCPU = iprot.readDouble();
               struct.setPidCPUIsSet(true);
@@ -492,10 +736,26 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
             break;
-          case 3: // PID
+          case 4: // PID
             if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
               struct.pid = iprot.readI32();
               struct.setPidIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 5: // START_TIMESTAMP
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.startTimestamp = iprot.readString();
+              struct.setStartTimestampIsSet(true);
+            } else { 
+              org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
+            }
+            break;
+          case 6: // END_TIMESTAMP
+            if (schemeField.type == org.apache.thrift.protocol.TType.STRING) {
+              struct.endTimestamp = iprot.readString();
+              struct.setEndTimestampIsSet(true);
             } else { 
               org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
             }
@@ -513,6 +773,9 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
       struct.validate();
 
       oprot.writeStructBegin(STRUCT_DESC);
+      oprot.writeFieldBegin(PACKET_ID_FIELD_DESC);
+      oprot.writeI32(struct.packetId);
+      oprot.writeFieldEnd();
       oprot.writeFieldBegin(TOTAL_CPU_FIELD_DESC);
       oprot.writeDouble(struct.totalCPU);
       oprot.writeFieldEnd();
@@ -522,6 +785,16 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
       oprot.writeFieldBegin(PID_FIELD_DESC);
       oprot.writeI32(struct.pid);
       oprot.writeFieldEnd();
+      if (struct.startTimestamp != null) {
+        oprot.writeFieldBegin(START_TIMESTAMP_FIELD_DESC);
+        oprot.writeString(struct.startTimestamp);
+        oprot.writeFieldEnd();
+      }
+      if (struct.endTimestamp != null) {
+        oprot.writeFieldBegin(END_TIMESTAMP_FIELD_DESC);
+        oprot.writeString(struct.endTimestamp);
+        oprot.writeFieldEnd();
+      }
       oprot.writeFieldStop();
       oprot.writeStructEnd();
     }
@@ -539,20 +812,29 @@ public class CPUStatsStruct implements org.apache.thrift.TBase<CPUStatsStruct, C
     @Override
     public void write(org.apache.thrift.protocol.TProtocol prot, CPUStatsStruct struct) throws TException {
       TTupleProtocol oprot = (TTupleProtocol) prot;
+      oprot.writeI32(struct.packetId);
       oprot.writeDouble(struct.totalCPU);
       oprot.writeDouble(struct.pidCPU);
       oprot.writeI32(struct.pid);
+      oprot.writeString(struct.startTimestamp);
+      oprot.writeString(struct.endTimestamp);
     }
 
     @Override
     public void read(org.apache.thrift.protocol.TProtocol prot, CPUStatsStruct struct) throws TException {
       TTupleProtocol iprot = (TTupleProtocol) prot;
+      struct.packetId = iprot.readI32();
+      struct.setPacketIdIsSet(true);
       struct.totalCPU = iprot.readDouble();
       struct.setTotalCPUIsSet(true);
       struct.pidCPU = iprot.readDouble();
       struct.setPidCPUIsSet(true);
       struct.pid = iprot.readI32();
       struct.setPidIsSet(true);
+      struct.startTimestamp = iprot.readString();
+      struct.setStartTimestampIsSet(true);
+      struct.endTimestamp = iprot.readString();
+      struct.setEndTimestampIsSet(true);
     }
   }
 

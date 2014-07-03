@@ -29,12 +29,16 @@ exception DroidStalkerAppException{
  */
 service DroidStalkerAppService {
     /**
+     * Method to set process id for the current session
+     */
+     oneway void setCurrentSessionProcessId(1: i32 pid),
+    /**
      * Method to get installed apps from device
      */
     set<AndroidAppStruct.AndroidAppStruct> getInstalledApps() throws (1: DroidStalkerAppException appException),
     /**
      * Method to get CPU stats associated with a pid
-     **/
-    CPUStatsStruct.CPUStatsStruct getCPUStatsFor(1: i32 pid, 2: i32 span) throws (1: DroidStalkerAppException
-    appException),
+     */
+    set<CPUStatsStruct.CPUStatsStruct> getCPUStatsFor(1: i32 pid, 2: i32 lastPacketId)
+    throws (1: DroidStalkerAppException appException),
 }

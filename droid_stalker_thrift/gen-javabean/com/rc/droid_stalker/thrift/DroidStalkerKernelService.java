@@ -72,9 +72,9 @@ public class DroidStalkerKernelService {
      * 
      * 
      * @param debugSession
-     * @param span
+     * @param lastPacketId
      */
-    public com.rc.droid_stalker.thrift.CPUStatsStruct getCPUStatsFor(String debugSession, int span) throws DroidStalkerKernelException, org.apache.thrift.TException;
+    public Set<com.rc.droid_stalker.thrift.CPUStatsStruct> getCPUStatsFor(String debugSession, int lastPacketId) throws DroidStalkerKernelException, org.apache.thrift.TException;
 
   }
 
@@ -88,7 +88,7 @@ public class DroidStalkerKernelService {
 
     public void getThreadsRunningIn(String debugSession, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
-    public void getCPUStatsFor(String debugSession, int span, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
+    public void getCPUStatsFor(String debugSession, int lastPacketId, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException;
 
   }
 
@@ -216,21 +216,21 @@ public class DroidStalkerKernelService {
       throw new org.apache.thrift.TApplicationException(org.apache.thrift.TApplicationException.MISSING_RESULT, "getThreadsRunningIn failed: unknown result");
     }
 
-    public com.rc.droid_stalker.thrift.CPUStatsStruct getCPUStatsFor(String debugSession, int span) throws DroidStalkerKernelException, org.apache.thrift.TException
+    public Set<com.rc.droid_stalker.thrift.CPUStatsStruct> getCPUStatsFor(String debugSession, int lastPacketId) throws DroidStalkerKernelException, org.apache.thrift.TException
     {
-      send_getCPUStatsFor(debugSession, span);
+      send_getCPUStatsFor(debugSession, lastPacketId);
       return recv_getCPUStatsFor();
     }
 
-    public void send_getCPUStatsFor(String debugSession, int span) throws org.apache.thrift.TException
+    public void send_getCPUStatsFor(String debugSession, int lastPacketId) throws org.apache.thrift.TException
     {
       getCPUStatsFor_args args = new getCPUStatsFor_args();
       args.setDebugSession(debugSession);
-      args.setSpan(span);
+      args.setLastPacketId(lastPacketId);
       sendBase("getCPUStatsFor", args);
     }
 
-    public com.rc.droid_stalker.thrift.CPUStatsStruct recv_getCPUStatsFor() throws DroidStalkerKernelException, org.apache.thrift.TException
+    public Set<com.rc.droid_stalker.thrift.CPUStatsStruct> recv_getCPUStatsFor() throws DroidStalkerKernelException, org.apache.thrift.TException
     {
       getCPUStatsFor_result result = new getCPUStatsFor_result();
       receiveBase(result, "getCPUStatsFor");
@@ -389,32 +389,32 @@ public class DroidStalkerKernelService {
       }
     }
 
-    public void getCPUStatsFor(String debugSession, int span, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
+    public void getCPUStatsFor(String debugSession, int lastPacketId, org.apache.thrift.async.AsyncMethodCallback resultHandler) throws org.apache.thrift.TException {
       checkReady();
-      getCPUStatsFor_call method_call = new getCPUStatsFor_call(debugSession, span, resultHandler, this, ___protocolFactory, ___transport);
+      getCPUStatsFor_call method_call = new getCPUStatsFor_call(debugSession, lastPacketId, resultHandler, this, ___protocolFactory, ___transport);
       this.___currentMethod = method_call;
       ___manager.call(method_call);
     }
 
     public static class getCPUStatsFor_call extends org.apache.thrift.async.TAsyncMethodCall {
       private String debugSession;
-      private int span;
-      public getCPUStatsFor_call(String debugSession, int span, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
+      private int lastPacketId;
+      public getCPUStatsFor_call(String debugSession, int lastPacketId, org.apache.thrift.async.AsyncMethodCallback resultHandler, org.apache.thrift.async.TAsyncClient client, org.apache.thrift.protocol.TProtocolFactory protocolFactory, org.apache.thrift.transport.TNonblockingTransport transport) throws org.apache.thrift.TException {
         super(client, protocolFactory, transport, resultHandler, false);
         this.debugSession = debugSession;
-        this.span = span;
+        this.lastPacketId = lastPacketId;
       }
 
       public void write_args(org.apache.thrift.protocol.TProtocol prot) throws org.apache.thrift.TException {
         prot.writeMessageBegin(new org.apache.thrift.protocol.TMessage("getCPUStatsFor", org.apache.thrift.protocol.TMessageType.CALL, 0));
         getCPUStatsFor_args args = new getCPUStatsFor_args();
         args.setDebugSession(debugSession);
-        args.setSpan(span);
+        args.setLastPacketId(lastPacketId);
         args.write(prot);
         prot.writeMessageEnd();
       }
 
-      public com.rc.droid_stalker.thrift.CPUStatsStruct getResult() throws DroidStalkerKernelException, org.apache.thrift.TException {
+      public Set<com.rc.droid_stalker.thrift.CPUStatsStruct> getResult() throws DroidStalkerKernelException, org.apache.thrift.TException {
         if (getState() != org.apache.thrift.async.TAsyncMethodCall.State.RESPONSE_READ) {
           throw new IllegalStateException("Method call not finished!");
         }
@@ -557,7 +557,7 @@ public class DroidStalkerKernelService {
       public getCPUStatsFor_result getResult(I iface, getCPUStatsFor_args args) throws org.apache.thrift.TException {
         getCPUStatsFor_result result = new getCPUStatsFor_result();
         try {
-          result.success = iface.getCPUStatsFor(args.debugSession, args.span);
+          result.success = iface.getCPUStatsFor(args.debugSession, args.lastPacketId);
         } catch (DroidStalkerKernelException kernelException) {
           result.kernelException = kernelException;
         }
@@ -814,7 +814,7 @@ public class DroidStalkerKernelService {
       }
     }
 
-    public static class getCPUStatsFor<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, getCPUStatsFor_args, com.rc.droid_stalker.thrift.CPUStatsStruct> {
+    public static class getCPUStatsFor<I extends AsyncIface> extends org.apache.thrift.AsyncProcessFunction<I, getCPUStatsFor_args, Set<com.rc.droid_stalker.thrift.CPUStatsStruct>> {
       public getCPUStatsFor() {
         super("getCPUStatsFor");
       }
@@ -823,10 +823,10 @@ public class DroidStalkerKernelService {
         return new getCPUStatsFor_args();
       }
 
-      public AsyncMethodCallback<com.rc.droid_stalker.thrift.CPUStatsStruct> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
+      public AsyncMethodCallback<Set<com.rc.droid_stalker.thrift.CPUStatsStruct>> getResultHandler(final AsyncFrameBuffer fb, final int seqid) {
         final org.apache.thrift.AsyncProcessFunction fcall = this;
-        return new AsyncMethodCallback<com.rc.droid_stalker.thrift.CPUStatsStruct>() { 
-          public void onComplete(com.rc.droid_stalker.thrift.CPUStatsStruct o) {
+        return new AsyncMethodCallback<Set<com.rc.droid_stalker.thrift.CPUStatsStruct>>() { 
+          public void onComplete(Set<com.rc.droid_stalker.thrift.CPUStatsStruct> o) {
             getCPUStatsFor_result result = new getCPUStatsFor_result();
             result.success = o;
             try {
@@ -866,8 +866,8 @@ public class DroidStalkerKernelService {
         return false;
       }
 
-      public void start(I iface, getCPUStatsFor_args args, org.apache.thrift.async.AsyncMethodCallback<com.rc.droid_stalker.thrift.CPUStatsStruct> resultHandler) throws TException {
-        iface.getCPUStatsFor(args.debugSession, args.span,resultHandler);
+      public void start(I iface, getCPUStatsFor_args args, org.apache.thrift.async.AsyncMethodCallback<Set<com.rc.droid_stalker.thrift.CPUStatsStruct>> resultHandler) throws TException {
+        iface.getCPUStatsFor(args.debugSession, args.lastPacketId,resultHandler);
       }
     }
 
@@ -4258,7 +4258,7 @@ public class DroidStalkerKernelService {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getCPUStatsFor_args");
 
     private static final org.apache.thrift.protocol.TField DEBUG_SESSION_FIELD_DESC = new org.apache.thrift.protocol.TField("debugSession", org.apache.thrift.protocol.TType.STRING, (short)1);
-    private static final org.apache.thrift.protocol.TField SPAN_FIELD_DESC = new org.apache.thrift.protocol.TField("span", org.apache.thrift.protocol.TType.I32, (short)2);
+    private static final org.apache.thrift.protocol.TField LAST_PACKET_ID_FIELD_DESC = new org.apache.thrift.protocol.TField("lastPacketId", org.apache.thrift.protocol.TType.I32, (short)2);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
     static {
@@ -4267,12 +4267,12 @@ public class DroidStalkerKernelService {
     }
 
     private String debugSession; // required
-    private int span; // required
+    private int lastPacketId; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
     public enum _Fields implements org.apache.thrift.TFieldIdEnum {
       DEBUG_SESSION((short)1, "debugSession"),
-      SPAN((short)2, "span");
+      LAST_PACKET_ID((short)2, "lastPacketId");
 
       private static final Map<String, _Fields> byName = new HashMap<String, _Fields>();
 
@@ -4289,8 +4289,8 @@ public class DroidStalkerKernelService {
         switch(fieldId) {
           case 1: // DEBUG_SESSION
             return DEBUG_SESSION;
-          case 2: // SPAN
-            return SPAN;
+          case 2: // LAST_PACKET_ID
+            return LAST_PACKET_ID;
           default:
             return null;
         }
@@ -4331,14 +4331,14 @@ public class DroidStalkerKernelService {
     }
 
     // isset id assignments
-    private static final int __SPAN_ISSET_ID = 0;
+    private static final int __LASTPACKETID_ISSET_ID = 0;
     private byte __isset_bitfield = 0;
     public static final Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> metaDataMap;
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.DEBUG_SESSION, new org.apache.thrift.meta_data.FieldMetaData("debugSession", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRING)));
-      tmpMap.put(_Fields.SPAN, new org.apache.thrift.meta_data.FieldMetaData("span", org.apache.thrift.TFieldRequirementType.DEFAULT, 
+      tmpMap.put(_Fields.LAST_PACKET_ID, new org.apache.thrift.meta_data.FieldMetaData("lastPacketId", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.I32)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
       org.apache.thrift.meta_data.FieldMetaData.addStructMetaDataMap(getCPUStatsFor_args.class, metaDataMap);
@@ -4349,12 +4349,12 @@ public class DroidStalkerKernelService {
 
     public getCPUStatsFor_args(
       String debugSession,
-      int span)
+      int lastPacketId)
     {
       this();
       this.debugSession = debugSession;
-      this.span = span;
-      setSpanIsSet(true);
+      this.lastPacketId = lastPacketId;
+      setLastPacketIdIsSet(true);
     }
 
     /**
@@ -4365,7 +4365,7 @@ public class DroidStalkerKernelService {
       if (other.isSetDebugSession()) {
         this.debugSession = other.debugSession;
       }
-      this.span = other.span;
+      this.lastPacketId = other.lastPacketId;
     }
 
     public getCPUStatsFor_args deepCopy() {
@@ -4375,8 +4375,8 @@ public class DroidStalkerKernelService {
     @Override
     public void clear() {
       this.debugSession = null;
-      setSpanIsSet(false);
-      this.span = 0;
+      setLastPacketIdIsSet(false);
+      this.lastPacketId = 0;
     }
 
     public String getDebugSession() {
@@ -4402,26 +4402,26 @@ public class DroidStalkerKernelService {
       }
     }
 
-    public int getSpan() {
-      return this.span;
+    public int getLastPacketId() {
+      return this.lastPacketId;
     }
 
-    public void setSpan(int span) {
-      this.span = span;
-      setSpanIsSet(true);
+    public void setLastPacketId(int lastPacketId) {
+      this.lastPacketId = lastPacketId;
+      setLastPacketIdIsSet(true);
     }
 
-    public void unsetSpan() {
-      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __SPAN_ISSET_ID);
+    public void unsetLastPacketId() {
+      __isset_bitfield = EncodingUtils.clearBit(__isset_bitfield, __LASTPACKETID_ISSET_ID);
     }
 
-    /** Returns true if field span is set (has been assigned a value) and false otherwise */
-    public boolean isSetSpan() {
-      return EncodingUtils.testBit(__isset_bitfield, __SPAN_ISSET_ID);
+    /** Returns true if field lastPacketId is set (has been assigned a value) and false otherwise */
+    public boolean isSetLastPacketId() {
+      return EncodingUtils.testBit(__isset_bitfield, __LASTPACKETID_ISSET_ID);
     }
 
-    public void setSpanIsSet(boolean value) {
-      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __SPAN_ISSET_ID, value);
+    public void setLastPacketIdIsSet(boolean value) {
+      __isset_bitfield = EncodingUtils.setBit(__isset_bitfield, __LASTPACKETID_ISSET_ID, value);
     }
 
     public void setFieldValue(_Fields field, Object value) {
@@ -4434,11 +4434,11 @@ public class DroidStalkerKernelService {
         }
         break;
 
-      case SPAN:
+      case LAST_PACKET_ID:
         if (value == null) {
-          unsetSpan();
+          unsetLastPacketId();
         } else {
-          setSpan((Integer)value);
+          setLastPacketId((Integer)value);
         }
         break;
 
@@ -4450,8 +4450,8 @@ public class DroidStalkerKernelService {
       case DEBUG_SESSION:
         return getDebugSession();
 
-      case SPAN:
-        return Integer.valueOf(getSpan());
+      case LAST_PACKET_ID:
+        return Integer.valueOf(getLastPacketId());
 
       }
       throw new IllegalStateException();
@@ -4466,8 +4466,8 @@ public class DroidStalkerKernelService {
       switch (field) {
       case DEBUG_SESSION:
         return isSetDebugSession();
-      case SPAN:
-        return isSetSpan();
+      case LAST_PACKET_ID:
+        return isSetLastPacketId();
       }
       throw new IllegalStateException();
     }
@@ -4494,12 +4494,12 @@ public class DroidStalkerKernelService {
           return false;
       }
 
-      boolean this_present_span = true;
-      boolean that_present_span = true;
-      if (this_present_span || that_present_span) {
-        if (!(this_present_span && that_present_span))
+      boolean this_present_lastPacketId = true;
+      boolean that_present_lastPacketId = true;
+      if (this_present_lastPacketId || that_present_lastPacketId) {
+        if (!(this_present_lastPacketId && that_present_lastPacketId))
           return false;
-        if (this.span != that.span)
+        if (this.lastPacketId != that.lastPacketId)
           return false;
       }
 
@@ -4529,12 +4529,12 @@ public class DroidStalkerKernelService {
           return lastComparison;
         }
       }
-      lastComparison = Boolean.valueOf(isSetSpan()).compareTo(other.isSetSpan());
+      lastComparison = Boolean.valueOf(isSetLastPacketId()).compareTo(other.isSetLastPacketId());
       if (lastComparison != 0) {
         return lastComparison;
       }
-      if (isSetSpan()) {
-        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.span, other.span);
+      if (isSetLastPacketId()) {
+        lastComparison = org.apache.thrift.TBaseHelper.compareTo(this.lastPacketId, other.lastPacketId);
         if (lastComparison != 0) {
           return lastComparison;
         }
@@ -4567,8 +4567,8 @@ public class DroidStalkerKernelService {
       }
       first = false;
       if (!first) sb.append(", ");
-      sb.append("span:");
-      sb.append(this.span);
+      sb.append("lastPacketId:");
+      sb.append(this.lastPacketId);
       first = false;
       sb.append(")");
       return sb.toString();
@@ -4623,10 +4623,10 @@ public class DroidStalkerKernelService {
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
               break;
-            case 2: // SPAN
+            case 2: // LAST_PACKET_ID
               if (schemeField.type == org.apache.thrift.protocol.TType.I32) {
-                struct.span = iprot.readI32();
-                struct.setSpanIsSet(true);
+                struct.lastPacketId = iprot.readI32();
+                struct.setLastPacketIdIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
               }
@@ -4649,8 +4649,8 @@ public class DroidStalkerKernelService {
           oprot.writeString(struct.debugSession);
           oprot.writeFieldEnd();
         }
-        oprot.writeFieldBegin(SPAN_FIELD_DESC);
-        oprot.writeI32(struct.span);
+        oprot.writeFieldBegin(LAST_PACKET_ID_FIELD_DESC);
+        oprot.writeI32(struct.lastPacketId);
         oprot.writeFieldEnd();
         oprot.writeFieldStop();
         oprot.writeStructEnd();
@@ -4673,15 +4673,15 @@ public class DroidStalkerKernelService {
         if (struct.isSetDebugSession()) {
           optionals.set(0);
         }
-        if (struct.isSetSpan()) {
+        if (struct.isSetLastPacketId()) {
           optionals.set(1);
         }
         oprot.writeBitSet(optionals, 2);
         if (struct.isSetDebugSession()) {
           oprot.writeString(struct.debugSession);
         }
-        if (struct.isSetSpan()) {
-          oprot.writeI32(struct.span);
+        if (struct.isSetLastPacketId()) {
+          oprot.writeI32(struct.lastPacketId);
         }
       }
 
@@ -4694,8 +4694,8 @@ public class DroidStalkerKernelService {
           struct.setDebugSessionIsSet(true);
         }
         if (incoming.get(1)) {
-          struct.span = iprot.readI32();
-          struct.setSpanIsSet(true);
+          struct.lastPacketId = iprot.readI32();
+          struct.setLastPacketIdIsSet(true);
         }
       }
     }
@@ -4705,7 +4705,7 @@ public class DroidStalkerKernelService {
   public static class getCPUStatsFor_result implements org.apache.thrift.TBase<getCPUStatsFor_result, getCPUStatsFor_result._Fields>, java.io.Serializable, Cloneable, Comparable<getCPUStatsFor_result>   {
     private static final org.apache.thrift.protocol.TStruct STRUCT_DESC = new org.apache.thrift.protocol.TStruct("getCPUStatsFor_result");
 
-    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.STRUCT, (short)0);
+    private static final org.apache.thrift.protocol.TField SUCCESS_FIELD_DESC = new org.apache.thrift.protocol.TField("success", org.apache.thrift.protocol.TType.SET, (short)0);
     private static final org.apache.thrift.protocol.TField KERNEL_EXCEPTION_FIELD_DESC = new org.apache.thrift.protocol.TField("kernelException", org.apache.thrift.protocol.TType.STRUCT, (short)1);
 
     private static final Map<Class<? extends IScheme>, SchemeFactory> schemes = new HashMap<Class<? extends IScheme>, SchemeFactory>();
@@ -4714,7 +4714,7 @@ public class DroidStalkerKernelService {
       schemes.put(TupleScheme.class, new getCPUStatsFor_resultTupleSchemeFactory());
     }
 
-    private com.rc.droid_stalker.thrift.CPUStatsStruct success; // required
+    private Set<com.rc.droid_stalker.thrift.CPUStatsStruct> success; // required
     private DroidStalkerKernelException kernelException; // required
 
     /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
@@ -4783,7 +4783,8 @@ public class DroidStalkerKernelService {
     static {
       Map<_Fields, org.apache.thrift.meta_data.FieldMetaData> tmpMap = new EnumMap<_Fields, org.apache.thrift.meta_data.FieldMetaData>(_Fields.class);
       tmpMap.put(_Fields.SUCCESS, new org.apache.thrift.meta_data.FieldMetaData("success", org.apache.thrift.TFieldRequirementType.DEFAULT, 
-          new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, com.rc.droid_stalker.thrift.CPUStatsStruct.class)));
+          new org.apache.thrift.meta_data.SetMetaData(org.apache.thrift.protocol.TType.SET, 
+              new org.apache.thrift.meta_data.StructMetaData(org.apache.thrift.protocol.TType.STRUCT, com.rc.droid_stalker.thrift.CPUStatsStruct.class))));
       tmpMap.put(_Fields.KERNEL_EXCEPTION, new org.apache.thrift.meta_data.FieldMetaData("kernelException", org.apache.thrift.TFieldRequirementType.DEFAULT, 
           new org.apache.thrift.meta_data.FieldValueMetaData(org.apache.thrift.protocol.TType.STRUCT)));
       metaDataMap = Collections.unmodifiableMap(tmpMap);
@@ -4794,7 +4795,7 @@ public class DroidStalkerKernelService {
     }
 
     public getCPUStatsFor_result(
-      com.rc.droid_stalker.thrift.CPUStatsStruct success,
+      Set<com.rc.droid_stalker.thrift.CPUStatsStruct> success,
       DroidStalkerKernelException kernelException)
     {
       this();
@@ -4807,7 +4808,11 @@ public class DroidStalkerKernelService {
      */
     public getCPUStatsFor_result(getCPUStatsFor_result other) {
       if (other.isSetSuccess()) {
-        this.success = new com.rc.droid_stalker.thrift.CPUStatsStruct(other.success);
+        Set<com.rc.droid_stalker.thrift.CPUStatsStruct> __this__success = new HashSet<com.rc.droid_stalker.thrift.CPUStatsStruct>(other.success.size());
+        for (com.rc.droid_stalker.thrift.CPUStatsStruct other_element : other.success) {
+          __this__success.add(new com.rc.droid_stalker.thrift.CPUStatsStruct(other_element));
+        }
+        this.success = __this__success;
       }
       if (other.isSetKernelException()) {
         this.kernelException = new DroidStalkerKernelException(other.kernelException);
@@ -4824,11 +4829,26 @@ public class DroidStalkerKernelService {
       this.kernelException = null;
     }
 
-    public com.rc.droid_stalker.thrift.CPUStatsStruct getSuccess() {
+    public int getSuccessSize() {
+      return (this.success == null) ? 0 : this.success.size();
+    }
+
+    public java.util.Iterator<com.rc.droid_stalker.thrift.CPUStatsStruct> getSuccessIterator() {
+      return (this.success == null) ? null : this.success.iterator();
+    }
+
+    public void addToSuccess(com.rc.droid_stalker.thrift.CPUStatsStruct elem) {
+      if (this.success == null) {
+        this.success = new HashSet<com.rc.droid_stalker.thrift.CPUStatsStruct>();
+      }
+      this.success.add(elem);
+    }
+
+    public Set<com.rc.droid_stalker.thrift.CPUStatsStruct> getSuccess() {
       return this.success;
     }
 
-    public void setSuccess(com.rc.droid_stalker.thrift.CPUStatsStruct success) {
+    public void setSuccess(Set<com.rc.droid_stalker.thrift.CPUStatsStruct> success) {
       this.success = success;
     }
 
@@ -4876,7 +4896,7 @@ public class DroidStalkerKernelService {
         if (value == null) {
           unsetSuccess();
         } else {
-          setSuccess((com.rc.droid_stalker.thrift.CPUStatsStruct)value);
+          setSuccess((Set<com.rc.droid_stalker.thrift.CPUStatsStruct>)value);
         }
         break;
 
@@ -5027,9 +5047,6 @@ public class DroidStalkerKernelService {
     public void validate() throws org.apache.thrift.TException {
       // check for required fields
       // check for sub-struct validity
-      if (success != null) {
-        success.validate();
-      }
     }
 
     private void writeObject(java.io.ObjectOutputStream out) throws java.io.IOException {
@@ -5067,9 +5084,19 @@ public class DroidStalkerKernelService {
           }
           switch (schemeField.id) {
             case 0: // SUCCESS
-              if (schemeField.type == org.apache.thrift.protocol.TType.STRUCT) {
-                struct.success = new com.rc.droid_stalker.thrift.CPUStatsStruct();
-                struct.success.read(iprot);
+              if (schemeField.type == org.apache.thrift.protocol.TType.SET) {
+                {
+                  org.apache.thrift.protocol.TSet _set24 = iprot.readSetBegin();
+                  struct.success = new HashSet<com.rc.droid_stalker.thrift.CPUStatsStruct>(2*_set24.size);
+                  for (int _i25 = 0; _i25 < _set24.size; ++_i25)
+                  {
+                    com.rc.droid_stalker.thrift.CPUStatsStruct _elem26;
+                    _elem26 = new com.rc.droid_stalker.thrift.CPUStatsStruct();
+                    _elem26.read(iprot);
+                    struct.success.add(_elem26);
+                  }
+                  iprot.readSetEnd();
+                }
                 struct.setSuccessIsSet(true);
               } else { 
                 org.apache.thrift.protocol.TProtocolUtil.skip(iprot, schemeField.type);
@@ -5099,7 +5126,14 @@ public class DroidStalkerKernelService {
         oprot.writeStructBegin(STRUCT_DESC);
         if (struct.success != null) {
           oprot.writeFieldBegin(SUCCESS_FIELD_DESC);
-          struct.success.write(oprot);
+          {
+            oprot.writeSetBegin(new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.STRUCT, struct.success.size()));
+            for (com.rc.droid_stalker.thrift.CPUStatsStruct _iter27 : struct.success)
+            {
+              _iter27.write(oprot);
+            }
+            oprot.writeSetEnd();
+          }
           oprot.writeFieldEnd();
         }
         if (struct.kernelException != null) {
@@ -5133,7 +5167,13 @@ public class DroidStalkerKernelService {
         }
         oprot.writeBitSet(optionals, 2);
         if (struct.isSetSuccess()) {
-          struct.success.write(oprot);
+          {
+            oprot.writeI32(struct.success.size());
+            for (com.rc.droid_stalker.thrift.CPUStatsStruct _iter28 : struct.success)
+            {
+              _iter28.write(oprot);
+            }
+          }
         }
         if (struct.isSetKernelException()) {
           struct.kernelException.write(oprot);
@@ -5145,8 +5185,17 @@ public class DroidStalkerKernelService {
         TTupleProtocol iprot = (TTupleProtocol) prot;
         BitSet incoming = iprot.readBitSet(2);
         if (incoming.get(0)) {
-          struct.success = new com.rc.droid_stalker.thrift.CPUStatsStruct();
-          struct.success.read(iprot);
+          {
+            org.apache.thrift.protocol.TSet _set29 = new org.apache.thrift.protocol.TSet(org.apache.thrift.protocol.TType.STRUCT, iprot.readI32());
+            struct.success = new HashSet<com.rc.droid_stalker.thrift.CPUStatsStruct>(2*_set29.size);
+            for (int _i30 = 0; _i30 < _set29.size; ++_i30)
+            {
+              com.rc.droid_stalker.thrift.CPUStatsStruct _elem31;
+              _elem31 = new com.rc.droid_stalker.thrift.CPUStatsStruct();
+              _elem31.read(iprot);
+              struct.success.add(_elem31);
+            }
+          }
           struct.setSuccessIsSet(true);
         }
         if (incoming.get(1)) {

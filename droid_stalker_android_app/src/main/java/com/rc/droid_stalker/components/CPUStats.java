@@ -1,4 +1,4 @@
-package com.rc.droid_stalker.sessions.components;
+package com.rc.droid_stalker.components;
 
 import com.rc.droid_stalker.thrift.CPUStatsStruct;
 import org.slf4j.Logger;
@@ -25,14 +25,13 @@ public final class CPUStats {
     }
 
 
-    public void push(final Set<CPUStatsStruct> cpuStats) {
-        for (CPUStatsStruct cpuStat : cpuStats)
-            mStatHistory.put(++mCurrentPacketId, cpuStat);
+    public void push(final CPUStatsStruct cpuStats) {
+        mStatHistory.put(++mCurrentPacketId, cpuStats);
     }
 
     public Set<CPUStatsStruct> getAllPacketsAfterId(final int lastPacketId) {
         if (mCurrentPacketId <= lastPacketId)
-            return new HashSet<>();
+            return new HashSet<CPUStatsStruct>();
         Set<CPUStatsStruct> resultSet = new LinkedHashSet<CPUStatsStruct>();
         for (int packet = lastPacketId + 1; packet < mCurrentPacketId; ++packet) {
             resultSet.add(mStatHistory.get(packet));

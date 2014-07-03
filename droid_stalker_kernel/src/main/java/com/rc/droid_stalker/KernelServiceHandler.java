@@ -16,6 +16,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * Kernel service handler
  * Author: akshay deo (akshay@rainingclouds.com)
  * Date  : 5/6/14
  * Time  : 5:21 PM
@@ -37,7 +38,7 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
 
     public KernelServiceHandler() {
         try {
-            mADB = ADB.initialize(String.format(ANDROID_SDK_LOCATION_FORMAT, "/home/appsurfer/android-sdk-linux"), this);
+            mADB = ADB.initialize(String.format(ANDROID_SDK_LOCATION_FORMAT, "/home/akshay/android-sdk-linux"), this);
             for (final IDevice device : mADB.getDevices()) {
                 addDevice(device);
             }
@@ -104,9 +105,9 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface, An
     }
 
     @Override
-    public CPUStatsStruct getCPUStatsFor(final String debugSession,
-                                         final int span) throws DroidStalkerKernelException {
-        return mCurrentDebugSession.getCPUStats(span);
+    public Set<CPUStatsStruct> getCPUStatsFor(final String debugSession,
+                                         final int lastPacketId) throws DroidStalkerKernelException {
+        return mCurrentDebugSession.getCPUStats(lastPacketId);
     }
 
     private Set<DeviceStruct> getConnectedDevicesStructList() {

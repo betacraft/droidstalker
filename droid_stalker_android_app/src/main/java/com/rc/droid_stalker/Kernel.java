@@ -19,6 +19,7 @@ import org.apache.thrift.TException;
 import org.apache.thrift.transport.TTransportException;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Set;
 
 /**
  * Author: akshay deo (akshay@rainingclouds.com)
@@ -114,16 +115,24 @@ public class Kernel extends Activity {
             public void run() {
                 try {
                     final AppConnection appConnection = AppConnection.get();
-                    final CPUStatsStruct cpuStatsStruct = appConnection.getClient().getCPUStatsFor(android.os.Process
-                            .myPid(),2000);
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getBaseContext(), cpuStatsStruct.getPid() + " " + cpuStatsStruct
-                                    .getTotalCPU() + " " + cpuStatsStruct.getPidCPU(),
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    final Set<CPUStatsStruct> cpuStatsStructs = appConnection.getClient().getCPUStatsFor(android.os
+                            .Process
+                            .myPid(), 2000);
+                    try{
+                    final CPUStatsStruct cpuStatsStruct = (CPUStatsStruct) cpuStatsStructs.toArray()[0];
+                    if (cpuStatsStruct != null)
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getBaseContext(), cpuStatsStruct.getPid() + " " + cpuStatsStruct
+                                        .getTotalCPU() + " " + cpuStatsStruct.getPidCPU() + "" + cpuStatsStruct
+                                        .getStartTimestamp() + " " + cpuStatsStruct.getEndTimestamp(),
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }catch (Exception ignored){
+
+                    }
                 } catch (TTransportException e) {
                     e.printStackTrace();
                 } catch (DroidStalkerAppException e) {

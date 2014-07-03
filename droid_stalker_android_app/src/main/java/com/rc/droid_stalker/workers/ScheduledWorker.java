@@ -8,7 +8,7 @@ import java.util.concurrent.*;
  * Date  : 7/10/13
  * Time  : 5:29 PM
  */
-public final class ScheduledWorkers {
+public final class ScheduledWorker {
 
     private static ScheduledExecutorService executorService = Executors.newScheduledThreadPool(10);
 

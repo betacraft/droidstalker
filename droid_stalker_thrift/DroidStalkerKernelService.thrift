@@ -62,6 +62,6 @@ service DroidStalkerKernelService {
     /**
      * Method to get CPU stats associated with debug session
      **/
-    CPUStatsStruct.CPUStatsStruct getCPUStatsFor(1: string debugSession, 2: i32 span) throws
+    set<CPUStatsStruct.CPUStatsStruct> getCPUStatsFor(1: string debugSession, 2:i32 lastPacketId) throws
     (1: DroidStalkerKernelException kernelException),
 }

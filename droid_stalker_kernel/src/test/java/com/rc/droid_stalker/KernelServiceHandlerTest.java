@@ -60,11 +60,11 @@ public class KernelServiceHandlerTest {
         for (AndroidAppStruct app : mKernelConnection.getClient().getInstalledAppsOn(device)) {
             System.out.println(app.getApplicationName());
         }
-        for (int i = 0; i < 100; ++i) {
-            CPUStatsStruct cpuStatsStruct = mKernelConnection.getClient().getCPUStatsFor(debugSessionId, 2000);
-            System.out.println(String.format("CPU stas %s %s %s", cpuStatsStruct.getPid(), cpuStatsStruct.getTotalCPU(),
-                    cpuStatsStruct.getPidCPU()));
 
+        Thread.sleep(20);
+        Set<CPUStatsStruct> cpuStats = mKernelConnection.getClient().getCPUStatsFor(debugSessionId, 0);
+        for (CPUStatsStruct cpuStatsStruct : cpuStats) {
+            System.out.println("id " + cpuStatsStruct.getPacketId() + " used " + cpuStatsStruct.getPidCPU());
         }
 
         assert true;

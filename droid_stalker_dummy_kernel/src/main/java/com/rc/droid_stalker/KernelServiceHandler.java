@@ -53,6 +53,7 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface {
     @Override
     public String startDebugSessionFor(final DeviceStruct device, final AndroidAppStruct androidApp) throws
             DroidStalkerKernelException {
+        logger.debug("Starting debug session");
         return DEBUG_SESSION_ID;
     }
 
@@ -65,18 +66,21 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface {
 
     @Override
     public Set<AndroidAppStruct> getInstalledAppsOn(final DeviceStruct device) throws DroidStalkerKernelException {
+        logger.debug("Get installed apps on device called");
         return INSTALLED_APPS;
     }
 
 
     @Override
     public Set<ThreadInfoStruct> getThreadsRunningIn(final String debugSession) throws DroidStalkerKernelException {
+        logger.debug("Get threads running called");
         return RUNNING_THREADS;
     }
 
     @Override
     public Set<CPUStatsStruct> getCPUStatsFor(final String debugSession,
                                               final int lastPacketId) throws DroidStalkerKernelException {
+        logger.debug("Get cpu stats for called");
         return CPU_STATS;
     }
 

@@ -12,6 +12,7 @@
         <module>droid_stalker_kernel</module>
         <module>droid_stalker_android_app</module>
         <module>droid_stalker_dummy_kernel</module>
+        <module>droid_stalker_intellij_plugin</module>
     </modules>
 
 

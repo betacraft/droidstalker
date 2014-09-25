@@ -25,10 +25,10 @@ public class KernelServiceHandler implements DroidStalkerKernelService.Iface {
     /**
      * Initialization block
      */ {
-        INSTALLED_APPS.add(new AndroidAppStruct("com.dummy1", "dummy_activity1", "Dummy1", null));
-        INSTALLED_APPS.add(new AndroidAppStruct("com.dummy2", "dummy_activity2", "Dummy2", null));
-        INSTALLED_APPS.add(new AndroidAppStruct("com.dummy3", "dummy_activity3", "Dummy3", null));
-        INSTALLED_APPS.add(new AndroidAppStruct("com.dummy4", "dummy_activity4", "Dummy4", null));
+        INSTALLED_APPS.add(new AndroidAppStruct("com.dummy1", "dummy_activity1", "Dummy1", ""));
+        INSTALLED_APPS.add(new AndroidAppStruct("com.dummy2", "dummy_activity2", "Dummy2", ""));
+        INSTALLED_APPS.add(new AndroidAppStruct("com.dummy3", "dummy_activity3", "Dummy3", ""));
+        INSTALLED_APPS.add(new AndroidAppStruct("com.dummy4", "dummy_activity4", "Dummy4", ""));
 
         RUNNING_THREADS.add(new ThreadInfoStruct(0, "dummy_thread1", 0, 100, 25000, 1552, false, 100));
         RUNNING_THREADS.add(new ThreadInfoStruct(0, "dummy_thread2", 0, 100, 25000, 1552, false, 100));

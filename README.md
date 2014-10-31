@@ -1,6 +1,7 @@
 #DroidStalker
 
-DroidStalker (codename) aims to be a complete Android application analytics tool when its under development. It tracks CPU consuption, Memory Usage, GC runs, Battery consumption, Network usage, Display rendering performance in realtime.
+DroidStalker (codename) aims to be a complete Android application analytics tool when its under development. It tracks
+CPU consuption, Memory Usage, GC runs, Battery consumption, Network usage, Display rendering performance in real time.
 
 
 ## Architecture

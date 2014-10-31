@@ -38,7 +38,7 @@
         <dependency>
             <groupId>com.facebook.nifty</groupId>
             <artifactId>nifty-core</artifactId>
-            <version>0.13.0-SNAPSHOT</version>
+            <version>0.13.1</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

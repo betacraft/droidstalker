@@ -86,7 +86,7 @@ public final class ADB implements AndroidDebugBridge.IDebugBridgeChangeListener 
      * @return
      */
 
-    public static ADB initialize(final String adbPath, final AndroidDebugBridge.IDeviceChangeListener deviceChangeListener) throws
+    public static ADB  initialize(final String adbPath, final AndroidDebugBridge.IDeviceChangeListener deviceChangeListener) throws
             DroidStalkerKernelException {
         if (INSTANCE != null)
             return INSTANCE;

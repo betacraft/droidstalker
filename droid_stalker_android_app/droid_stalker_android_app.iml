@@ -11,6 +11,9 @@
         <option name="PACK_TEST_CODE" value="true" />
         <option name="COMPILE_CUSTOM_GENERATED_SOURCES" value="false" />
         <includeAssetsFromLibraries>true</includeAssetsFromLibraries>
+        <resOverlayFolders>
+          <path>/res-overlay</path>
+        </resOverlayFolders>
       </configuration>
     </facet>
   </component>
@@ -28,7 +31,7 @@
       <excludeFolder url="file://$MODULE_DIR$/target/generated-sources/extracted-dependencies" />
       <excludeFolder url="file://$MODULE_DIR$/target/maven-archiver" />
     </content>
-    <orderEntry type="jdk" jdkName="Maven Android API 16 Platform" jdkType="Android SDK" />
+    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: com.facebook.nifty:nifty-core:0.9.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:14.0.1" level="project" />
@@ -36,7 +39,7 @@
     <orderEntry type="library" name="Maven: javax.validation:validation-api:1.0.0.GA" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty:3.6.2.Final" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.findbugs:annotations:2.0.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: android:android:4.1.2_r4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: android:android:4.2.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.googlecode.androidannotations:androidannotations:2.7" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.googlecode.androidannotations:androidannotations-api:2.7" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.sun.codemodel:codemodel:2.4.1" level="project" />
@@ -47,18 +50,6 @@
     <orderEntry type="library" name="Maven: commons-logging:commons-logging:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.6" level="project" />
     <orderEntry type="library" name="Maven: com.facebook.nifty:nifty-core:0.13.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
-    <orderEntry type="library" name="Maven: com.google.guava:guava:16.0.1" level="project" />
-    <orderEntry type="library" name="Maven: com.google.inject:guice:3.0" level="project" />
-    <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-multibindings:3.0" level="project" />
-    <orderEntry type="library" name="Maven: io.airlift:units:0.83" level="project" />
-    <orderEntry type="library" name="Maven: javax.validation:validation-api:1.1.0.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.bval:bval-jsr303:0.5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.bval:bval-core:0.5" level="project" />
-    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils-core:1.8.3" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty:3.7.0.Final" level="project" />
-    <orderEntry type="library" name="Maven: com.google.code.findbugs:annotations:2.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-android:1.7.7" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.7" level="project" />
     <orderEntry type="library" name="Maven: joda-time:joda-time:2.3" level="project" />

@@ -8,12 +8,19 @@
     <artifactId>droid_stalker</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+
+    <developers>
+        <developer>
+            <email>akshay@rainingclouds.com</email>
+            <name>Akshay Deo</name>
+            <organization>RainingClouds Technologies</organization>
+            <organizationUrl>http://rainingclouds.com</organizationUrl>
+        </developer>
+    </developers>
+
     <modules>
         <module>droid_stalker_kernel</module>
-        <module>droid_stalker_android_app</module>
         <module>droid_stalker_dummy_kernel</module>
-        <module>droid_stalker_intellij_plugin</module>
     </modules>
-
 
 </project>

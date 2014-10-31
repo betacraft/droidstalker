@@ -137,6 +137,7 @@ public final class DebugSession {
         }
         mAppConnection = AppConnection.get();
         startScheduledWorkers();
+
         if (mClient == null)
             throw new DroidStalkerKernelException(KernelExceptionErrorCode.APP_COULD_NOT_START,
                     "Failed to get hold of the client");

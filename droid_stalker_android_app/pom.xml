@@ -16,8 +16,8 @@
         <abs.version>4.1.0</abs.version>
         <vpi.version>2.3.1</vpi.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <android.version>4.1.2_r4</android.version>
-        <android.platform>16</android.platform>
+        <android.version>4.2.2</android.version>
+        <android.platform>20</android.platform>
         <keystore.location>/home/akshay/code_base/appsurfer-android-keystore/appsurfer-android-keystore
         </keystore.location>
         <keystore.alias>AppSurfer Android</keystore.alias>
